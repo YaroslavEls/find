@@ -8,7 +8,7 @@ class LocationUpdateRequest extends FormRequest
 {
     public function authorize(): bool
     {
-        return true;
+        return $this->user()->can('update', $this->route('location'));
     }
 
     public function rules(): array
@@ -17,7 +17,8 @@ class LocationUpdateRequest extends FormRequest
             'name' => ['required', 'string', 'max:128'],
             'city' => ['required', 'string', 'max:128'],
             'address' => ['required', 'string', 'max:128'],
-            'schedule' => ['required', 'string', 'max:128'],
+            'schedule' => ['required', 'array', 'size:7'],
+            'schedule.*' => ['present', 'string', 'max:128'],
             'oldPhotos' => ['nullable', 'array', 'max:12'],
             'oldPhotos.*' => ['filled', 'string'],
             'photos' => ['nullable', 'array', 'max:12'],

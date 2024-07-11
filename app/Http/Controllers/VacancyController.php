@@ -3,63 +3,52 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\VacancyStoreRequest;
+use App\Http\Requests\VacancyUpdateRequest;
 use App\Models\Vacancy;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
-use Ramsey\Uuid\Type\Integer;
+use Inertia\Response;
 
 class VacancyController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
         //
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function create(Request $request): Response
     {
-        return Inertia::render('Vacancy/Create');
+        return Inertia::render('Vacancy/Create', [
+            'locations' => $request->user()->userable->locations
+        ]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(VacancyStoreRequest $request)
+    public function store(VacancyStoreRequest $request): RedirectResponse
     {
         $validated = $request->validated();
         
         $validated['employment'] = implode(';', $validated['employment']);
 
-        $request->user()->saloon->vacancies()->create($validated);
+        $request->user()->userable->vacancies()->create($validated);
+
+        return redirect(route('profile'));
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(Vacancy $vacancy)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Vacancy $vacancy)
+    public function edit(Request $request, Vacancy $vacancy): Response
     {
         return Inertia::render('Vacancy/Edit', [
-            'vacancy' => $vacancy
+            'vacancy' => $vacancy,
+            'locations' => $request->user()->userable->locations
         ]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(VacancyStoreRequest $request, Vacancy $vacancy)
+    public function update(VacancyUpdateRequest $request, Vacancy $vacancy): RedirectResponse
     {
         $validated = $request->validated();
         
@@ -67,13 +56,16 @@ class VacancyController extends Controller
 
         $vacancy->fill($validated);
         $vacancy->save();
+
+        return redirect(route('profile'));
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Vacancy $vacancy)
+    public function destroy(Request $request, Vacancy $vacancy): void
     {
+        if ($request->user()->cannot('delete', $vacancy)) {
+            abort(403);
+        }
+
         $vacancy->delete();
     }
 }

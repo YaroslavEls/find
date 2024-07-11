@@ -17,7 +17,7 @@ const form = useForm({
     name: props.location.name,
     city: props.location.city,
     address: props.location.address,
-    schedule: props.location.schedule,
+    schedule: props.location.schedule.split(';'),
     oldPhotos: props.location.photos.split(';'),
     photos: [],
     video: props.location.video,
@@ -67,12 +67,14 @@ watch (
 watch (
     () => form.schedule,
     (newData, _) => {
-        if (newData == props.location.schedule) {
+        const oldData = props.location.schedule.split(';');
+        if (JSON.stringify(newData) == JSON.stringify(oldData)) {
             modified.value.schedule = false;
             return;
         }
         modified.value.schedule = newData;
-    }
+    },
+    { deep: true }
 );
 watch (
     () => form.oldPhotos,
@@ -110,9 +112,7 @@ const submit = () => {
     }
 
     form.post(route('location.update', { location: props.location.id }), {
-        onError: () => {
-            console.log(form);
-        }
+        onError: () => console.log(form)
     });
 };
 

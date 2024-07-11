@@ -4,8 +4,7 @@ import ProfileNav from '@/Components/ProfileNav.vue';
 import Public from '@/Pages/Saloon/Partials/Public.vue';
 import Vacancies from '@/Pages/Saloon/Partials/Vacancies.vue';
 import Locations from '@/Pages/Saloon/Partials/Locations.vue';
-import { Head } from '@inertiajs/vue3';
-import { ref } from 'vue';
+import { Head, useRemember } from '@inertiajs/vue3';
 
 defineProps({
     saloon: {
@@ -13,11 +12,11 @@ defineProps({
         required: true
     },
     vacancies: {
-        type: Object,
+        type: Array,
         required: true
     },
     locations: {
-        type: Object,
+        type: Array,
         required: true
     }
 });
@@ -28,7 +27,7 @@ const names = {
     'Vacancies': 'Вакансії',
     'Locations': 'Локації'
 };
-const current = ref('Public');
+const current = useRemember('Public');
 
 </script>
 

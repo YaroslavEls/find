@@ -70,6 +70,12 @@ watch (
     { deep: true }
 );
 
+const refresh = () => {
+    Object.keys(modified.value).forEach(key => {
+        modified.value[key] = false;
+    });
+};
+
 const submit = () => {
     form.socials = form.socials.filter(x => x !== '');
     if (form.socials.length == 0) {
@@ -77,6 +83,7 @@ const submit = () => {
     }
 
     form.post(route('saloon.update'), {
+        onSuccess: () => refresh(),
         onError: () => console.log(form)
     });
 };

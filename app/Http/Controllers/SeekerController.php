@@ -14,23 +14,17 @@ use Inertia\Response;
 
 class SeekerController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
         //
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create(Request $request): Response 
     {
         return Inertia::render('Seeker/Create');
     }
 
-    public function validate(Request $request)
+    public function validate(Request $request): void
     {
         $orig = new SeekerStoreRequest();
 
@@ -59,9 +53,6 @@ class SeekerController extends Controller
         $request->validate($rules[$request->header('form-page')], $orig->messages());
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(SeekerStoreRequest $request): RedirectResponse
     {
         $validated = $request->validated();
@@ -84,26 +75,12 @@ class SeekerController extends Controller
         return redirect(route('home', absolute: false));
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(Seeker $seeker)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Seeker $seeker)
-    {
-        dd(123456);
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(SeekerUpdateRequest $request)
+    public function update(SeekerUpdateRequest $request): RedirectResponse
     {
         $seeker = $request->user()->userable;
 
@@ -131,13 +108,7 @@ class SeekerController extends Controller
         
         $seeker->fill($validated);
         $seeker->save();
-    }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Seeker $seeker)
-    {
-        //
+        return redirect(route('profile'));
     }
 }

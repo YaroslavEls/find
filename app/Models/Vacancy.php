@@ -19,10 +19,6 @@ class Vacancy extends Model
         'descr'
     ];
 
-    protected $with = [
-        'location'
-    ];
-
     public function saloon(): BelongsTo
     {
         return $this->belongsTo(Saloon::class);

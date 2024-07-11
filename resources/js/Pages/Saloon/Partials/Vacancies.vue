@@ -9,7 +9,11 @@ defineProps({
         required: true
     },
     vacancies: {
-        type: Object,
+        type: Array,
+        required: true
+    },
+    locations: {
+        type: Array,
         required: true
     }
 });
@@ -24,7 +28,7 @@ const selected = ref(null);
             v-for="(vac, index) in vacancies"
             :key="index"
             :vacancy="vac"
-            :location="vac.location"
+            :location="locations.find(loc => loc.id === vac.location_id)"
             :saloon="saloon"
             :index="index"
             v-model="selected"

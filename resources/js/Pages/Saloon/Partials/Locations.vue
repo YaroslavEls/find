@@ -5,7 +5,7 @@ import { ref } from 'vue';
 
 defineProps({
     locations: {
-        type: Object,
+        type: Array,
         required: true
     }
 });

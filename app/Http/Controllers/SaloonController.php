@@ -5,29 +5,20 @@ namespace App\Http\Controllers;
 use App\Http\Requests\SaloonStoreRequest;
 use App\Http\Requests\SaloonUpdateRequest;
 use App\Models\Saloon;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
+use Inertia\Response;
 
 class SaloonController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function create(): Response
     {
         return Inertia::render('Saloon/Create');
     }
 
-    public function validate(Request $request)
+    public function validate(Request $request): void
     {
         $orig = new SaloonStoreRequest();
 
@@ -42,10 +33,7 @@ class SaloonController extends Controller
         $request->validate($rules, $orig->messages());
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(SaloonStoreRequest $request)
+    public function store(SaloonStoreRequest $request): RedirectResponse
     {
         $validated = $request->validated();
 
@@ -61,6 +49,7 @@ class SaloonController extends Controller
         $request->user()->update(['userable_id' => $saloon->id]);
 
         foreach ($locations as $loc) {
+            $loc['schedule'] = implode(';', $loc['schedule']);
             foreach ($loc['photos'] as $photo) {
                 $path = $photo->store('uploads');
             }
@@ -71,31 +60,16 @@ class SaloonController extends Controller
         return redirect(route('home', absolute: false));
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(Saloon $saloon)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Saloon $saloon)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(SaloonUpdateRequest $request, Saloon $saloon)
+    public function update(SaloonUpdateRequest $request, Saloon $saloon): RedirectResponse
     {
         $saloon = $request->user()->userable;
         
         $validated = $request->validated();
-        // dd($validated);
 
         $validated['socials'] = implode(';', $validated['socials']);
 
@@ -109,13 +83,7 @@ class SaloonController extends Controller
 
         $saloon->fill($validated);
         $saloon->save();
-    }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Saloon $saloon)
-    {
-        //
+        return redirect(route('profile'));
     }
 }

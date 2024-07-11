@@ -1,5 +1,6 @@
 <script setup>
 import OptionsMenu from '@/Components/OptionsMenu.vue';
+import VacancyTags from '@/Components/VacancyTags.vue';
 
 const props = defineProps({
     vacancy: { 
@@ -21,7 +22,7 @@ const props = defineProps({
 });
 
 const model = defineModel({ 
-    type: Number,
+    type: [Number, null],
     required: true 
 });
 
@@ -48,6 +49,9 @@ const menuItems = {
         >
 
         <div class="grow mr-8">
+            <VacancyTags
+                :tags="{ date: vacancy.updated_at, exp: vacancy.experience, empl: vacancy.employment }"
+            />
             <div class="mb-4 txt-h3">
                 {{ vacancy.job }} - 
                 <span class="text-systemgreen">{{ vacancy.salary }}₴</span>

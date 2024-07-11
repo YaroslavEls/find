@@ -16,7 +16,7 @@ const form = useForm({
     name: null,
     city: null,
     address: null,
-    schedule: null,
+    schedule: [null, null, null, null, null, null, null],
     photos: [],
     video: null
 });

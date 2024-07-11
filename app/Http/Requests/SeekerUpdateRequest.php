@@ -2,7 +2,6 @@
 
 namespace App\Http\Requests;
 
-use App\Models\Seeker;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -10,9 +9,6 @@ class SeekerUpdateRequest extends FormRequest
 {
     public function authorize(): bool
     {
-        // $seeker = Seeker::where('user_id', $this->user()->id)->first();
-
-        // return $this->user()->can('update', $seeker);
         return true;
     }
 

@@ -1,5 +1,6 @@
 <script setup>
 import Text from '@/Components/Inputs/Text.vue';
+import Schedule from '@/Components/Inputs/Schedule.vue';
 import File from '@/Components/Inputs/File.vue';
 import Photos from '@/Components/Inputs/Photos.vue';
 
@@ -32,9 +33,8 @@ const model = defineModel({
         :error="model.errors.address"
         v-model="model.address"
     />
-    <Text
+    <Schedule
         type="text"
-        placeholder="07:00 - 20:00"
         heading="Графік роботи"
         :error="model.errors.schedule"
         v-model="model.schedule"

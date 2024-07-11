@@ -19,7 +19,6 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        // 'role',
         'userable_type',
         'userable_id',
         'email',
@@ -34,11 +33,6 @@ class User extends Authenticatable
     protected $hidden = [
         'password',
         'remember_token',
-    ];
-
-    protected $with = [
-        // 'seeker',
-        // 'saloon'
     ];
 
     /**
@@ -58,16 +52,6 @@ class User extends Authenticatable
     {
         return $this->morphTo();
     }
-
-    // public function seeker(): HasOne
-    // {
-    //     return $this->hasOne(Seeker::class);
-    // }
-
-    // public function saloon(): HasOne
-    // {
-    //     return $this->hasOne(Saloon::class);
-    // }
 
     public function is_seeker(): bool
     {

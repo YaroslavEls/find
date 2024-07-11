@@ -15,9 +15,6 @@ const props = defineProps({
     }
 });
 
-console.log(props);
-// const seeker = usePage().props.auth.user.seeker;
-
 const tabs = {Public, Private};
 const names = {
     'Public': 'Профіль',
@@ -147,11 +144,16 @@ watch (
     }
 );
 
+const refresh = () => {
+    Object.keys(modified.value).forEach(key => {
+        modified.value[key] = false;
+    });
+};
+
 const submit = () => {
     form.post(route('seeker.update'), {
-        onError: () => {
-            console.log(form);
-        }
+        onSuccess: () => refresh(),
+        onError: () => console.log(form)
     });
 };
 

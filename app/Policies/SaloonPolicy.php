@@ -2,11 +2,11 @@
 
 namespace App\Policies;
 
-use App\Models\Seeker;
+use App\Models\Saloon;
 use App\Models\User;
 use Illuminate\Auth\Access\Response;
 
-class SeekerPolicy
+class SaloonPolicy
 {
     //
 }

@@ -5,25 +5,29 @@ import SubmitButton from '@/Components/SubmitButton.vue';
 import FormContent from '@/Pages/Vacancy/Partials/FormContent.vue';
 import { Head, useForm, usePage } from '@inertiajs/vue3';
 
+const props = defineProps({
+    locations: {
+        type: Array,
+        required: true
+    }
+});
+
 const form = useForm({
-    location: null,
-    location_id: null,
-    job: null,
-    employment: [],
+    location: props.locations[0].name,
+    location_id: props.locations[0].id,
+    job: 'Бариста',
+    employment: ['Повна', 'Не повна', 'Виходжу на підміни'],
     salary: null,
     experience: 1,
     descr: null 
 });
 
 const submit = () => {
-    const locs = usePage().props.auth.user.saloon.locations;
-    const location = locs.find(item => item.name == form.location);
+    const location = props.locations.find(item => item.name == form.location);
     form.location_id = location ? location.id : null;
 
     form.post(route('vacancy.store'), {
-        onError: () => {
-            console.log(form);
-        }
+        onError: () => console.log(form)
     });
 };
 
@@ -40,6 +44,7 @@ const submit = () => {
 
             <FormContent
                 v-model="form"
+                :locations="locations"
             />
 
             <SubmitButton

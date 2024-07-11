@@ -3,15 +3,14 @@
 namespace App\Http\Requests;
 
 use App\Models\Location;
-use App\Models\Vacancy;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class VacancyStoreRequest extends FormRequest
+class VacancyUpdateRequest extends FormRequest
 {
     public function authorize(): bool
     {
-        return $this->user()->can('create', Vacancy::class);
+        return $this->user()->can('update', $this->route('vacancy'));
     }
 
     public function rules(): array

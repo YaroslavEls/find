@@ -47,7 +47,7 @@ import { Link } from '@inertiajs/vue3';
                 class="flex items-center gap-4 px-6 py-2 rounded-xl bg-gray70"
             >
                 <div class="txt-h5">{{ $page.props.auth.user.name }}</div>
-                <img :src="$page.props.auth.user.photo" class="w-14 h-14 rounded-[32px] bg-gray50">
+                <img :src="'/'+$page.props.auth.user.photo" class="w-14 h-14 rounded-[32px] bg-gray50">
             </Link>
         </div>
         <div v-else class="flex items-center gap-6">

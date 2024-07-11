@@ -53,7 +53,6 @@ const inputEvent = (e) => {
 };
 
 const remove = (x) => {
-    console.log(x);
     urls.value.splice(x, 1);
     photos.value.splice(x, 1);
 };

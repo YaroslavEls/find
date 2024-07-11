@@ -5,6 +5,13 @@ import TextArea from '@/Components/Inputs/TextArea.vue';
 import DropdownMulti from '@/Components/Inputs/DropdownMulti.vue';
 import DropdownSingle from '@/Components/Inputs/DropdownSingle.vue';
 
+defineProps({
+    locations: {
+        type: Array,
+        required: true
+    }
+});
+
 const model = defineModel({ 
     type: Object,
     required: true 
@@ -15,7 +22,7 @@ const model = defineModel({
 <template>
     <DropdownSingle
         heading="Локація"
-        :options="$page.props.auth.user.saloon.locations.map(item => item.name)"
+        :options="locations.map(item => item.name)"
         :error="model.errors.location_id"
         v-model="model.location"
     />
@@ -32,6 +39,7 @@ const model = defineModel({
     />
     <Text
         type="text"
+        placeholder="20000"
         heading="Зарплата"
         :error="model.errors.salary"
         v-model="model.salary"
@@ -44,6 +52,7 @@ const model = defineModel({
     />
     <TextArea
         heading="Опис вакансії"
+        placeholder="Ми круті приєднуйся!"
         :error="model.errors.descr"
         v-model="model.descr"
     />

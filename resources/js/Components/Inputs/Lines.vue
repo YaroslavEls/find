@@ -61,7 +61,7 @@ const errors = () => {
                 class="flex justify-center items-center gap-2 text-blue40 text-center cursor-pointer txt-text-buttons"
             >
                 Додати ще посилання
-                <div class="icon-add"></div>
+                <div class="icon-add blue"></div>
             </div>
         </template>
 

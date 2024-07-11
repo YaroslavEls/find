@@ -10,11 +10,15 @@ const props = defineProps({
     vacancy: {
         type: Object,
         required: true
+    },
+    locations: {
+        type: Array,
+        required: true
     }
 });
 
 const form = useForm({
-    location: props.vacancy.location.name,
+    location: props.locations.find(loc => loc.id === props.vacancy.location_id).name,
     location_id: props.vacancy.location_id,
     job: props.vacancy.job,
     employment: props.vacancy.employment.split(';'),
@@ -36,7 +40,7 @@ const modified = ref({
 watch (
     () => form.location,
     (newData, _) => {
-        if (newData == props.vacancy.location.name) {
+        if (newData == props.locations.find(loc => loc.id === props.vacancy.location_id).name) {
             modified.value.location = false;
             return;
         }
@@ -97,14 +101,11 @@ watch (
 );
 
 const submit = () => {
-    const locs = usePage().props.auth.user.saloon.locations;
-    const location = locs.find(item => item.name == form.location);
+    const location = props.locations.find(item => item.name == form.location);
     form.location_id = location ? location.id : null;
 
     form.post(route('vacancy.update', { vacancy: props.vacancy.id }), {
-        onError: () => {
-            console.log(form);
-        }
+        onError: () => console.log(form)
     });
 };
 
@@ -121,6 +122,7 @@ const submit = () => {
 
             <FormContent
                 v-model="form"
+                :locations="locations"
             />
 
             <SubmitButton
