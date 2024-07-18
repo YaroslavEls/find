@@ -43,11 +43,6 @@ class LocationController extends Controller
         return redirect(route('profile'));
     }
 
-    public function show(Location $location)
-    {
-        //
-    }
-
     public function edit(Location $location): Response
     {
         return Inertia::render('Location/Edit', [

@@ -18,6 +18,11 @@ const params = {
         method: 'delete',
         text: 'Видалити',
         icon: 'icon-delete'
+    },
+    save: {
+        method: 'post',
+        text: 'Зберегти',
+        icon: 'icon-fav'
     }
 };
 

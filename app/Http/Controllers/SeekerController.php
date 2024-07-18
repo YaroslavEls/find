@@ -6,6 +6,7 @@ use App\Http\Requests\SeekerStoreRequest;
 use App\Http\Requests\SeekerUpdateRequest;
 use App\Models\Seeker;
 use Carbon\Carbon;
+use Diglactic\Breadcrumbs\Breadcrumbs;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -14,9 +15,13 @@ use Inertia\Response;
 
 class SeekerController extends Controller
 {
-    public function index()
+    public function index(): Response
     {
-        //
+        $seekers = Seeker::all();
+
+        return Inertia::render('Seeker/Index', [
+            'seekers' => $seekers
+        ]);
     }
 
     public function create(Request $request): Response 
@@ -75,9 +80,16 @@ class SeekerController extends Controller
         return redirect(route('home', absolute: false));
     }
 
-    public function show(Seeker $seeker)
+    public function show(Seeker $seeker): Response
     {
-        //
+        $seeker->score = round($seeker->user->reviews->avg('score'));
+
+        $breadcrumbs = Breadcrumbs::generate('seeker', $seeker);
+
+        return Inertia::render('Seeker/Show', [
+            'breadcrumbs' => $breadcrumbs,
+            'seeker' => $seeker
+        ]);
     }
 
     public function update(SeekerUpdateRequest $request): RedirectResponse

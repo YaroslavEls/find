@@ -24,18 +24,18 @@ switch (props.tags.exp) {
         transformed.experience = 'Без досвіду';
         break;
     case '1':
-        transformed.experience = props.tags.exp + 'рік досвіду';
+        transformed.experience = props.tags.exp + ' рік досвіду';
         break;
     case '2':
     case '3':
     case '4':
-        transformed.experience = props.tags.exp + 'роки досвіду';
+        transformed.experience = props.tags.exp + ' роки досвіду';
         break;
     case '6.5':
         transformed.experience = '6+ років досвіду';
         break;
     default:
-        transformed.experience = props.tags.exp + 'років досвіду';
+        transformed.experience = props.tags.exp + ' років досвіду';
 }
 
 transformed.employment = props.tags.empl.split(';')[0] + ' зайнятість';
@@ -49,11 +49,11 @@ const icons = {
 </script>
 
 <template>
-    <div class="flex gap-2 mb-4">
+    <div class="flex gap-2">
         <div 
             v-for="(value, key) in transformed"
             :key="key"
-            class="flex items-center gap-2 px-4 py-1 rounded bg-gray60 txt-secondary"
+            class="flex items-center gap-2 px-4 py-1 h-fit rounded bg-gray60 txt-secondary"
         >
             <div :class="icons[key]"></div>
             {{ value }}

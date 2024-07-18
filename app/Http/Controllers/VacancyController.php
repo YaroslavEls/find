@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\VacancyStoreRequest;
 use App\Http\Requests\VacancyUpdateRequest;
 use App\Models\Vacancy;
+use Diglactic\Breadcrumbs\Breadcrumbs;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -12,9 +13,13 @@ use Inertia\Response;
 
 class VacancyController extends Controller
 {
-    public function index()
+    public function index(): Response
     {
-        //
+        $vacancies = Vacancy::all();
+
+        return Inertia::render('Vacancy/Index', [
+            'vacancies' => $vacancies
+        ]);
     }
 
     public function create(Request $request): Response
@@ -37,7 +42,14 @@ class VacancyController extends Controller
 
     public function show(Vacancy $vacancy)
     {
-        //
+        $vacancy->score = round($vacancy->saloon->user->reviews->avg('score'));
+
+        $breadcrumbs = Breadcrumbs::generate('vacancy', $vacancy);
+
+        return Inertia::render('Vacancy/Show', [
+            'breadcrumbs' => $breadcrumbs,
+            'vacancy' => $vacancy
+        ]);
     }
 
     public function edit(Request $request, Vacancy $vacancy): Response

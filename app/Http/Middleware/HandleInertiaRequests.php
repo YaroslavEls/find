@@ -29,17 +29,19 @@ class HandleInertiaRequests extends Middleware
      */
     public function share(Request $request): array
     {
-        if (!$request->user()) {
-            $data = null;
-        } else {
-            $data = $request->user()->userable ? [
+        $data = null;
+
+        if ($request->user() && $request->user()->userable) {
+            $data = [
                 'user_id' => $request->user()->id,
                 'userable_id' => $request->user()->userable_id,
                 'userable_type' => $request->user()->userable_type,
                 'email' => $request->user()->email,
                 'name' => $request->user()->userable->name,
-                'photo' => $request->user()->is_seeker() ? $request->user()->userable->photo : $request->user()->userable->logo,
-            ] : null;
+                'photo' => $request->user()->is_seeker()
+                    ? $request->user()->userable->photo
+                    : $request->user()->userable->logo,
+            ];
         }
 
         return [

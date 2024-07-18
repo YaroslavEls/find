@@ -19,6 +19,11 @@ class Vacancy extends Model
         'descr'
     ];
 
+    protected $with = [
+        'saloon:id,logo,name',
+        'location:id,photos,city,address'
+    ];
+
     public function saloon(): BelongsTo
     {
         return $this->belongsTo(Saloon::class);

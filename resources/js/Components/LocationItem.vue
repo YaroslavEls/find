@@ -57,7 +57,7 @@ if (schedule.slice(0, 5).every(value => value === schedule[0])) {
 <template>
     <div class="relative flex mb-12">
         <img 
-            :src="location.photos.split(';')[0]"
+            :src="'/' + location.photos.split(';')[0]"
             class="w-[424px] h-[272px] mr-8 border-solid border-2 border-gray50 rounded-lg"
         >
 

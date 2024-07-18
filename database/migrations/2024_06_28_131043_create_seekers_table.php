@@ -21,7 +21,7 @@ return new class extends Migration
             $table->float('salary');
             $table->string('city');
             $table->string('employment');
-            $table->string('info');
+            $table->text('info');
             $table->string('cv')->nullable();
             $table->timestamps();
         });

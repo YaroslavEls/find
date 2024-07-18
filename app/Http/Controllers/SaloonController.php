@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\SaloonStoreRequest;
 use App\Http\Requests\SaloonUpdateRequest;
 use App\Models\Saloon;
+use App\Models\Vacancy;
+use Diglactic\Breadcrumbs\Breadcrumbs;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -52,17 +54,35 @@ class SaloonController extends Controller
             $loc['schedule'] = implode(';', $loc['schedule']);
             foreach ($loc['photos'] as $photo) {
                 $path = $photo->store('uploads');
+                $pathes[] = $path;
             }
-            $loc['photos'] = implode(';', $loc['photos']);
+            $loc['photos'] = implode(';', $pathes);
             $saloon->locations()->create($loc);
         }
 
         return redirect(route('home', absolute: false));
     }
 
-    public function show(Saloon $saloon)
+    public function show(Vacancy $vacancy): Response
     {
-        //
+        $saloon = $vacancy->saloon()->get()[0];
+        $saloon->load(['vacancies', 'locations']);
+        $saloon->score = round($saloon->user->reviews->avg('score'));
+
+        $reviews = $saloon
+            ->user
+            ->reviews()
+            ->with(['author.userable:id,photo,name'])
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        $breadcrumbs = Breadcrumbs::generate('saloon', $vacancy);
+
+        return Inertia::render('Saloon/Show', [
+            'breadcrumbs' => $breadcrumbs,
+            'saloon' => $saloon,
+            'reviews' => $reviews
+        ]);
     }
 
     public function update(SaloonUpdateRequest $request, Saloon $saloon): RedirectResponse

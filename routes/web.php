@@ -3,6 +3,7 @@
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LocationController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\SaloonController;
 use App\Http\Controllers\SeekerController;
 use App\Http\Controllers\VacancyController;
@@ -32,9 +33,24 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])
         ->name('profile');
 
+    Route::get('/vacancies', [VacancyController::class, 'index'])
+        ->name('vacancies');
+    Route::get('/vacancies/{vacancy}', [VacancyController::class, 'show'])
+        ->name('vacancies.show');
+
+    Route::get('vacancies/{vacancy}/saloon', [SaloonController::class, 'show'])
+        ->name('saloons.show');
+
+    Route::post('/reviews/{user}', [ReviewController::class, 'store'])
+        ->name('review.store');
+});
+
+Route::middleware(['auth', 'seeker'])->group(function () {
     Route::patch('/seeker', [SeekerController::class, 'update'])
         ->name('seeker.update');
+});
 
+Route::middleware(['auth', 'saloon'])->group(function () {
     Route::patch('/saloon', [SaloonController::class, 'update'])
         ->name('saloon.update');
 
@@ -59,6 +75,13 @@ Route::middleware('auth')->group(function () {
         ->name('vacancy.update');
     Route::delete('/vacancy/{vacancy}/delete', [VacancyController::class, 'destroy'])
         ->name('vacancy.delete');
+
+    Route::get('/seekers', [SeekerController::class, 'index'])
+        ->name('seekers');
+    Route::get('/seekers/{seeker}', [SeekerController::class, 'show'])
+        ->name('seekers.show');
+    Route::get('/seekers/{seeker}/reviews', [ReviewController::class, 'index'])
+        ->name('seekers.reviews');
 });
 
 require __DIR__.'/auth.php';

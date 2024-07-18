@@ -20,16 +20,16 @@ import { Link } from '@inertiajs/vue3';
                 </Link>
                 <Link
                     v-show="$page.props.auth.user.userable_type == 'App\\Models\\Seeker'"
-                    :href="route('home')"
-                    :class="$page.url == '/vaccancies' ? 'text-gray0' : 'text-gray40'"
+                    :href="route('vacancies')"
+                    :class="$page.url.split('/')[1] == 'vacancies' ? 'text-gray0' : 'text-gray40'"
                     class="font-semibold text-[22px] tracking-normal leading-none"
                 >
                     Вакансії
                 </Link>
                 <Link
                     v-show="$page.props.auth.user.userable_type == 'App\\Models\\Saloon'"
-                    :href="route('home')"
-                    :class="$page.url == '/vaccancies' ? 'text-gray0' : 'text-gray40'"
+                    :href="route('seekers')"
+                    :class="$page.url.split('/')[1] == 'seekers' ? 'text-gray0' : 'text-gray40'"
                     class="font-semibold text-[22px] tracking-normal leading-none"
                 >
                     Кандидати

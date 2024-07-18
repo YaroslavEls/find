@@ -27,9 +27,9 @@ const reviews = [
     <Head title="Home" />
     
     <MainLayout>
-        <!-- <Link :href="route('logout')" method="post" as="button" class="font-semibold text-[20px]">
+        <Link :href="route('logout')" method="post" as="button" class="font-semibold text-[20px]">
             Log out
-        </Link> -->
+        </Link>
 
         <section>
             <div class="w-fit px-6 py-3 mb-4 bg-blue50 rounded-lg txt-h5">Платформа для пошуку роботи</div>
