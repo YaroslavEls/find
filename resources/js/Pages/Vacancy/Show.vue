@@ -3,7 +3,9 @@ import MainLayout from '@/Layouts/MainLayout.vue';
 import Breadcrumbs from '@/Components/Breadcrumbs.vue';
 import Tags from '@/Components/Tags.vue';
 import SubmitButton from '@/Components/SubmitButton.vue';
-import { Link } from '@inertiajs/vue3';
+import { Carousel, Slide } from 'vue3-carousel';
+import 'vue3-carousel/dist/carousel.css';
+import { router, Link, usePage } from '@inertiajs/vue3';
 
 const props = defineProps({
     breadcrumbs: {
@@ -19,6 +21,26 @@ const props = defineProps({
 const formatter = new Intl.DateTimeFormat('uk-UA', { day: 'numeric', month: 'long', year: 'numeric' });
 const date = new Date(props.vacancy.created_at);
 const formattedDate = formatter.format(date);
+
+const isSeeker = usePage().props.auth.user.userable_type === 'App\\Models\\Seeker';
+
+const saveData = {
+    route: route('save.vacancy', { vacancy: props.vacancy }), 
+    method: 'post', 
+    label: 'Додати до обраного' 
+};
+if (usePage().props.auth.user.saves.includes(props.vacancy.id)) {
+    saveData.route = route('unsave.vacancy', { vacancy: props.vacancy });
+    saveData.method = 'delete';
+    saveData.label = 'Видалити з обраного';
+}
+
+const save = () => {
+    router.visit(saveData.route, {
+        method: saveData.method,
+        preserveScroll: true
+    });
+};
 
 </script>
 
@@ -58,17 +80,22 @@ const formattedDate = formatter.format(date);
                     </div>
                     <div class="basis-6/12">
                         <div class="mb-2 text-gray40 txt-body">Локація:</div>
-                        <div class="txt-h4">{{ vacancy.location.city, vacancy.location.address }}</div>
+                        <Link
+                            :href="route('location.show', { vacancy: vacancy.id, location: vacancy.location.id })"
+                            class="txt-h4"
+                        >
+                            {{ vacancy.location.city }}, {{ vacancy.location.address }}
+                        </Link>
                     </div>
                 </div>
 
                 <Link
-                    :href="route('home', { vacancy: vacancy.id })"
+                    :href="route('saloons.show', { vacancy: vacancy.id, sec: 'reviews' })"
                     class="block w-fit mb-10"
                 >
                     <div class="mb-2 text-gray40 txt-body">Відгуки та рейтинг:</div>
                     <div class="flex items-center gap-2 txt-h4">
-                        <div>{{ vacancy.score > 2 ? 'Позитивні' : 'Негативні' }} відгуки</div>
+                        <div>Відгуки</div>
                         <div>-</div>
                         <div class="flex gap-1">
                             <div
@@ -103,22 +130,55 @@ const formattedDate = formatter.format(date);
                 </div>
 
                 <SubmitButton
+                    v-if="isSeeker"
                     text="Відгукнутися на вакансію"
                     regular
                 />
             </div>
 
             <div class="basis-[728px]">
-                <div class="flex gap-2 px-6 py-2 mb-6 h-fit w-fit my-0 mr-0 ml-auto bg-blue50 rounded txt-body">
-                    Зберегти
+                <div
+                    v-if="isSeeker"
+                    @click="save"
+                    class="flex gap-2 px-6 py-2 mb-6 h-fit w-fit my-0 mr-0 ml-auto bg-blue50 rounded txt-body cursor-pointer"
+                >
+                    {{ saveData.label }}
                     <div class="icon-fav" />
                 </div>
+                
+                <Carousel :autoplay="5000" :transition="750" :wrap-around="true">
+                    <Slide 
+                        v-for="(photo, index) in vacancy.location.photos.split(';')" 
+                        :key="index"
+                        class="relative cursor-grab"
+                    >
+                        <img 
+                            :src="'/' + photo"
+                            class="w-full h-[448px] border-solid border-gray50 border-2 rounded-xl"
+                        >
+                        <div class="absolute right-4 bottom-2 text-gray90 txt-h5">{{ index + 1 }}/{{ vacancy.location.photos.split(';').length }}</div>
+                    </Slide>
+                </Carousel>
 
-                <img 
-                    :src="'/' + vacancy.location.photos.split(';')[0]"
-                    class="w-full h-[448px] border-solid border-gray50 border-2 rounded-xl"
-                >
+                <div class="mt-10">
+                    <div class="mb-4 text-gray40 txt-h3">Соціальні мережі:</div>
+                    <div
+                        v-for="(item, index) in vacancy.saloon.socials.split(';')"
+                        :key="index"
+                        class="mb-6 txt-body"
+                    >
+                        {{ item }}
+                    </div>
+                </div>
+                
             </div>
         </div>
     </MainLayout>
 </template>
+
+<style>
+section.carousel {
+    text-align: unset;
+    padding: 0;
+}
+</style>

@@ -15,6 +15,10 @@ defineProps({
     locations: {
         type: Array,
         required: true
+    },
+    isSeeker: {
+        type: Boolean,
+        required: true
     }
 });
 
@@ -31,10 +35,12 @@ const selected = ref(null);
             :location="locations.find(loc => loc.id === vac.location_id)"
             :saloon="saloon"
             :index="index"
+            :isSeeker="isSeeker"
             v-model="selected"
         />
 
         <CreateNewButton
+            v-if="$page.url.startsWith('/profile')"
             routeName="vacancy.create"
             text="Додати вакансію"
         />

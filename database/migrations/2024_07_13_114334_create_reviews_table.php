@@ -16,7 +16,7 @@ return new class extends Migration
             $table->integer('user_id');
             $table->integer('author_id');
             $table->enum('score', [1, 2, 3, 4, 5]);
-            $table->string('text');
+            $table->text('text');
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->constrained()->cascadeOnDelete();

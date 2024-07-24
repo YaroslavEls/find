@@ -20,7 +20,7 @@ class ReviewController extends Controller
         $reviews = $seeker
             ->user
             ->reviews()
-            ->with(['author.userable:id,photo,name'])
+            ->with(['author.userable:id,logo,name'])
             ->orderBy('created_at', 'desc')
             ->get();
 

@@ -13,9 +13,25 @@ use Inertia\Response;
 
 class VacancyController extends Controller
 {
-    public function index(): Response
+    public function index(Request $request): Response
     {
-        $vacancies = Vacancy::all();
+        if ($request->query('sort') == 'new') {
+            $vacancies = Vacancy::orderBy('created_at', 'desc')
+                ->paginate(10)
+                ->withQueryString();
+        } else if ($request->query('sort') == 'saved') {
+            $saves = $request->user()
+                ->saves()
+                ->where(['user_id' => $request->user()->id])
+                ->distinct()
+                ->pluck('savable_id');
+            $vacancies = Vacancy::whereIn('id', $saves)
+                ->paginate(10)
+                ->withQueryString();
+        } else {
+            $vacancies = Vacancy::paginate(10)
+                ->withQueryString();
+        }
 
         return Inertia::render('Vacancy/Index', [
             'vacancies' => $vacancies
@@ -42,6 +58,7 @@ class VacancyController extends Controller
 
     public function show(Vacancy $vacancy)
     {
+        $vacancy->load(['saloon', 'location']);
         $vacancy->score = round($vacancy->saloon->user->reviews->avg('score'));
 
         $breadcrumbs = Breadcrumbs::generate('vacancy', $vacancy);

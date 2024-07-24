@@ -15,12 +15,40 @@ use Inertia\Response;
 
 class SeekerController extends Controller
 {
-    public function index(): Response
+    public function index(Request $request): Response
     {
-        $seekers = Seeker::all();
+        if ($request->query('sort') == 'new') {
+            $seekers = Seeker::orderBy('created_at', 'desc');
+        } else if ($request->query('sort') == 'saved') {
+            $saves = $request->user()
+                ->saves()
+                ->where(['user_id' => $request->user()->id])
+                ->distinct()
+                ->pluck('savable_id');
+            $seekers = Seeker::whereIn('id', $saves);
+        } else {
+            $seekers = Seeker::query();
+        }
+
+        if ($request->query('job')) {
+            $jobs = explode(';', $request->query('job'));
+            $seekers->whereIn('job', $jobs);
+        }
+        if ($request->query('emp')) {
+            // todo
+        }
+        if ($request->query('exp')) {
+            $seekers->where('experience', '>=', $request->query('exp'));
+        }
+        if ($request->query('sal')) {
+            $seekers->where('salary', '>=', $request->query('sal'));
+        }
+        if ($request->query('city')) {
+            $seekers->where('city', 'like', '%' . $request->query('city') . '%');
+        }
 
         return Inertia::render('Seeker/Index', [
-            'seekers' => $seekers
+            'seekers' => $seekers->paginate(10)->withQueryString()
         ]);
     }
 

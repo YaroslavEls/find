@@ -41,6 +41,7 @@ class HandleInertiaRequests extends Middleware
                 'photo' => $request->user()->is_seeker()
                     ? $request->user()->userable->photo
                     : $request->user()->userable->logo,
+                'saves' => array_column($request->user()->saves->toArray(), 'savable_id')
             ];
         }
 

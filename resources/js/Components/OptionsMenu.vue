@@ -23,6 +23,11 @@ const params = {
         method: 'post',
         text: 'Зберегти',
         icon: 'icon-fav'
+    },
+    unsave: {
+        method: 'delete',
+        text: 'Видалити',
+        icon: 'icon-fav'
     }
 };
 

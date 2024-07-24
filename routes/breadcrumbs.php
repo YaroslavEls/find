@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Location;
 use App\Models\Seeker;
 use App\Models\Vacancy;
 use Diglactic\Breadcrumbs\Breadcrumbs;
@@ -37,4 +38,10 @@ Breadcrumbs::for('vacancy', function (BreadcrumbTrail $trail, Vacancy $vacancy) 
 Breadcrumbs::for('saloon', function(BreadcrumbTrail $trail, Vacancy $vacancy) {
     $trail->parent('vacancy', $vacancy);
     $trail->push($vacancy->saloon->name, route('saloons.show', $vacancy));
+});
+
+// Vacancies > [Vacancy] > [Saloon] > [Location]
+Breadcrumbs::for('location', function(BreadcrumbTrail $trail, Vacancy $vacancy, Location $location) {
+    $trail->parent('saloon', $vacancy);
+    $trail->push($location->name, route('location.show', [$vacancy, $location]));
 });

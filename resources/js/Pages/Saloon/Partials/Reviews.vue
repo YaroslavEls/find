@@ -1,7 +1,7 @@
 <script setup>
 import CreateForm from '@/Pages/Review/Partials/CreateForm.vue';
 import ReviewItem from '@/Components/ReviewItem.vue';
-import { useForm } from '@inertiajs/vue3';
+import { useForm, usePage } from '@inertiajs/vue3';
 
 const props = defineProps({
     saloon: {
@@ -10,6 +10,10 @@ const props = defineProps({
     },
     reviews: {
         type: Array,
+        required: true
+    },
+    isSeeker: {
+        type: Boolean,
         required: true
     }
 });
@@ -20,7 +24,6 @@ const form = useForm({
 });
 
 const submit = () => {
-    // console.log(props.saloon.user.id);
     form.post(route('review.store', { user: props.saloon.user.id }), {
         only: ['reviews'],
         onSuccess: () => form.reset(),
@@ -32,7 +35,15 @@ const submit = () => {
 
 <template>
     <div>
-        <form @submit.prevent="submit" class="mb-10">
+        <div class="mb-4 text-gray40 txt-h3">
+            {{ reviews.length }} Відгуків
+        </div>
+
+        <form
+            v-if="isSeeker"
+            @submit.prevent="submit" 
+            class="mb-10"
+        >
             <CreateForm 
                 v-model="form"
                 :count="reviews.length"

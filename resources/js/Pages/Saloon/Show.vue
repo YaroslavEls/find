@@ -1,18 +1,22 @@
 <script setup>
 import MainLayout from '@/Layouts/MainLayout.vue';
+import Breadcrumbs from '@/Components/Breadcrumbs.vue';
 import SaloonNav from '@/Components/SaloonNav.vue';
 import Description from '@/Pages/Saloon/Partials/Description.vue';
 import Reviews from '@/Pages/Saloon/Partials/Reviews.vue';
 import Vacancies from '@/Pages/Saloon/Partials/Vacancies.vue';
 import Locations from '@/Pages/Saloon/Partials/Locations.vue';
-import { Head, useRemember } from '@inertiajs/vue3';
-import Breadcrumbs from '@/Components/Breadcrumbs.vue';
-// import {ref} from 'vue';
+import { Head, useRemember, usePage } from '@inertiajs/vue3';
 
-defineProps({
+const props = defineProps({
     breadcrumbs: {
         type: Array,
         required: true
+    },
+    section: {
+        type: [String, null],
+        required: false,
+        default: null
     },
     saloon: {
         type: Object,
@@ -25,12 +29,14 @@ defineProps({
 });
 
 const names = {
-    'Description': 'Опис',
-    'Reviews': 'Відгуки',
-    'Vacancies': 'Вакансії',
-    'Locations': 'Локації'
+    'description': 'Опис',
+    'reviews': 'Відгуки',
+    'vacancies': 'Вакансії',
+    'locations': 'Локації'
 };
-const current = useRemember('Description');
+const current = useRemember(props.section ?? 'description');
+
+const isSeeker = usePage().props.auth.user.userable_type === 'App\\Models\\Seeker';
 
 </script>
 
@@ -68,7 +74,7 @@ const current = useRemember('Description');
 
         <Transition>
             <Description
-                v-if="current === 'Description'"
+                v-if="current === 'description'"
                 :saloon="saloon"
                 class="mb-20"
             />
@@ -76,27 +82,30 @@ const current = useRemember('Description');
 
         <Transition>
             <Reviews
-                v-if="current === 'Reviews'"
+                v-if="current === 'reviews'"
                 :saloon="saloon"
                 :reviews="reviews"
+                :isSeeker="isSeeker"
                 class="mb-20"
             />
         </Transition>
 
         <Transition>
             <Vacancies
-                v-if="current === 'Vacancies'"
+                v-if="current === 'vacancies'"
                 :saloon="saloon"
                 :locations="saloon.locations"
                 :vacancies="saloon.vacancies"
+                :isSeeker="isSeeker"
                 class="mb-20"
             />
         </Transition>
 
         <Transition>
             <Locations
-                v-if="current === 'Locations'"
+                v-if="current === 'locations'"
                 :locations="saloon.locations"
+                :isSeeker="isSeeker"
                 class="mb-20"
             />
         </Transition>

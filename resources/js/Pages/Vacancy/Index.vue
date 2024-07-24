@@ -2,16 +2,20 @@
 import MainLayout from '@/Layouts/MainLayout.vue';
 import ListingNav from '@/Components/ListingNav.vue';
 import VacancyItem from '@/Components/VacancyItem.vue';
+import Pagination from '@/Components/Pagination.vue';
+import { usePage } from '@inertiajs/vue3';
 import { ref } from 'vue';
 
-defineProps({
+const props = defineProps({
     vacancies: {
-        type: Array,
+        type: Object,
         required: true
     }
 });
 
 const selected = ref(null);
+
+const isSeeker = usePage().props.auth.user.userable_type === 'App\\Models\\Seeker';
 
 </script>
 
@@ -19,15 +23,23 @@ const selected = ref(null);
     <MainLayout>
         <ListingNav
             heading="Вакансії"
-            :count="vacancies.length"
+            :count="vacancies.total"
+            :isSeeker="isSeeker"
+            route="vacancies"
         />
 
         <VacancyItem
-            v-for="(vacancy, index) in vacancies"
+            v-for="(vacancy, index) in vacancies.data"
             :key="vacancy.id"
             :vacancy="vacancy"
             :index="index"
+            :isSeeker="isSeeker"
             v-model="selected"
+        />
+
+        <Pagination
+            :count="vacancies.last_page"
+            :links="vacancies.links"
         />
     </MainLayout>
 </template>

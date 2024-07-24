@@ -49,7 +49,7 @@ const positions = [
                 max="6.5"
                 step="0.5"
                 v-model="model"
-                class="h-14"
+                class="h-14 w-[576px]"
             >
 
             <div 

@@ -11,6 +11,10 @@ const props = defineProps({
     index: { 
         type: Number,
         required: true 
+    },
+    isSeeker: {
+        type: Boolean,
+        required: true
     }
 });
 
@@ -27,10 +31,20 @@ const options = (x) => {
     model.value = x;
 };
 
-const menuItems = {
-    edit: route('vacancy.edit', { vacancy: props.vacancy.id }),
-    delete: route('vacancy.delete', { vacancy: props.vacancy.id })
-};
+const menuItems = () => {
+    if (usePage().url.startsWith('/profile')) {
+        return {
+            edit: route('vacancy.edit', { vacancy: props.vacancy.id }),
+            delete: route('vacancy.delete', { vacancy: props.vacancy.id })
+        };
+    } 
+
+    if (usePage().props.auth.user.saves.includes(props.vacancy.id)) {
+        return { unsave: route('unsave.vacancy', { vacancy: props.vacancy }) }
+    }
+
+    return { save: route('save.vacancy', { vacancy: props.vacancy }) };
+}
 
 </script>
 
@@ -55,11 +69,14 @@ const menuItems = {
                 {{ vacancy.job }} - 
                 <span class="text-systemgreen">{{ vacancy.salary }}₴</span>
             </div>
-            <div class="flex gap-2 mb-4 itemc-center text-gray20 txt-h5">
+            <Link
+                :href="route('location.show', { vacancy: vacancy.id, location: vacancy.location.id })"
+                class="flex gap-2 w-fit mb-4 itemc-center text-gray20 txt-h5"
+            >
                 <div class="icon-location" />
                 <div>({{ vacancy.location.city }})</div>
                 <div>{{ vacancy.location.address }}</div>
-            </div>
+            </Link>
             <Link
                 :href="route('saloons.show', { vacancy: vacancy.id })"
                 class="flex items-center gap-2 mb-4 w-fit"
@@ -82,14 +99,16 @@ const menuItems = {
         </div>
 
         <div
+            v-if="isSeeker"
             @click="options(index)"
             class="w-14 h-10 my-0 mr-0 ml-auto rounded-lg icon-options bg-center bg-no-repeat cursor-pointer hover:bg-blue40 duration-300"
             :class="model == index ? 'bg-gray70' : 'bg-gray50'"
         />
 
         <OptionsMenu
+            v-if="isSeeker"
             v-show="model == index" 
-            :items="menuItems"
+            :items="menuItems()"
         />
     </div>
 </template>

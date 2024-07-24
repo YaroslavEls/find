@@ -7,6 +7,10 @@ defineProps({
     locations: {
         type: Array,
         required: true
+    },
+    isSeeker: {
+        type: Boolean,
+        required: true
     }
 });
 
@@ -21,10 +25,12 @@ const selected = ref(null);
             :key="index"
             :location="loc"
             :index="index"
+            :isSeeker="isSeeker"
             v-model="selected"
         />
 
         <CreateNewButton
+            v-if="$page.url.startsWith('/profile')"
             routeName="location.create"
             text="Додати локацію"
         />

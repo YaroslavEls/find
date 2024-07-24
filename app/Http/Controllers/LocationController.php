@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\LocationStoreRequest;
 use App\Http\Requests\LocationUpdateRequest;
 use App\Models\Location;
+use App\Models\Vacancy;
+use Diglactic\Breadcrumbs\Breadcrumbs;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -41,6 +43,17 @@ class LocationController extends Controller
         $request->user()->userable->locations()->create($validated);
 
         return redirect(route('profile'));
+    }
+
+    public function show(Request $request, Vacancy $vacancy, Location $location): Response
+    {
+        $breadcrumbs = Breadcrumbs::generate('location', $vacancy, $location);
+
+        return Inertia::render('Location/Show', [
+            'breadcrumbs' => $breadcrumbs,
+            'location' => $location,
+            'vacancies' => $location->vacancies
+        ]);
     }
 
     public function edit(Location $location): Response

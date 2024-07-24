@@ -5,6 +5,7 @@ use App\Http\Controllers\LocationController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\SaloonController;
+use App\Http\Controllers\SaveController;
 use App\Http\Controllers\SeekerController;
 use App\Http\Controllers\VacancyController;
 use Illuminate\Support\Facades\Route;
@@ -40,9 +41,20 @@ Route::middleware('auth')->group(function () {
 
     Route::get('vacancies/{vacancy}/saloon', [SaloonController::class, 'show'])
         ->name('saloons.show');
+    Route::get('vacancies/{vacancy}/saloon/{location}', [LocationController::class, 'show'])
+        ->name('location.show');
 
     Route::post('/reviews/{user}', [ReviewController::class, 'store'])
         ->name('review.store');
+
+    Route::post('seeker/save/{seeker}', [SaveController::class, 'storeSeeker'])
+        ->name('save.seeker');
+    Route::delete('seeker/save/{seeker}', [SaveController::class, 'destroySeeker'])
+        ->name('unsave.seeker');
+    Route::post('vacancy/save/{vacancy}', [SaveController::class, 'storeVacancy'])
+        ->name('save.vacancy');
+    Route::delete('vacancy/save/{vacancy}', [SaveController::class, 'destroyVacancy'])
+        ->name('unsave.vacancy');
 });
 
 Route::middleware(['auth', 'seeker'])->group(function () {

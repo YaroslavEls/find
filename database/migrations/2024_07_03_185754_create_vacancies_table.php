@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('employment');
             $table->float('experience');
             $table->float('salary');
-            $table->string('descr');
+            $table->text('descr');
             $table->timestamps();
         });
     }

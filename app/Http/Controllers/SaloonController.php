@@ -63,7 +63,7 @@ class SaloonController extends Controller
         return redirect(route('home', absolute: false));
     }
 
-    public function show(Vacancy $vacancy): Response
+    public function show(Request $request, Vacancy $vacancy): Response
     {
         $saloon = $vacancy->saloon()->get()[0];
         $saloon->load(['vacancies', 'locations']);
@@ -80,6 +80,7 @@ class SaloonController extends Controller
 
         return Inertia::render('Saloon/Show', [
             'breadcrumbs' => $breadcrumbs,
+            'section' => $request->query('sec') ?? null,
             'saloon' => $saloon,
             'reviews' => $reviews
         ]);

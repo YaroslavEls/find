@@ -11,12 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('saloons', function (Blueprint $table) {
+        Schema::create('saves', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->text('descr');
-            $table->string('logo');
-            $table->string('socials');
+            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
+            $table->string('savable_type');
+            $table->integer('savable_id');
             $table->timestamps();
         });
     }
@@ -26,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('saloons');
+        Schema::dropIfExists('saves');
     }
 };

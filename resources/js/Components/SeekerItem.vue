@@ -1,7 +1,7 @@
 <script setup>
 import OptionsMenu from '@/Components/OptionsMenu.vue';
 import Tags from '@/Components/Tags.vue';
-import { Link } from '@inertiajs/vue3';
+import { Link, usePage } from '@inertiajs/vue3';
 
 const props = defineProps({
     seeker: { 
@@ -23,18 +23,22 @@ const options = (x) => {
     model.value = x;
 };
 
-const menuItems = {
-    save: route('home')
+const menuItems = () => {
+    if (usePage().props.auth.user.saves.includes(props.seeker.id)) {
+        return { unsave: route('unsave.seeker', { seeker: props.seeker }) }
+    }
+
+    return { save: route('save.seeker', { seeker: props.seeker }) };
 };
 
 </script>
 
 <template>
     <div class="relative flex mb-12">
-        <Link :href="route('seekers.show', { seeker: seeker.id })">
+        <Link :href="route('seekers.show', { seeker: seeker.id })" class="mr-8">
             <img
                 :src="seeker.photo" 
-                class="w-[272px] h-[272px] mr-8 border-solid border-2 border-gray50 rounded-lg"
+                class="w-[272px] h-[272px] border-solid border-2 border-gray50 rounded-lg"
             >
         </Link>
 
@@ -77,7 +81,7 @@ const menuItems = {
 
         <OptionsMenu
             v-show="model == seeker.id" 
-            :items="menuItems"
+            :items="menuItems()"
         />
     </div>
 </template>

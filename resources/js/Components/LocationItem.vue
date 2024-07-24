@@ -1,5 +1,6 @@
 <script setup>
 import OptionsMenu from '@/Components/OptionsMenu.vue';
+import { Link, usePage } from '@inertiajs/vue3';
 
 const props = defineProps({
     location: { 
@@ -9,6 +10,10 @@ const props = defineProps({
     index: { 
         type: Number,
         required: true 
+    },
+    isSeeker: {
+        type: Boolean,
+        required: true
     }
 });
 
@@ -52,14 +57,22 @@ if (schedule.slice(0, 5).every(value => value === schedule[0])) {
     formatted['нд'] = schedule[6];
 }
 
+const vid = usePage().url.split('/')[2];
+
 </script>
 
 <template>
     <div class="relative flex mb-12">
-        <img 
-            :src="'/' + location.photos.split(';')[0]"
-            class="w-[424px] h-[272px] mr-8 border-solid border-2 border-gray50 rounded-lg"
+
+        <Link
+            :href="route('location.show', { vacancy: vid, location: location.id })"
+            class="mr-8"
         >
+            <img 
+                :src="'/' + location.photos.split(';')[0]"
+                class="w-[424px] h-[272px] border-solid border-2 border-gray50 rounded-lg"
+            >
+        </Link>
 
         <div class="grow mr-8">
             <div class="mb-6 txt-h2">{{ location.name }}</div>
@@ -79,12 +92,14 @@ if (schedule.slice(0, 5).every(value => value === schedule[0])) {
         </div>
 
         <div
+            v-if="isSeeker"
             @click="options(index)"
             class="w-14 h-10 rounded-lg icon-options bg-center bg-no-repeat cursor-pointer hover:bg-blue40 duration-300"
             :class="model == index ? 'bg-gray70' : 'bg-gray50'"
         />
 
         <OptionsMenu
+            v-if="isSeeker"
             v-show="model == index" 
             :items="menuItems"
         />
