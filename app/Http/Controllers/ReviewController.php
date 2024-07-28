@@ -44,8 +44,12 @@ class ReviewController extends Controller
         //
     }
 
-    public function destroy(Review $review)
+    public function destroy(Request $request, Review $review)
     {
-        //
+        if ($request->user()->cannot('delete', $review)) {
+            abort(403);
+        }
+
+        $review->delete();
     }
 }

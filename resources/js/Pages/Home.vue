@@ -3,6 +3,7 @@ import MainLayout from '@/Layouts/MainLayout.vue';
 import { Head, Link } from '@inertiajs/vue3';
 import { Carousel, Navigation, Slide } from 'vue3-carousel';
 import 'vue3-carousel/dist/carousel.css';
+import { ref } from 'vue';
 
 const reviews = [
     {
@@ -21,27 +22,72 @@ const reviews = [
     }
 ];
 
+const howto = [
+    {
+        heading: 'Як знайти роботу?',
+        subheading: 'Я шукаю бариста!',
+        1: {
+            top: 'Зареєструйся та заповний свій профіль!',
+            bottom: 'Для більш ефективного пошуку роботи, заповни всі можливі поля.'
+        },
+        2: {
+            top: 'Відфільтруй вакансії, щоб підібрати для себе найкрутішу!',
+            bottom: 'Читай відгуки та дивись рейтинг це дуже допоможе покращити наш ринок праці'
+        },
+        3: {
+            top: 'Знайшовши для себе вакансію або кавярню напиши їм та домовся про зустріч!',
+            bottom: 'Використовуй тільки наш чат! Для уникнення шахрайства.'
+        },
+        route: route('vacancies')
+    },
+    {
+        heading: 'Як знайти Бариста?',
+        subheading: 'Я шукаю роботу!',
+        1: {
+            top: 'Створи та заповни профіль закладу або мережі, додай наявні локації та графіки роботи.',
+            bottom: null
+        },
+        2: {
+            top: 'Створи вакансію для потрібної локації, та заповни всю потрібну інформацію!',
+            bottom: null
+        },
+        3: {
+            top: 'Тепер зачекай поки когось зацікавить ваша вакансія, або сам пошукай цікавих кандидатів та зв’яжися з ними)',
+            bottom: null
+        },
+        route: route('seekers')
+    },
+];
+
+const currentHowTo = ref(0);
+
 </script>
 
 <template>
     <Head title="Home" />
     
     <MainLayout>
-        <Link :href="route('logout')" method="post" as="button" class="font-semibold text-[20px]">
-            Log out
-        </Link>
-
-        <section>
+        <div class="pb-16">
             <div class="w-fit px-6 py-3 mb-4 bg-blue50 rounded-lg txt-h5">Платформа для пошуку роботи</div>
             <div class="max-w-[1032px] font-semibold text-[80px] leading-[110%] mb-4">FIND - шукай роботу, якісно, швидко та зручно</div>
             <div class="max-w-[728px] mb-16 text-gray30 txt-h3">Місце, для пошуку роботи та кандидатів в сфері загального харчування</div>
             <div class="flex gap-8 justify-end">
-                <div class="text-center w-[424px] rounded-lg py-[18px] border-solid border-2 border-gray40 txt-buttons">Переглянути кандидатів</div>
-                <div class="text-center w-[424px] rounded-lg py-5 bg-blue50 txt-buttons">Переглянути вакансії</div>
+                <Link
+                    :href="route('seekers')"
+                    class="text-center w-[424px] rounded-lg py-[18px] border-solid border-2 border-gray40 txt-buttons"
+                >
+                    Переглянути кандидатів
+                </Link>
+                <Link
+                    :href="route('vacancies')"
+                    class="text-center w-[424px] rounded-lg py-5 bg-blue50 txt-buttons"
+                >
+                Переглянути вакансії
+                </Link>
             </div>
-        </section>
+        </div>
 
-        <section>
+        <div class="py-16">
             <div class="mb-6 txt-h1">Наші переваги!</div>
             <div class="flex justify-between gap-y-8 flex-wrap">
                 <div class="border-solid border-2 border-gray40 rounded-2xl w-[48.9%] px-8 py-10">
@@ -61,9 +107,9 @@ const reviews = [
                     <div class="txt-h4">FIND - має свій чат, для твоєї зручності, та спрощення процесу пошуку роботи.</div>
                 </div>
             </div>
-        </section>
+        </div>
         
-        <section>
+        <div class="py-16">
             <div class="mb-6 txt-h1">Відгуки про FIND</div>
 
             <Carousel :wrap-around="true">
@@ -87,35 +133,49 @@ const reviews = [
                     <Navigation />
                 </template>
             </Carousel>
-        </section>
+        </div>
 
-        <section>
-            <div class="mb-6 txt-h1">Як знайти роботу?</div>
+        <div class="pt-16">
+            <div class="flex justify-between items-center">
+                <div class="mb-6 txt-h1">{{ howto[currentHowTo].heading }}</div>
+                <div
+                    @click="currentHowTo = currentHowTo === 0 ? 1 : 0"
+                    class="text-blue40 txt-buttons cursor-pointer"
+                >
+                    {{ howto[currentHowTo].subheading }}
+                </div>
+            </div>
+            
             <div>
                 <div class="border-solid border-2 border-gray40 rounded-2xl px-20 flex h-[152px] items-center mb-6">
                     <div class="font-semibold text-[64px] leading-[110%] w-10 text-center mr-[206px]">1</div>
                     <div class="max-w-[835px]">
-                        <div class="mb-2 txt-h3">Зареєструйся та заповний свій профіль!</div>
-                        <div class="text-blue30 txt-body">Для більш ефективного пошуку роботи, заповни всі можливі поля.</div>
+                        <div class="mb-2 txt-h3">{{ howto[currentHowTo][1].top }}</div>
+                        <div class="text-blue30 txt-body">{{ howto[currentHowTo][1].bottom }}</div>
                     </div>
                 </div>
                 <div class="border-solid border-2 border-gray40 rounded-2xl px-20 flex h-[152px] items-center mb-6">
                     <div class="font-semibold text-[64px] leading-[110%] w-10 text-center mr-[206px]">2</div>
                     <div class="max-w-[835px]">
-                        <div class="mb-2 txt-h3">Відфільтруй вакансії, щоб підібрати для себе найкрутішу!</div>
-                        <div class="text-blue30 txt-body">Читай відгуки та дивись рейтинг це дуже допоможе покращити наш ринок праці</div>
+                        <div class="mb-2 txt-h3">{{ howto[currentHowTo][2].top }}</div>
+                        <div class="text-blue30 txt-body">{{ howto[currentHowTo][2].bottom }}</div>
                     </div>
                 </div>
                 <div class="border-solid border-2 border-gray40 rounded-2xl px-20 flex h-[152px] items-center mb-6">
                     <div class="font-semibold text-[64px] leading-[110%] w-10 text-center mr-[206px]">3</div>
                     <div class="max-w-[835px]">
-                        <div class="mb-2 txt-h3">Знайшовши для себе вакансію або кавярню напиши їм та домовся про зустріч!</div>
-                        <div class="text-blue30 txt-body">Використовуй тільки наш чат! Для уникнення шахрайства.</div>
+                        <div class="mb-2 txt-h3">{{ howto[currentHowTo][3].top }}</div>
+                        <div class="text-blue30 txt-body">{{ howto[currentHowTo][3].bottom }}</div>
                     </div>
                 </div>
             </div>
-            <div class="w-[576px] bg-blue50 mt-16 mx-auto p-5 text-center rounded-xl txt-buttons">Почати пошук!</div>
-        </section>
+            <Link
+                :href="howto[currentHowTo].route" 
+                class="block w-[576px] bg-blue50 mt-16 mx-auto p-5 text-center rounded-xl txt-buttons"
+            >
+                Почати пошук!
+            </Link>
+        </div>
 
     </MainLayout>
 </template>

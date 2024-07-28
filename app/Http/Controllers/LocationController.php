@@ -42,17 +42,18 @@ class LocationController extends Controller
 
         $request->user()->userable->locations()->create($validated);
 
-        return redirect(route('profile'));
+        return redirect(route('profile', ['sec' => 'locations']));
     }
 
-    public function show(Request $request, Vacancy $vacancy, Location $location): Response
+    public function show(Vacancy $vacancy, Location $location): Response
     {
+        $location->load(['vacancies']);
+
         $breadcrumbs = Breadcrumbs::generate('location', $vacancy, $location);
 
         return Inertia::render('Location/Show', [
             'breadcrumbs' => $breadcrumbs,
-            'location' => $location,
-            'vacancies' => $location->vacancies
+            'location' => $location
         ]);
     }
 
@@ -94,7 +95,7 @@ class LocationController extends Controller
         $location->fill($validated);
         $location->save();
 
-        return redirect(route('profile'));
+        return redirect(route('profile', ['sec' => 'locations']));
     }
 
     public function destroy(Request $request, Location $location): void

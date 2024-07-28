@@ -27,7 +27,7 @@ const move = (name) => {
 </script>
 
 <template>
-    <div class="flex items-center gap-4 mt-16 mb-10">
+    <div class="flex items-center gap-4 mb-10">
         <div class="txt-h1">Мій Профіль</div>
         <Link 
             :href="route('logout')"

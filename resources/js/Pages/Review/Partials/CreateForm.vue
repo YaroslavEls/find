@@ -1,7 +1,7 @@
 <script setup>
 import Stars from '@/Components/Inputs/Stars.vue';
 import SubmitButton from '@/Components/SubmitButton.vue';
-import { ref, onMounted } from 'vue';
+import { ref } from 'vue';
 
 defineProps({
     count: {
@@ -16,11 +16,21 @@ const model = defineModel({
 });
 
 const textarea = ref(null);
+const stars = [ref(null), ref(null), ref(null), ref(null), ref(null)];
 
 const resize = () => {
     textarea.value.style.height = 'auto';
     textarea.value.style.height = (textarea.value.scrollHeight + 5) + 'px';
 };
+
+model.value.regenerate = () => {
+    model.value.reset();
+    textarea.value.style.height = 'auto';
+    for (let i = 0; i < stars.length; i++) {
+        stars[i].value[0].classList.add('gray');
+    }
+};
+
 
 </script>
 
@@ -28,6 +38,7 @@ const resize = () => {
     <div class="flex gap-[3%]">
         <div class="relative basis-[69%]">
             <Stars
+                :stars="stars"
                 v-model="model.score"
                 class="absolute right-0 top-[-56px]"
             />

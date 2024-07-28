@@ -11,6 +11,10 @@ class SaveController extends Controller
 {
     public function storeSeeker(Request $request, Seeker $seeker)
     {
+        if ($request->user()->cannot('save', Seeker::class)) {
+            abort(403);
+        }
+
         $seeker->saves()->create([
             'user_id' => $request->user()->id
         ]);
@@ -18,6 +22,10 @@ class SaveController extends Controller
 
     public function storeVacancy(Request $request, Vacancy $vacancy)
     {
+        if ($request->user()->cannot('save', Vacancy::class)) {
+            abort(403);
+        }
+
         $vacancy->saves()->create([
             'user_id' => $request->user()->id
         ]);

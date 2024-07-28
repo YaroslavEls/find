@@ -46,6 +46,8 @@ Route::middleware('auth')->group(function () {
 
     Route::post('/reviews/{user}', [ReviewController::class, 'store'])
         ->name('review.store');
+    Route::delete('/reviews/{review}', [ReviewController::class, 'destroy'])
+        ->name('review.delete');
 
     Route::post('seeker/save/{seeker}', [SaveController::class, 'storeSeeker'])
         ->name('save.seeker');

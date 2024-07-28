@@ -1,4 +1,5 @@
 <script setup>
+import Schedule from '@/Components/Schedule.vue';
 import OptionsMenu from '@/Components/OptionsMenu.vue';
 import { Link, usePage } from '@inertiajs/vue3';
 
@@ -10,10 +11,6 @@ const props = defineProps({
     index: { 
         type: Number,
         required: true 
-    },
-    isSeeker: {
-        type: Boolean,
-        required: true
     }
 });
 
@@ -35,29 +32,9 @@ const menuItems = {
     delete: route('location.delete', { location: props.location.id })
 };
 
-const schedule = props.location.schedule.split(';');
-const formatted = {};
-
-if (schedule.slice(0, 5).every(value => value === schedule[0])) {
-    formatted['пн-пт'] = schedule[0];
-
-    if (schedule[5] == schedule[6]) {
-        formatted['сб-нд'] = schedule[5];
-    } else {
-        formatted['сб'] = schedule[5];
-        formatted['нд'] = schedule[6];
-    }
-} else {
-    formatted['пн'] = schedule[0];
-    formatted['вт'] = schedule[1];
-    formatted['ср'] = schedule[2];
-    formatted['чт'] = schedule[3];
-    formatted['пт'] = schedule[4];
-    formatted['сб'] = schedule[5];
-    formatted['нд'] = schedule[6];
-}
-
-const vid = usePage().url.split('/')[2];
+const url = !usePage().url.startsWith('/profile') 
+    ? route('location.show', { vacancy: usePage().url.split('/')[2], location: props.location.id })
+    : null;
 
 </script>
 
@@ -65,7 +42,8 @@ const vid = usePage().url.split('/')[2];
     <div class="relative flex mb-12">
 
         <Link
-            :href="route('location.show', { vacancy: vid, location: location.id })"
+            v-if="!$page.url.startsWith('/profile')"
+            :href="url"
             class="mr-8"
         >
             <img 
@@ -74,32 +52,31 @@ const vid = usePage().url.split('/')[2];
             >
         </Link>
 
+        <img
+            v-else
+            :src="'/' + location.photos.split(';')[0]"
+            class="w-[424px] h-[272px] mr-8 border-solid border-2 border-gray50 rounded-lg"
+        >
+
         <div class="grow mr-8">
             <div class="mb-6 txt-h2">{{ location.name }}</div>
             <div class="mb-2 text-gray40 txt-body">Адреса:</div>
             <div class="mb-6 txt-h4">{{ location.city }} , {{ location.address }}</div>
             <div class="mb-2 text-gray40 txt-body">Графік роботи закладу:</div>
-            <div
-                v-for="(value, key) in formatted"
-                :key="key"
-                class="txt-h4 mb-2"
-            >
-                <div class="flex items-center gap-6">
-                    <div>{{ key }}</div>
-                    <div>{{ value }}</div>
-                </div>
-            </div>
+            <Schedule
+                :schedule="location.schedule"
+            />
         </div>
 
         <div
-            v-if="isSeeker"
+            v-if="$page.url.startsWith('/profile')"
             @click="options(index)"
             class="w-14 h-10 rounded-lg icon-options bg-center bg-no-repeat cursor-pointer hover:bg-blue40 duration-300"
             :class="model == index ? 'bg-gray70' : 'bg-gray50'"
         />
 
         <OptionsMenu
-            v-if="isSeeker"
+            v-if="$page.url.startsWith('/profile')"
             v-show="model == index" 
             :items="menuItems"
         />

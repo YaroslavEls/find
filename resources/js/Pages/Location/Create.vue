@@ -26,7 +26,7 @@ const submit = () => {
     <MainLayout>
         <Head title="Add a Location" />
 
-        <form @submit.prevent="submit" class="w-[576px] mt-6 mb-32 mx-auto">
+        <form @submit.prevent="submit" class="max-w-[624px] w-full px-6 mx-auto">
             <BackButton />
 
             <div class="mb-10 txt-h1">Додавання локації</div>

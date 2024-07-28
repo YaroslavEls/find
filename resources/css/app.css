@@ -81,15 +81,11 @@
         @apply bg-background text-gray0;
     }
 
-    main {
+    /* main {
         max-width: 1488px;
         width: 100%;
         margin: 0 auto;
-    }
-
-    section {
-        padding: 64px 0;
-    }
+    } */
 
     .txt-h1 {
         font-weight: 600;
@@ -205,6 +201,12 @@
     
     input[type="range"]:focus::-moz-range-thumb{
         outline: none;
+    }
+
+    .icon-flag {
+        width: 40px;
+        height: 26px;
+        background-image: url("data:image/svg+xml,%3Csvg width='40' height='26' viewBox='0 0 40 26' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cg clip-path='url(%23clip0_1027_3887)'%3E%3Crect width='40' height='13' fill='%23005EC7'/%3E%3Crect y='13' width='40' height='13' fill='%23FFD232'/%3E%3C/g%3E%3Cdefs%3E%3CclipPath id='clip0_1027_3887'%3E%3Crect width='40' height='26' rx='4' fill='white'/%3E%3C/clipPath%3E%3C/defs%3E%3C/svg%3E");
     }
 
     .icon-back {

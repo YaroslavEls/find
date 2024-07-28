@@ -17,7 +17,7 @@ const props = defineProps({
 <template>
     <div 
         v-if="count > 1"
-        class="flex justify-center gap-4 my-20"
+        class="flex justify-center gap-4 mt-20"
     >
         <Link
             v-for="(item, index) in links.slice(1, -1)"

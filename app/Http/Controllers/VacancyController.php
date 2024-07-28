@@ -53,7 +53,7 @@ class VacancyController extends Controller
 
         $request->user()->userable->vacancies()->create($validated);
 
-        return redirect(route('profile'));
+        return redirect(route('profile', ['sec' => 'vacancies']));
     }
 
     public function show(Vacancy $vacancy)
@@ -86,7 +86,7 @@ class VacancyController extends Controller
         $vacancy->fill($validated);
         $vacancy->save();
 
-        return redirect(route('profile'));
+        return redirect(route('profile', ['sec' => 'vacancies']));
     }
 
     public function destroy(Request $request, Vacancy $vacancy): void

@@ -46,7 +46,7 @@ const isSeeker = usePage().props.auth.user.userable_type === 'App\\Models\\Seeke
     <MainLayout>
         <Breadcrumbs 
             :items="breadcrumbs"
-            class="mt-16 mb-12"
+            class="mb-12"
         />
 
         <div class="flex items-center gap-6">
@@ -76,7 +76,6 @@ const isSeeker = usePage().props.auth.user.userable_type === 'App\\Models\\Seeke
             <Description
                 v-if="current === 'description'"
                 :saloon="saloon"
-                class="mb-20"
             />
         </Transition>
 
@@ -86,7 +85,6 @@ const isSeeker = usePage().props.auth.user.userable_type === 'App\\Models\\Seeke
                 :saloon="saloon"
                 :reviews="reviews"
                 :isSeeker="isSeeker"
-                class="mb-20"
             />
         </Transition>
 
@@ -97,7 +95,6 @@ const isSeeker = usePage().props.auth.user.userable_type === 'App\\Models\\Seeke
                 :locations="saloon.locations"
                 :vacancies="saloon.vacancies"
                 :isSeeker="isSeeker"
-                class="mb-20"
             />
         </Transition>
 
@@ -106,7 +103,6 @@ const isSeeker = usePage().props.auth.user.userable_type === 'App\\Models\\Seeke
                 v-if="current === 'locations'"
                 :locations="saloon.locations"
                 :isSeeker="isSeeker"
-                class="mb-20"
             />
         </Transition>
 

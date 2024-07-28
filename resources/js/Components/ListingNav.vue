@@ -24,16 +24,6 @@ defineProps({
 });
 
 const path = window.location.origin + window.location.pathname;
-// const path = () => window.location.href;
-// console.log(path);
-
-// const path = (name) => {
-//     const urlParams = new URLSearchParams(window.location.search);
-//     urlParams.set('sort', name);
-
-//     return window.location.origin + window.location.pathname + '?' + urlParams.toString();
-// };
-
 const urlParams = new URLSearchParams(window.location.search);
 const sort = ref(urlParams.get('sort'));
 
@@ -42,7 +32,7 @@ const active = ref(false);
 </script>
 
 <template>
-    <div class="flex justify-between items-center mt-16 mb-14">
+    <div class="flex justify-between items-center mb-14">
         <div class="flex items-end gap-4">
             <div class="txt-h1">{{ heading }}</div>
             <div class="text-gray40 txt-h3">{{ count }}</div>

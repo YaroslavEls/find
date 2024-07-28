@@ -9,6 +9,9 @@ import SubmitButton from '@/Components/SubmitButton.vue';
 import { useForm, usePage } from '@inertiajs/vue3';
 import { ref, watch } from 'vue';
 
+// import VueCropper from 'vue-cropperjs';
+// import 'cropperjs/dist/cropper.css';
+
 const props = defineProps({
     saloon: {
         type: Object,
@@ -88,11 +91,13 @@ const submit = () => {
     });
 };
 
+const selectedFile = props.saloon.logo;
+
 </script>
 
 <template>
     <div class="flex justify-between">
-        <form @submit.prevent="submit" class="w-[576px] mb-20">
+        <form @submit.prevent="submit" class="w-[576px]">
             <div class="mb-4 text-gray40 txt-h3">Загальні:</div>
             <Text
                 type="text"
@@ -132,4 +137,15 @@ const submit = () => {
             />
         </div>
     </div>
+
+    <!-- <VueCropper 
+        v-show="selectedFile" 
+        ref="cropper" 
+        :src="selectedFile" 
+        :aspectRatio="16/9" 
+        :initialAspectRatio="16/9" 
+        :autoCropArea="1"
+        :zoomable="false"
+    /> -->
+
 </template>

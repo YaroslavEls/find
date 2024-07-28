@@ -22,4 +22,9 @@ class VacancyPolicy
     {
         return $user->userable()->is($vacancy->saloon);
     }
+
+    public function save(User $user): bool
+    {
+        return $user->is_seeker();
+    }
 }

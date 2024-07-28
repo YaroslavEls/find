@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 use Inertia\Response;
+// use Intervention\Image\Laravel\Facades\Image;
 
 class SaloonController extends Controller
 {
@@ -97,8 +98,18 @@ class SaloonController extends Controller
         if ($validated['logo'] == null) {
             $validated['logo'] = $saloon->logo;
         } else {
+            // dd($validated['logo']);
+            // $filename = time() . '.' . $validated['logo']->getClientOriginalExtension();
+            // $img = Image::read($validated['logo'])->cover(728, 448, 'center');
+            // return $img->response('jpg');
+            // dd($img);
+
             $path = $validated['logo']->store('uploads');
             $validated['logo'] = $path;
+            // $path = public_path('uploads/' . $filename);
+            // $a = $img->save($path);
+            // dd($a->file);
+            // $validated['logo'] = 'uploads/' . $filename;
             Storage::delete($saloon->logo);
         }
 

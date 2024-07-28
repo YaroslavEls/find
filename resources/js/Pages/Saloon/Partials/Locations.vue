@@ -7,10 +7,6 @@ defineProps({
     locations: {
         type: Array,
         required: true
-    },
-    isSeeker: {
-        type: Boolean,
-        required: true
     }
 });
 
@@ -22,10 +18,9 @@ const selected = ref(null);
     <div class="relative">
         <LocationItem
             v-for="(loc, index) in locations"
-            :key="index"
+            :key="loc.id"
             :location="loc"
-            :index="index"
-            :isSeeker="isSeeker"
+            :index="loc.id"
             v-model="selected"
         />
 

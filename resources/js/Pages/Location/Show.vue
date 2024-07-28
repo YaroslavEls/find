@@ -13,10 +13,6 @@ defineProps({
     location: {
         type: Object,
         required: true
-    },
-    vacancies: {
-        type: Array,
-        required: true
     }
 });
 
@@ -30,7 +26,7 @@ const isSeeker = usePage().props.auth.user.userable_type === 'App\\Models\\Seeke
     <MainLayout>
         <Breadcrumbs 
             :items="breadcrumbs"
-            class="mt-16 mb-12"
+            class="mb-12"
         />
 
         <div class="flex items-center gap-4 mb-10">
@@ -39,11 +35,9 @@ const isSeeker = usePage().props.auth.user.userable_type === 'App\\Models\\Seeke
         </div>
 
         <VacancyItem
-            v-for="(vac, index) in vacancies"
+            v-for="(vac, index) in location.vacancies"
             :key="index"
             :vacancy="vac"
-            :location="location"
-            :saloon="vac.saloon"
             :index="index"
             :isSeeker="isSeeker"
             v-model="selected"

@@ -20,6 +20,7 @@ class ProfileController extends Controller
         }
         if ($request->user()->is_saloon()) {
             return Inertia::render('Saloon/Edit', [
+                'section' => $request->query('sec') ?? null,
                 'saloon' => $request->user()->userable,
                 'vacancies' => $request->user()->userable->vacancies,
                 'locations' => $request->user()->userable->locations

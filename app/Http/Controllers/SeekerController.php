@@ -52,7 +52,7 @@ class SeekerController extends Controller
         ]);
     }
 
-    public function create(Request $request): Response 
+    public function create(): Response 
     {
         return Inertia::render('Seeker/Create');
     }

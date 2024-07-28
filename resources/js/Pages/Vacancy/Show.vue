@@ -2,6 +2,7 @@
 import MainLayout from '@/Layouts/MainLayout.vue';
 import Breadcrumbs from '@/Components/Breadcrumbs.vue';
 import Tags from '@/Components/Tags.vue';
+import Schedule from '@/Components/Schedule.vue';
 import SubmitButton from '@/Components/SubmitButton.vue';
 import { Carousel, Slide } from 'vue3-carousel';
 import 'vue3-carousel/dist/carousel.css';
@@ -49,10 +50,10 @@ const save = () => {
         
         <Breadcrumbs
             :items="breadcrumbs"
-            class="mt-16 mb-12"
+            class="mb-12"
         />
 
-        <div class="flex justify-between mb-20">
+        <div class="flex justify-between">
             <div class="basis-[49%]">
                 <Tags
                     :tags="{ date: vacancy.updated_at, exp: vacancy.experience, empl: vacancy.employment }"
@@ -111,7 +112,9 @@ const save = () => {
                 <div class="flex gap-4 mb-8">
                     <div class="basis-6/12">
                         <div class="mb-2 text-gray40 txt-body">Графік роботи закладу:</div>
-                        <div class="txt-h4">{{ vacancy.saloon.name }}</div>
+                        <Schedule
+                            :schedule="vacancy.location.schedule"
+                        />
                     </div>
                     <div class="basis-6/12">
                         <div class="mb-2 text-gray40 txt-body">Наявність світла:</div>

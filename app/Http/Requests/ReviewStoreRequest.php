@@ -8,7 +8,7 @@ class ReviewStoreRequest extends FormRequest
 {
     public function authorize(): bool
     {
-        return true;
+        return $this->user()->can('review', $this->route('user'));
     }
 
     public function rules(): array

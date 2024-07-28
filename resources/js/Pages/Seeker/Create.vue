@@ -1,5 +1,5 @@
 <script setup>
-import MainLayout from '@/Layouts/MainLayout.vue';
+import AuthLayout from '@/Layouts/AuthLayout.vue';
 import ProgressBar from '@/Components/ProgressBar.vue';
 import SubmitButton from '@/Components/SubmitButton.vue';
 import RegForm1 from '@/Pages/Seeker/Partials/RegForm1.vue';
@@ -64,10 +64,10 @@ const next = () => {
 </script>
 
 <template>
-    <MainLayout>
+    <AuthLayout>
         <Head title="Register" />
 
-        <div class="w-[576px] mt-6 mb-32 mx-auto">
+        <div class="w-full">
             <div
                 @click="current = move(--current)"
                 :class="{ 'invisible': current == 0 }"
@@ -93,5 +93,5 @@ const next = () => {
                 />
             </form>
         </div>
-    </MainLayout>
+    </AuthLayout>
 </template>

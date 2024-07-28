@@ -49,10 +49,10 @@ const save = () => {
         
         <Breadcrumbs
             :items="breadcrumbs"
-            class="mt-16 mb-12"
+            class="mb-12"
         />
 
-        <div class="flex justify-between mb-20">
+        <div class="flex justify-between">
             <div class="basis-[49%]">
                 <Tags
                     :tags="{ date: seeker.updated_at, exp: seeker.experience, empl: seeker.employment }"

@@ -1,20 +1,23 @@
 <script setup>
-import { ref } from 'vue';
+const props = defineProps({
+    stars: {
+        type: Array,
+        required: true
+    }
+});
 
 const model = defineModel({
     type: Number,
     required: true
 });
 
-const stars = [ref(null), ref(null), ref(null), ref(null), ref(null)];
-
 const rate = (max) => {
-    for (let i = 0; i < stars.length; i++) {
-        stars[i].value[0].classList.add('gray');
+    for (let i = 0; i < props.stars.length; i++) {
+        props.stars[i].value[0].classList.add('gray');
     }
 
     for (let i = 0; i <= max; i++) {
-        stars[i].value[0].classList.remove('gray');
+        props.stars[i].value[0].classList.remove('gray');
     }
 
     model.value = max + 1;

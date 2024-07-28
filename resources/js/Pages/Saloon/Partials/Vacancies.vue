@@ -30,11 +30,9 @@ const selected = ref(null);
     <div class="relative">
         <VacancyItem
             v-for="(vac, index) in vacancies"
-            :key="index"
+            :key="vac.id"
             :vacancy="vac"
-            :location="locations.find(loc => loc.id === vac.location_id)"
-            :saloon="saloon"
-            :index="index"
+            :index="vac.id"
             :isSeeker="isSeeker"
             v-model="selected"
         />

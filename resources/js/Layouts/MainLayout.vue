@@ -1,6 +1,8 @@
 <script setup>
 import ApplicationLogo from '@/Components/ApplicationLogo.vue';
+import Footer from '@/Components/Footer.vue';
 import { Link } from '@inertiajs/vue3';
+
 </script>
 
 <template>
@@ -19,24 +21,24 @@ import { Link } from '@inertiajs/vue3';
                     Головна
                 </Link>
                 <Link
-                    v-show="$page.props.auth.user.userable_type == 'App\\Models\\Seeker'"
+                    v-if="$page.props.auth.user.userable_type == 'App\\Models\\Seeker'"
                     :href="route('vacancies')"
-                    :class="$page.url.split('/')[1] == 'vacancies' ? 'text-gray0' : 'text-gray40'"
+                    :class="$page.url.startsWith('/vacancies') ? 'text-gray0' : 'text-gray40'"
                     class="font-semibold text-[22px] tracking-normal leading-none"
                 >
                     Вакансії
                 </Link>
                 <Link
-                    v-show="$page.props.auth.user.userable_type == 'App\\Models\\Saloon'"
+                    v-if="$page.props.auth.user.userable_type == 'App\\Models\\Saloon'"
                     :href="route('seekers')"
-                    :class="$page.url.split('/')[1] == 'seekers' ? 'text-gray0' : 'text-gray40'"
+                    :class="$page.url.startsWith('/seekers') ? 'text-gray0' : 'text-gray40'"
                     class="font-semibold text-[22px] tracking-normal leading-none"
                 >
                     Кандидати
                 </Link>
                 <Link 
                     :href="route('home')"
-                    :class="$page.url == '/chat' ? 'text-gray0' : 'text-gray40'"
+                    :class="$page.url.startsWith('/chat') ? 'text-gray0' : 'text-gray40'"
                     class="font-semibold text-[22px] tracking-normal leading-none"
                 >
                     Чати
@@ -60,31 +62,9 @@ import { Link } from '@inertiajs/vue3';
         </div>
     </header>
 
-    <main>
+    <main class="max-w-[1512px] w-full min-h-[50vh] px-6 mt-16 mb-20 mx-auto">
         <slot />
     </main>
 
-    <footer class="border-solid border-t-2 border-gray50">
-        <div class="max-w-[1488px] w-full mx-auto py-8">
-            <div>
-                <Link href="/">
-                    <ApplicationLogo />
-                </Link>
-                <div class="flex items-center gap-2 mt-6">
-                    <div class="txt-body">Зроблено в Україні!</div>
-                    <svg width="40" height="26" viewBox="0 0 40 26" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <g clip-path="url(#clip0_619_3562)">
-                            <rect width="40" height="13" fill="#005EC7"/>
-                            <rect y="13" width="40" height="13" fill="#FFD232"/>
-                        </g>
-                        <defs>
-                            <clipPath id="clip0_619_3562">
-                                <rect width="40" height="26" rx="4" fill="white"/>
-                            </clipPath>
-                        </defs>
-                    </svg>
-                </div>
-            </div>
-        </div>
-    </footer>
+    <Footer />
 </template>

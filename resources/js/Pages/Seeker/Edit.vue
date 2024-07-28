@@ -169,7 +169,7 @@ const submit = () => {
             v-model:form="form"
         />
 
-        <form @submit.prevent="submit" class="mb-20">
+        <form @submit.prevent="submit">
             <div class="flex justify-between">
                 <component
                     :is="tabs[current]"
