@@ -3,6 +3,8 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
@@ -76,5 +78,26 @@ class User extends Authenticatable
     public function saves(): HasMany
     {
         return $this->hasMany(Save::class);
+    }
+
+    public function chats(): HasMany
+    {
+        return $this->userable->hasMany(Chat::class);
+    }
+
+    public function nonArchivedChats(): Collection
+    {
+        return $this->chats()->where('archived', false)->get();
+    }
+
+    public function archivedChats(): Collection
+    {
+        return $this->chats()->where('archived', true)->get();
+    }
+
+    public function in_chat(Chat $chat): bool
+    {
+        return ($this->is_seeker() && $chat->seeker->is($this->userable))
+            || ($this->is_saloon() && $chat->saloon->is($this->userable));
     }
 }

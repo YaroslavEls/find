@@ -87,7 +87,7 @@ const menuItems = () => {
                 >
                 <div class="text-blue30 txt-h5">{{ vacancy.saloon.name }}</div>
             </Link>
-            <div class="mb-2 text-gray40 txt-body cropped">
+            <div class="mb-2 text-gray40 txt-body cropped-2">
                 {{ vacancy.descr }}
             </div>
             <Link

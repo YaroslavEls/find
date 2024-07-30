@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Chat;
 use App\Models\Location;
 use App\Models\Seeker;
 use App\Models\Vacancy;
@@ -44,4 +45,15 @@ Breadcrumbs::for('saloon', function(BreadcrumbTrail $trail, Vacancy $vacancy) {
 Breadcrumbs::for('location', function(BreadcrumbTrail $trail, Vacancy $vacancy, Location $location) {
     $trail->parent('saloon', $vacancy);
     $trail->push($location->name, route('location.show', [$vacancy, $location]));
+});
+
+// Chats
+Breadcrumbs::for('chats', function (BreadcrumbTrail $trail) {
+    $trail->push('Чати', route('chat'));
+});
+
+// Chats > [Chatter]
+Breadcrumbs::for('chat', function (BreadcrumbTrail $trail, Chat $chat, $chatter) {
+    $trail->parent('chats');
+    $trail->push($chatter->name, route('chat.show', $chat));
 });

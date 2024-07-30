@@ -1,0 +1,40 @@
+<script setup>
+import MainLayout from '@/Layouts/MainLayout.vue';
+import ChatsNav from '@/Components/ChatsNav.vue';
+import ChatItem from '@/Components/ChatItem.vue';
+import { Link } from '@inertiajs/vue3';
+import { ref } from 'vue';
+
+defineProps({
+    chats: {
+        type: Array,
+        required: true
+    }
+});
+
+const path = window.location.origin + window.location.pathname;
+const urlParams = new URLSearchParams(window.location.search);
+const sort = ref(urlParams.get('sort'));
+
+const selected = ref(null);
+
+</script>
+
+<template>
+    <MainLayout>
+        <ChatsNav />
+
+        <ChatItem
+            v-for="chat in chats"
+            :key="chat.id"
+            :chat="chat"
+            v-model="selected"
+        />
+
+        <Link
+            :href="sort === 'archive' ? path : path + '?sort=archive'" 
+            class="block w-fit mt-14 mr-0 ml-auto px-6 py-2 h-fit rounded txt-body bg-blue50">
+            {{ sort === 'archive' ? 'Повернутись з архіву' : 'Перейти до архіву' }}
+        </Link>
+    </MainLayout>
+</template>

@@ -108,10 +108,12 @@ const save = () => {
                     Опубліковано - {{ formattedDate }}
                 </div>
 
-                <SubmitButton
-                    text="Зв’язатися з кандидатом"
-                    regular
-                />
+                <Link :href="route('chat.create', { user: seeker.user.id })">
+                    <SubmitButton
+                        text="Зв’язатися з кандидатом"
+                        regular
+                    />
+                </Link>
             </div>
 
             <div class="basis-[576px]">

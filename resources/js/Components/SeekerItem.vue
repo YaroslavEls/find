@@ -62,7 +62,7 @@ const menuItems = () => {
                 <div class="icon-person" />
                 <div>{{ seeker.name }}</div>
             </Link>
-            <div class="mb-2 text-gray40 txt-body cropped">
+            <div class="mb-2 text-gray40 txt-body cropped-2">
                 {{ seeker.info }}
             </div>
             <Link

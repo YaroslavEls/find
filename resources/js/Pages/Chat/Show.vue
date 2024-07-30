@@ -1,0 +1,99 @@
+<script setup>
+import MainLayout from '@/Layouts/MainLayout.vue';
+import Breadcrumbs from '@/Components/Breadcrumbs.vue';
+import MessageItem from '@/Components/MessageItem.vue';
+import MessageForm from '@/Components/MessageForm.vue';
+import { Link, useForm, usePage } from '@inertiajs/vue3';
+import { ref, onMounted } from 'vue';
+
+const props = defineProps({
+    breadcrumbs: {
+        type: Array,
+        required: true
+    },
+    chat: {
+        type: Object,
+        required: true
+    }
+});
+
+const form = useForm({
+    text: ''
+});
+
+const submit = () => {
+    form.post(route('chat.message', { chat: props.chat }), {
+        preserveScroll: true,
+        onSuccess: () => {
+            form.reset();
+            incoming.value.length = 0;
+        }
+    })
+};
+
+onMounted(() => {
+    Echo.private(`chat.${usePage().props.auth.user.user_id}`)
+        .listen('MessageSent', (res) => {
+            incoming.value.push(res.message);
+        })
+});
+
+const incoming = ref([]);
+
+const author = (msg) => {
+    return msg.sender.userable_type === 'App\\Models\\Seeker' 
+        ? { name: props.chat.seeker.name, photo: props.chat.seeker.photo }
+        : { name: props.chat.saloon.name, photo: props.chat.saloon.logo };
+};
+
+</script>
+
+<template>
+    <MainLayout>
+        <Breadcrumbs
+            :items="breadcrumbs"
+            class="mb-12"
+        />
+
+        <div class="max-w-[1184px] w-full mx-auto">
+            <MessageItem
+                v-for="message in chat.messages"
+                :key="message.id"
+                :message="message"
+                :author="author(message)"
+            />
+
+            <div
+                v-show="incoming.length > 0"
+                class="mb-10 pb-2 border-solid border-blue50 border-b-[1px] text-blue50  text-right txt-text-buttons"
+            >
+                Нові повідомлення
+            </div>
+
+            <MessageItem
+                v-for="message in incoming"
+                :key="message.id"
+                :message="message"
+                :author="author(message)"
+            />
+
+            <form
+                v-if="!chat.archived"
+                @submit.prevent="submit" 
+                class="mb-4"
+            >
+                <MessageForm 
+                    v-model="form"
+                />
+            </form>
+
+            <Link
+                :href="route(chat.archived ? 'chat.unarchive' : 'chat.archive', { chat: props.chat })"
+                :method="chat.archived ? 'delete' : 'post'"
+                as="button"
+                class="text-blue40 txt-text-buttons">
+                {{ chat.archived ? 'Відновити чат з архіву' : 'Перемістити чат до архіву' }}
+            </Link>
+        </div>
+    </MainLayout>
+</template>

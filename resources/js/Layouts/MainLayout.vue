@@ -37,7 +37,7 @@ import { Link } from '@inertiajs/vue3';
                     Кандидати
                 </Link>
                 <Link 
-                    :href="route('home')"
+                    :href="route('chat')"
                     :class="$page.url.startsWith('/chat') ? 'text-gray0' : 'text-gray40'"
                     class="font-semibold text-[22px] tracking-normal leading-none"
                 >

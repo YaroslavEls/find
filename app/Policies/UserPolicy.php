@@ -11,4 +11,9 @@ class UserPolicy
     {
         return $user->userable_type !== $model->userable_type;
     }
+
+    public function chat(User $user, User $model): bool
+    {
+        return $user->userable_type !== $model->userable_type;
+    }
 }

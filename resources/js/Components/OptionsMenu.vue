@@ -28,6 +28,16 @@ const params = {
         method: 'delete',
         text: 'Видалити',
         icon: 'icon-fav'
+    },
+    archive: {
+        method: 'post',
+        text: 'Архівувати',
+        icon: 'icon-archive'
+    },
+    unarchive: {
+        method: 'delete',
+        text: 'Розархівувати',
+        icon: 'icon-archive'
     }
 };
 

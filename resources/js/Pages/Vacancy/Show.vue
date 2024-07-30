@@ -132,11 +132,13 @@ const save = () => {
                     Опубліковано - {{ formattedDate }}
                 </div>
 
-                <SubmitButton
-                    v-if="isSeeker"
-                    text="Відгукнутися на вакансію"
-                    regular
-                />
+                <Link :href="route('chat.create', { user: vacancy.saloon.user.id })">
+                    <SubmitButton
+                        v-if="isSeeker"
+                        text="Відгукнутися на вакансію"
+                        regular
+                    />
+                </Link>
             </div>
 
             <div class="basis-[728px]">

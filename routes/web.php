@@ -1,7 +1,10 @@
 <?php
 
+use App\Http\Controllers\ArchiveController;
+use App\Http\Controllers\ChatController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LocationController;
+use App\Http\Controllers\MessageController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\SaloonController;
@@ -57,6 +60,23 @@ Route::middleware('auth')->group(function () {
         ->name('save.vacancy');
     Route::delete('vacancy/save/{vacancy}', [SaveController::class, 'destroyVacancy'])
         ->name('unsave.vacancy');
+
+    Route::get('/chat', [ChatController::class, 'index'])
+        ->name('chat');
+    Route::get('/chat/new/{user}', [ChatController::class, 'create'])
+        ->name('chat.create');
+    Route::post('chat/new/{user}', [ChatController::class, 'store'])
+        ->name('chat.store');
+    Route::get('/chat/{chat}', [ChatController::class, 'show'])
+        ->name('chat.show');
+
+    Route::post('chat/{chat}', [MessageController::class, 'store'])
+        ->name('chat.message');
+
+    Route::post('chat/{chat}/archive', [ArchiveController::class, 'store'])
+        ->name('chat.archive');
+    Route::delete('chat/{chat}/unarchive', [ArchiveController::class, 'destroy'])
+        ->name('chat.unarchive');
 });
 
 Route::middleware(['auth', 'seeker'])->group(function () {

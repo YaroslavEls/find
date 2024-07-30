@@ -15,7 +15,11 @@ class VacancyController extends Controller
 {
     public function index(Request $request): Response
     {
-        if ($request->query('sort') == 'new') {
+        if ($request->query('saloon')) {
+            $vacancies = Vacancy::where('saloon_id', $request->query('saloon'))
+                ->paginate(10)
+                ->withQueryString();
+        } else if ($request->query('sort') == 'new') {
             $vacancies = Vacancy::orderBy('created_at', 'desc')
                 ->paginate(10)
                 ->withQueryString();
