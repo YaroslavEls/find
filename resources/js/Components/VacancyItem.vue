@@ -69,9 +69,13 @@ const menuItems = () => {
                 {{ vacancy.job }} - 
                 <span class="text-systemgreen">{{ vacancy.salary }}₴</span>
             </div>
+            <div v-if="vacancy.location.gen" class="flex gap-2 items-center mb-4">
+                <div class="icon-gen" />
+                <div class="txt-h5">Маємо генератор</div>
+            </div>
             <Link
                 :href="route('location.show', { vacancy: vacancy.id, location: vacancy.location.id })"
-                class="flex gap-2 w-fit mb-4 itemc-center text-gray20 txt-h5"
+                class="flex gap-2 w-fit mb-4 items-center text-gray20 txt-h5"
             >
                 <div class="icon-location" />
                 <div>({{ vacancy.location.city }})</div>

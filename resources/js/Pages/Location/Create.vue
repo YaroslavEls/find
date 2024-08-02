@@ -10,6 +10,7 @@ const form = useForm({
     city: null,
     address: null,
     schedule: [null, null, null, null, null, null, null],
+    gen: false,
     photos: [],
     video: null 
 });

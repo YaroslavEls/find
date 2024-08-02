@@ -18,6 +18,7 @@ const form = useForm({
     city: props.location.city,
     address: props.location.address,
     schedule: props.location.schedule.split(';'),
+    gen: props.location.gen,
     oldPhotos: props.location.photos.split(';'),
     photos: [],
     video: props.location.video,
@@ -29,6 +30,7 @@ const modified = ref({
     cite: false,
     address: false,
     schedule: false,
+    gen: false,
     oldPhotos: false,
     photos: false,
     video: false
@@ -75,6 +77,16 @@ watch (
         modified.value.schedule = newData;
     },
     { deep: true }
+);
+watch (
+    () => form.gen,
+    (newData, _) => {
+        if (newData == props.location.gen) {
+            modified.value.gen = false;
+            return;
+        }
+        modified.value.gen = newData;
+    }
 );
 watch (
     () => form.oldPhotos,

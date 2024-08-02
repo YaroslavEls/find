@@ -1,7 +1,8 @@
 <script setup>
 import CreateForm from '@/Pages/Review/Partials/CreateForm.vue';
 import ReviewItem from '@/Components/ReviewItem.vue';
-import { useForm, usePage } from '@inertiajs/vue3';
+import { useForm } from '@inertiajs/vue3';
+import { ref } from 'vue';
 
 const props = defineProps({
     saloon: {
@@ -26,10 +27,12 @@ const form = useForm({
 const submit = () => {
     form.post(route('review.store', { user: props.saloon.user.id }), {
         only: ['reviews'],
-        onSuccess: () => form.reset(),
+        onSuccess: () => form.regenerate(),
         onError: () => console.log(form)
     });
 };
+
+const active = ref(null);
 
 </script>
 
@@ -54,6 +57,7 @@ const submit = () => {
             v-for="(review, index) in reviews"
             :key="index"
             :review="review"
+            v-model="active"
         />
     </div>
 </template>

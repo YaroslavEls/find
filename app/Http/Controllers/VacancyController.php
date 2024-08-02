@@ -6,6 +6,7 @@ use App\Http\Requests\VacancyStoreRequest;
 use App\Http\Requests\VacancyUpdateRequest;
 use App\Models\Vacancy;
 use Diglactic\Breadcrumbs\Breadcrumbs;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -15,27 +16,61 @@ class VacancyController extends Controller
 {
     public function index(Request $request): Response
     {
-        if ($request->query('saloon')) {
-            $vacancies = Vacancy::where('saloon_id', $request->query('saloon'))
-                ->paginate(10)
-                ->withQueryString();
-        } else if ($request->query('sort') == 'new') {
-            $vacancies = Vacancy::orderBy('created_at', 'desc')
-                ->paginate(10)
-                ->withQueryString();
-        } else if ($request->query('sort') == 'saved') {
-            $saves = $request->user()
-                ->saves()
-                ->where(['user_id' => $request->user()->id])
-                ->distinct()
-                ->pluck('savable_id');
-            $vacancies = Vacancy::whereIn('id', $saves)
-                ->paginate(10)
-                ->withQueryString();
-        } else {
-            $vacancies = Vacancy::paginate(10)
-                ->withQueryString();
+        $sort = $request->query('sort');
+        $saloon = $request->query('saloon');
+        $job = $request->query('job');
+        $emp = $request->query('emp');
+        $exp = $request->query('exp');
+        $sal = $request->query('sal');
+        $city = $request->query('city');
+
+        switch ($sort) {
+            case 'new':
+                $vacancies = Vacancy::orderBy('created_at', 'desc');
+                break;
+            case 'saved':
+                $ids = $request->user()
+                    ->saves()
+                    ->join('vacancies', 'vacancies.id', '=', 'saves.savable_id')
+                    ->select('vacancies.*')
+                    ->pluck('id');
+                $vacancies = Vacancy::whereIn('id', $ids)
+                    ->with([
+                        'saloon:id,logo,name', 
+                        'location:id,photos,city,address,gen'
+                    ]);
+                break;
+            default:
+                $vacancies = Vacancy::query();
+                break;
         }
+
+        $vacancies = $vacancies
+            ->when($saloon, function (Builder $query, string $saloon) {
+                $query->where('saloon_id', $saloon);
+            })
+            ->when($job, function(Builder $query, string $job) {
+                $jobs = explode(';', $job);
+                $query->whereIn('job', $jobs);
+            })
+            ->when($emp, function(Builder $query, string $emp) {
+                $emps = explode(';', $emp);
+                $query->where('employment', 'like', '%' . $emps[0] . '%');
+                for ($i = 1; $i < count($emps); $i++) {
+                    $query->orWhere('employment', 'like', '%' . $emps[$i] . '%');
+                }
+            })
+            ->when($exp, function(Builder $query, string $exp) {
+                $query->where('experience', '>=', $exp);
+            })
+            ->when($sal, function(Builder $query, string $sal) {
+                $query->where('salary', '>=', $sal);
+            })
+            ->when($city, function(Builder $query, string $city) {
+                $query->where('city', 'like', '%' . $city . '%');
+            })
+            ->paginate(10)
+            ->withQueryString();
 
         return Inertia::render('Vacancy/Index', [
             'vacancies' => $vacancies

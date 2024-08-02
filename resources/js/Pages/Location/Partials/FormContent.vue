@@ -1,6 +1,7 @@
 <script setup>
 import Text from '@/Components/Inputs/Text.vue';
 import Schedule from '@/Components/Inputs/Schedule.vue';
+import Checkbox from '@/Components/Inputs/Checkbox.vue';
 import File from '@/Components/Inputs/File.vue';
 import Photos from '@/Components/Inputs/Photos.vue';
 
@@ -56,5 +57,10 @@ const model = defineModel({
         button="Додати відео"
         :error="model.errors.video"
         v-model="model.video"
+    />
+    <Checkbox
+        text="На даній локації присутні генератори в якості резервного джерела електропостачання"
+        :error="model.errors.gen"
+        v-model="model.gen"
     />
 </template>

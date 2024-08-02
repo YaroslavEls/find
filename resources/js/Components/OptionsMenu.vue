@@ -52,6 +52,7 @@ const params = {
                 :href="value"
                 :method="params[key]['method']"
                 as="button"
+                preserve-scroll
                 class="flex justify-between w-full mb-4 last:mb-0 txt-secondary"
             >
                 {{ params[key]['text'] }}

@@ -7,12 +7,30 @@ const props = defineProps({
     author: {
         type: Object,
         required: true
+    },
+    next: {
+        type: [Object, null],
+        required: true
     }
 });
 
-const formatter = new Intl.DateTimeFormat('uk-UA', { day: 'numeric', month: 'long', year: 'numeric' });
 const date = new Date(props.message.created_at);
+const today = new Date();
+const options = {};
+if (date.toDateString() === today.toDateString()) {
+    options.hour = 'numeric';
+    options.minute = 'numeric';
+} else {
+    options.day = 'numeric';
+    options.month = 'long';
+    options.year = 'numeric';
+}
+const formatter = new Intl.DateTimeFormat('uk-UA', options);
 const formattedDate = formatter.format(date);
+
+const separate = () => {
+    return JSON.stringify(props.author) === JSON.stringify(props.next);
+};
 
 </script>
 
@@ -30,6 +48,7 @@ const formattedDate = formatter.format(date);
             </div>
             <div class="text-gray40 txt-secondary">{{ formattedDate }}</div>
         </div>
-        <div class="txt-body">{{ message.text }}</div>
+        <div class="whitespace-pre-wrap txt-body">{{ message.text }}</div>
+        <div v-if="!separate() && next" class="w-full h-[1px] mt-10 bg-gray50" />
     </div>
 </template>

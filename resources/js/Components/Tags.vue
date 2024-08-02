@@ -9,15 +9,16 @@ const props = defineProps({
 const transformed = {
     date: null,
     experience: null,
-    employment: null
+    employment: null,
+    replacement: null
 }
 
 const date = new Date(props.tags.date);
-const months = [
-    'Січня', 'Лютого', 'Березня', 'Квітня', 'Травня', 'Червня',
-    'Липня', 'Серпня', 'Вересня', 'Жовтня', 'Листопада', 'Грудня'
-];
-transformed.date = date.getDate() + ' ' + months[date.getMonth()];
+const formatter = new Intl.DateTimeFormat('uk-UA', { 
+    day: 'numeric', 
+    month: 'long' 
+});
+transformed.date = formatter.format(date);
 
 switch (props.tags.exp) {
     case '0':
@@ -38,21 +39,33 @@ switch (props.tags.exp) {
         transformed.experience = props.tags.exp + ' років досвіду';
 }
 
-transformed.employment = props.tags.empl.split(';')[0] + ' зайнятість';
+const empl = props.tags.empl.split(';');
+
+if (empl.includes('Повна') && empl.includes('Неповна')) {
+    transformed.employment = 'Повна/Неповна зайнятість'
+} else if (empl.includes('Повна') && !empl.includes('Неповна')) {
+    transformed.employment = 'Повна зайнятість'
+} else if (!empl.includes('Повна') && empl.includes('Неповна')) {
+    transformed.employment = 'Неповна зайнятість'
+}
+
+transformed.replacement = empl.includes('Підміни') ? 'Підміни' : null;
 
 const icons = {
     date: 'icon-date',
     experience: 'icon-experience',
-    employment: 'icon-employment'
+    employment: 'icon-employment',
+    replacement: 'icon-replacement'
 }
 
 </script>
 
 <template>
-    <div class="flex gap-2">
+    <div class="flex flex-wrap gap-2">
         <div 
             v-for="(value, key) in transformed"
             :key="key"
+            v-show="value !== null"
             class="flex items-center gap-2 px-4 py-1 h-fit rounded bg-gray60 txt-secondary"
         >
             <div :class="icons[key]"></div>

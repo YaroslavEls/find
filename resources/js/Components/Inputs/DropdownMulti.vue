@@ -19,8 +19,8 @@ const model = defineModel({
 
 const options = ref({
     'Повна': false,
-    'Не повна': false,
-    'Виходжу на підміни': false
+    'Неповна': false,
+    'Підміни': false
 });
 
 for (let i = 0; i < model.value.length; i++) {

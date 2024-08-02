@@ -31,7 +31,6 @@ model.value.regenerate = () => {
     }
 };
 
-
 </script>
 
 <template>

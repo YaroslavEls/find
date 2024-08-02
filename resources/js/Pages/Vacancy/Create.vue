@@ -16,7 +16,7 @@ const form = useForm({
     location: props.locations[0].name,
     location_id: props.locations[0].id,
     job: 'Бариста',
-    employment: ['Повна', 'Не повна', 'Виходжу на підміни'],
+    employment: ['Повна', 'Неповна', 'Підміни'],
     salary: null,
     experience: 1,
     descr: null 

@@ -18,19 +18,31 @@ const model = defineModel({
     required: true
 });
 
+const searchParams = new URLSearchParams(window.location.search);
+
 const filters = ref({
     job: {
-        'Бариста': false,
-        'Старший Бариста': false
+        'Бариста': searchParams.get('job')
+            ? searchParams.get('job').split(';').includes('Бариста') ?? false
+            : false,
+        'Старший Бариста': searchParams.get('job')
+            ? searchParams.get('job').split(';').includes('Старший Бариста') ?? false
+            : false
     },
     employment: {
-        'Повна': false,
-        'Не повна': false,
-        'Підміна': false
+        'Повна': searchParams.get('emp')
+            ? searchParams.get('emp').split(';').includes('Повна') ?? false
+            : false,
+        'Неповна': searchParams.get('emp')
+            ? searchParams.get('emp').split(';').includes('Неповна') ?? false
+            : false,
+        'Підміни': searchParams.get('emp') ? 
+            searchParams.get('emp').split(';').includes('Підміни') ?? false
+            : false
     },
-    experience: 1,
-    salary: '',
-    city: ''
+    experience: searchParams.get('exp') ?? 0,
+    salary: searchParams.get('sal') ?? '',
+    city: searchParams.get('city') ?? ''
 });
 
 const nonEmpty = (obj) => {
@@ -43,13 +55,11 @@ const nonEmpty = (obj) => {
 };
 
 const params = () => {
-    const old = new URLSearchParams(window.location.search);
-
     const params = {
-        sort: old.get('sort') ? old.get('sort') : '',
+        sort: searchParams.get('sort') ?? '',
         job: '',
         emp: '',
-        exp: filters.value.experience,
+        exp: filters.value.experience > 0 ? filters.value.experience : '',
         sal: filters.value.salary,
         city: filters.value.city
     };
@@ -67,7 +77,7 @@ const params = () => {
             tmp.push(key);
         }
     });
-    params['emp'] = tmp;
+    params['emp'] = tmp.join(';');
 
     return nonEmpty(params);
 };
@@ -113,6 +123,7 @@ const filter = () => {
         />
         <div class="mt-8 mb-2 text-gray30 txt-h5">Мінімальна зарплата</div>
         <Text
+            type="number"
             placeholder="20000"
             v-model="filters.salary"
         />

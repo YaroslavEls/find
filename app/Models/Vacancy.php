@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
-use Illuminate\Database\Eloquent\Relations\MorphToMany;
 
 class Vacancy extends Model
 {
@@ -23,7 +22,7 @@ class Vacancy extends Model
 
     protected $with = [
         'saloon:id,logo,name',
-        'location:id,photos,city,address'
+        'location:id,photos,city,address,gen'
     ];
 
     public function saloon(): BelongsTo

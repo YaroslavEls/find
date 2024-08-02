@@ -47,6 +47,7 @@ class LocationFactory extends Factory
             'city' => fake()->city(),
             'address' => fake()->streetAddress(),
             'schedule' => '07:00 - 20:00',
+            'gen' => fake()->boolean(),
             'photos' => $this->photos(),
             'video' => null
         ];

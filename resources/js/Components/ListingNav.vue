@@ -32,13 +32,13 @@ const active = ref(false);
 </script>
 
 <template>
-    <div class="flex justify-between items-center mb-14">
-        <div class="flex items-end gap-4">
-            <div class="txt-h1">{{ heading }}</div>
-            <div class="text-gray40 txt-h3">{{ count }}</div>
-        </div>
+    <div class="flex justify-between items-center gap-16 mb-14">
+        <div class="flex justify-between items-center max-w-[1184px] w-full">
+            <div class="flex items-end gap-4">
+                <div class="txt-h1">{{ heading }}</div>
+                <div class="text-gray40 txt-h3">{{ count }}</div>
+            </div>
 
-        <div class="relative flex gap-28">
             <div class="flex gap-2">
                 <Link
                     :href="path"
@@ -64,7 +64,9 @@ const active = ref(false);
                     <div class="icon-fav" />
                 </Link>
             </div>
+        </div>
 
+        <div class="relative">
             <div
                 @click="active = !active"
                 class="flex gap-2 px-6 py-2 h-fit bg-blue50 rounded txt-body cursor-pointer"

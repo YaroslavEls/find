@@ -20,6 +20,7 @@ class LocationStoreRequest extends FormRequest
             'address' => ['required', 'string', 'max:128'],
             'schedule' => ['required', 'array', 'size:7'],
             'schedule.*' => ['present', 'nullable', 'string', 'max:128'],
+            'gen' => ['required', 'boolean'],
             'photos' => ['required', 'array', 'max:12'],
             'photos.*' => ['filled', 'mimes:png,jpg', 'max:2048'],
             'video' => ['nullable', 'mimes:mpeg,mp4,avi', 'max:10240'],

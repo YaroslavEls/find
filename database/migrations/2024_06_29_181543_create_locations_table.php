@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('city');
             $table->string('address');
             $table->string('schedule');
+            $table->boolean('gen');
             $table->string('photos');
             $table->string('video')->nullable();
             $table->timestamps();

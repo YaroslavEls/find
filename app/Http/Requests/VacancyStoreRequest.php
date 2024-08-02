@@ -17,7 +17,7 @@ class VacancyStoreRequest extends FormRequest
     public function rules(): array
     {
         $jobs = ['Бариста', 'Старший Бариста'];
-        $employments = ['Повна', 'Не повна', 'Виходжу на підміни'];
+        $employments = ['Повна', 'Неповна', 'Підміни'];
 
         return [
             'location_id' => ['required', 'integer', Rule::exists(Location::class, 'id')],

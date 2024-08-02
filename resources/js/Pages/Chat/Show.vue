@@ -21,12 +21,15 @@ const form = useForm({
     text: ''
 });
 
+const textarea = ref(null);
+
 const submit = () => {
     form.post(route('chat.message', { chat: props.chat }), {
         preserveScroll: true,
         onSuccess: () => {
             form.reset();
             incoming.value.length = 0;
+            textarea.value.style.height = 'auto';
         }
     })
 };
@@ -41,6 +44,7 @@ onMounted(() => {
 const incoming = ref([]);
 
 const author = (msg) => {
+    if (!msg) return null;
     return msg.sender.userable_type === 'App\\Models\\Seeker' 
         ? { name: props.chat.seeker.name, photo: props.chat.seeker.photo }
         : { name: props.chat.saloon.name, photo: props.chat.saloon.logo };
@@ -57,10 +61,11 @@ const author = (msg) => {
 
         <div class="max-w-[1184px] w-full mx-auto">
             <MessageItem
-                v-for="message in chat.messages"
+                v-for="(message, index) in chat.messages"
                 :key="message.id"
                 :message="message"
                 :author="author(message)"
+                :next="author(chat.messages[index + 1])"
             />
 
             <div
@@ -75,6 +80,7 @@ const author = (msg) => {
                 :key="message.id"
                 :message="message"
                 :author="author(message)"
+                :next="null"
             />
 
             <form
@@ -83,7 +89,8 @@ const author = (msg) => {
                 class="mb-4"
             >
                 <MessageForm 
-                    v-model="form"
+                    v-model:form="form"
+                    v-model:area="textarea"
                 />
             </form>
 

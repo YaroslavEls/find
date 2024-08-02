@@ -7,6 +7,7 @@ use App\Http\Requests\SeekerUpdateRequest;
 use App\Models\Seeker;
 use Carbon\Carbon;
 use Diglactic\Breadcrumbs\Breadcrumbs;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -17,38 +18,54 @@ class SeekerController extends Controller
 {
     public function index(Request $request): Response
     {
-        if ($request->query('sort') == 'new') {
-            $seekers = Seeker::orderBy('created_at', 'desc');
-        } else if ($request->query('sort') == 'saved') {
-            $saves = $request->user()
-                ->saves()
-                ->where(['user_id' => $request->user()->id])
-                ->distinct()
-                ->pluck('savable_id');
-            $seekers = Seeker::whereIn('id', $saves);
-        } else {
-            $seekers = Seeker::query();
+        $sort = $request->query('sort');
+        $job = $request->query('job');
+        $emp = $request->query('emp');
+        $exp = $request->query('exp');
+        $sal = $request->query('sal');
+        $city = $request->query('city');
+
+        switch ($sort) {
+            case 'new':
+                $seekers = Seeker::orderBy('created_at', 'desc');
+                break;
+            case 'saved':
+                $seekers = $request->user()
+                    ->saves()
+                    ->join('seekers', 'seekers.id', '=', 'saves.savable_id')
+                    ->select('seekers.*');
+                break;
+            default:
+                $seekers = Seeker::query();
+                break;
         }
 
-        if ($request->query('job')) {
-            $jobs = explode(';', $request->query('job'));
-            $seekers->whereIn('job', $jobs);
-        }
-        if ($request->query('emp')) {
-            // todo
-        }
-        if ($request->query('exp')) {
-            $seekers->where('experience', '>=', $request->query('exp'));
-        }
-        if ($request->query('sal')) {
-            $seekers->where('salary', '>=', $request->query('sal'));
-        }
-        if ($request->query('city')) {
-            $seekers->where('city', 'like', '%' . $request->query('city') . '%');
-        }
+        $seekers = $seekers
+            ->when($job, function(Builder $query, string $job) {
+                $jobs = explode(';', $job);
+                $query->whereIn('job', $jobs);
+            })
+            ->when($emp, function(Builder $query, string $emp) {
+                $emps = explode(';', $emp);
+                $query->where('employment', 'like', '%' . $emps[0] . '%');
+                for ($i = 1; $i < count($emps); $i++) {
+                    $query->orWhere('employment', 'like', '%' . $emps[$i] . '%');
+                }
+            })
+            ->when($exp, function(Builder $query, string $exp) {
+                $query->where('experience', '>=', $exp);
+            })
+            ->when($sal, function(Builder $query, string $sal) {
+                $query->where('salary', '>=', $sal);
+            })
+            ->when($city, function(Builder $query, string $city) {
+                $query->where('city', 'like', '%' . $city . '%');
+            })
+            ->paginate(10)
+            ->withQueryString();
 
         return Inertia::render('Seeker/Index', [
-            'seekers' => $seekers->paginate(10)->withQueryString()
+            'seekers' => $seekers
         ]);
     }
 

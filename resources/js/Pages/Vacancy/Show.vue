@@ -118,7 +118,10 @@ const save = () => {
                     </div>
                     <div class="basis-6/12">
                         <div class="mb-2 text-gray40 txt-body">Наявність світла:</div>
-                        <div class="txt-h4">{{ vacancy.location.city, vacancy.location.address }}</div>
+                        <div class="flex gap-2 items-center">
+                            <div class="icon-gen" />
+                            <div class="txt-h4">{{ vacancy.location.gen ? 'Маємо генератор' : 'Генератори відсутні' }}</div>
+                        </div>
                     </div>
                 </div>
 

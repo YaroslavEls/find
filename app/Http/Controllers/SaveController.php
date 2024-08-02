@@ -33,6 +33,10 @@ class SaveController extends Controller
 
     public function destroySeeker(Request $request, Seeker $seeker)
     {
+        if ($request->user()->cannot('save', Seeker::class)) {
+            abort(403);
+        }
+
         Save::where([
             'user_id' => $request->user()->id,
             'savable_type' => 'App\Models\Seeker',
@@ -42,6 +46,10 @@ class SaveController extends Controller
 
     public function destroyVacancy(Request $request, Vacancy $vacancy)
     {
+        if ($request->user()->cannot('save', Vacancy::class)) {
+            abort(403);
+        }
+        
         Save::where([
             'user_id' => $request->user()->id,
             'savable_type' => 'App\Models\Vacancy',

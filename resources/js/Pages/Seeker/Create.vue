@@ -25,7 +25,7 @@ const forms = [
     }),
     useForm({
         city: null,
-        employment: ['Повна', 'Не повна', 'Виходжу на підміни']
+        employment: ['Повна', 'Неповна', 'Підміни']
     }),
     useForm({
         info: null,

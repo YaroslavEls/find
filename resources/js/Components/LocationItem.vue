@@ -61,7 +61,11 @@ const url = !usePage().url.startsWith('/profile')
         <div class="grow mr-8">
             <div class="mb-6 txt-h2">{{ location.name }}</div>
             <div class="mb-2 text-gray40 txt-body">Адреса:</div>
-            <div class="mb-6 txt-h4">{{ location.city }} , {{ location.address }}</div>
+            <div class="mb-6 txt-h4">{{ location.city }}, {{ location.address }}</div>
+            <div v-if="location.gen" class="flex gap-2 items-center mb-6">
+                <div class="icon-gen" />
+                <div class="txt-h4">Маємо генератор</div>
+            </div>
             <div class="mb-2 text-gray40 txt-body">Графік роботи закладу:</div>
             <Schedule
                 :schedule="location.schedule"

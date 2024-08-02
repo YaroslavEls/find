@@ -16,6 +16,7 @@ class Location extends Model
         'city',
         'address',
         'schedule',
+        'gen',
         'photos',
         'video'
     ];

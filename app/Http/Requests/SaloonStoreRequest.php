@@ -30,6 +30,7 @@ class SaloonStoreRequest extends FormRequest
             'locations.*.address' => $orig->rules()['address'],
             'locations.*.schedule' => $orig->rules()['schedule'],
             'locations.*.schedule.*' => $orig->rules()['schedule.*'],
+            'locations.*.gen' => $orig->rules()['gen'],
             'locations.*.photos' => $orig->rules()['photos'],
             'locations.*.photos.*' => $orig->rules()['photos.*'],
             'locations.*.video' => $orig->rules()['video'],

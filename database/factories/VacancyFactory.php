@@ -11,7 +11,7 @@ class VacancyFactory extends Factory
 {
     protected static array $jobs = ['Бариста', 'Старший Бариста'];
 
-    protected static array $employments = ['Повна', 'Не повна', 'Виходжу на підміни'];
+    protected static array $employments = ['Повна', 'Неповна', 'Підміни'];
 
     /**
      * Define the model's default state.

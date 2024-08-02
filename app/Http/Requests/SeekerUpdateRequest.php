@@ -15,7 +15,7 @@ class SeekerUpdateRequest extends FormRequest
     public function rules(): array
     {
         $jobs = ['Бариста', 'Старший Бариста'];
-        $employments = ['Повна', 'Не повна', 'Виходжу на підміни'];
+        $employments = ['Повна', 'Неповна', 'Підміни'];
 
         return [
             'name' => ['required', 'string', 'max:128'],
