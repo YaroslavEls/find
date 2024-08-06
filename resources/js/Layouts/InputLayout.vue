@@ -1,3 +1,10 @@
+<script setup>
+import { useMq } from "vue3-mq";
+
+const mq = useMq();
+
+</script>
+
 <template>
     <div class="relative mb-8">
         <div v-if="$slots.heading" class="flex justify-between items-end mb-1">

@@ -5,6 +5,7 @@ import SubmitButton from '@/Components/SubmitButton.vue';
 import FormContent from '@/Pages/Location/Partials/FormContent.vue';
 import { Head, useForm } from '@inertiajs/vue3';
 import { ref, watch } from 'vue';
+import { useMq } from 'vue3-mq';
 
 const props = defineProps({
     location: {
@@ -12,6 +13,8 @@ const props = defineProps({
         required: true
     }
 });
+
+const mq = useMq();
 
 const form = useForm({
     name: props.location.name,
@@ -134,7 +137,11 @@ const submit = () => {
     <MainLayout>
         <Head title="Add a Location" />
 
-        <form @submit.prevent="submit" class="max-w-[624px] w-full px-6 mx-auto">
+        <form 
+            @submit.prevent="submit" 
+            class="w-full"
+            :class="mq.desktop ? 'max-w-[624px] px-6 mx-auto' : ''"
+        >
             <BackButton />
 
             <div class="mb-10 txt-h1">Редагування локації</div>
@@ -144,7 +151,7 @@ const submit = () => {
             />
 
             <SubmitButton
-                text="Створити"
+                text="Зберегти зміни"
                 :class="Object.values(modified).some(value => value !== false) ? 'bg-blue50' : 'bg-gray70 text-gray40 pointer-events-none'"
             />
         </form>

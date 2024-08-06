@@ -62,7 +62,8 @@ class SeekerController extends Controller
                 $query->where('city', 'like', '%' . $city . '%');
             })
             ->paginate(10)
-            ->withQueryString();
+            ->withQueryString()
+            ->onEachSide(1);
 
         return Inertia::render('Seeker/Index', [
             'seekers' => $seekers

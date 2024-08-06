@@ -3,8 +3,9 @@ import MainLayout from '@/Layouts/MainLayout.vue';
 import BackButton from '@/Components/BackButton.vue';
 import SubmitButton from '@/Components/SubmitButton.vue';
 import FormContent from '@/Pages/Vacancy/Partials/FormContent.vue';
-import { Head, useForm, usePage } from '@inertiajs/vue3';
+import { Head, useForm } from '@inertiajs/vue3';
 import { ref, watch } from 'vue';
+import { useMq } from 'vue3-mq';
 
 const props = defineProps({
     vacancy: {
@@ -16,6 +17,8 @@ const props = defineProps({
         required: true
     }
 });
+
+const mq = useMq();
 
 const form = useForm({
     location: props.locations.find(loc => loc.id === props.vacancy.location_id).name,
@@ -115,7 +118,10 @@ const submit = () => {
     <MainLayout>
         <Head title="Add a Location" />
 
-        <form @submit.prevent="submit" class="w-[576px] mt-6 mb-32 mx-auto">
+        <form 
+            @submit.prevent="submit" 
+            :class="mq.desktop ? 'w-[576px] mt-6 mb-32 mx-auto' : 'w-full'"
+        >
             <BackButton />
 
             <div class="mb-10 txt-h1">Редагування вакансії</div>

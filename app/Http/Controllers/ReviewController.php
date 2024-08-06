@@ -24,6 +24,8 @@ class ReviewController extends Controller
             ->orderBy('created_at', 'desc')
             ->get();
 
+        $seeker->score = round($seeker->user->reviews->avg('score'));
+
         return Inertia::render('Review/Index', [
             'breadcrumbs' => $breadcrumbs,
             'seeker' => $seeker,

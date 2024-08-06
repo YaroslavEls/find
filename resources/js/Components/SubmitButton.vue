@@ -1,4 +1,6 @@
 <script setup>
+import { useMq } from "vue3-mq";
+
 defineProps({
     text: {
         type: String,
@@ -9,13 +11,16 @@ defineProps({
     }
 });
 
+const mq = useMq();
+
 </script>
 
 <template>
     <button
         :type="regular ? 'button' : 'submit'" 
-        class="py-4 w-full text-center bg-blue50 rounded-xl txt-buttons"
+        class="w-full text-center bg-blue50 rounded-lg txt-buttons"
+        :class="mq.desktop ? 'py-4' : 'py-3'"
     >
         {{ text }}
-    </button>    
+    </button>   
 </template>

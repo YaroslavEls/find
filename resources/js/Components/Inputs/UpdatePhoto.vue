@@ -1,5 +1,6 @@
 <script setup>
 import { ref } from 'vue';
+import { useMq } from 'vue3-mq';
 
 const props = defineProps({
     identifier: {
@@ -28,6 +29,8 @@ const model = defineModel({
     required: true
 });
 
+const mq = useMq();
+
 const current = ref(props.original);
 
 const updatePhoto = (e) => {
@@ -42,12 +45,14 @@ const updatePhoto = (e) => {
     <img 
         :src="current" 
         alt=""
-        class="w-full h-[448px] mb-4 border-solid border-2 border-gray50 rounded-xl"
+        class="w-full border-solid border-2 border-gray50 rounded-xl"
+        :class="mq.desktop ? 'h-[448px] mb-4' : 'h-[202px] mb-2'"
     >
 
     <label 
         :for="identifier" 
-        class="block mb-8 text-blue40 text-right txt-text-buttons cursor-pointer"
+        class="block text-blue40 text-right txt-text-buttons cursor-pointer"
+        :class="mq.desktop ? 'mb-8' : 'mb-10'"
     >
         {{ button }}
     </label>
@@ -59,7 +64,7 @@ const updatePhoto = (e) => {
         @input="updatePhoto"
     >
 
-    <div class="h-6 text-systemred txt-secondary">
+    <div v-if="error" class="h-6 text-systemred txt-secondary">
         {{ error }}
     </div>
 </template>

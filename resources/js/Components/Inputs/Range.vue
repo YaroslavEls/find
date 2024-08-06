@@ -1,5 +1,6 @@
 <script setup>
 import InputLayout from '@/Layouts/InputLayout.vue';
+import { useMq } from "vue3-mq";
 
 defineProps({
     heading: {
@@ -10,6 +11,9 @@ defineProps({
         type: String,
         required: true
     },
+    note: {
+        type: String
+    },
     error: {
         type: String
     }
@@ -19,6 +23,8 @@ const model = defineModel({
     type: [String, Number],
     required: true
 });
+
+const mq = useMq();
 
 const positions = [
     'left-[46px]',
@@ -35,6 +41,21 @@ const positions = [
     'left-[528px]',
 ];
 
+const positionsMobile = [
+    'left-[29px]',
+    'left-[57px]',
+    'left-[83px]',
+    'left-[111px]',
+    'left-[137px]',
+    'left-[165px]',
+    'left-[193px]',
+    'left-[220px]',
+    'left-[246px]',
+    'left-[273px]',
+    'left-[302px]',
+    'left-[330px]',
+]
+
 </script>
 
 <template>
@@ -49,17 +70,19 @@ const positions = [
                 max="6.5"
                 step="0.5"
                 v-model="model"
-                class="h-14 w-[576px]"
+                class="w-full"
+                :class="mq.desktop ? 'h-14' : 'h-[52px]'"
             >
 
             <div 
-                v-for="pos in positions" 
+                v-for="pos in (mq.desktop ? positions : positionsMobile)" 
                 :key="pos"
-                class="absolute top-[53px] w-[2px] h-[10px] bg-gray40 rounded-2xl z-[-1]"
-                :class="pos"
+                class="absolute w-[2px] h-[10px] bg-gray40 rounded-2xl z-[-1]"
+                :class="[pos, mq.desktop ? 'top-[53px]' : 'top-[46px]']"
             />
         </template>
 
+        <template v-if="note" #note>{{ note }}</template>
         <template v-if="error" #error>{{ error }}</template>
     </InputLayout>
 </template>

@@ -1,4 +1,6 @@
 <script setup>
+import { MqResponsive } from "vue3-mq";
+
 const props = defineProps({
     stars: {
         type: Array,
@@ -26,13 +28,29 @@ const rate = (max) => {
 </script>
 
 <template>
-    <div class="flex gap-1">
-        <div
-            v-for="(item, index) in stars"
-            :key="index"
-            :ref="stars[index]"
-            @click="rate(index)"
-            class="cursor-pointer icon-star gray" 
-        />
-    </div>
+    <MqResponsive group>
+        <template #desktop>
+            <div class="flex gap-1">
+                <div
+                    v-for="(_, index) in stars"
+                    :key="index"
+                    :ref="stars[index]"
+                    @click="rate(index)"
+                    class="cursor-pointer icon-star gray" 
+                />
+            </div>
+        </template>
+
+        <template #mobile>
+            <div class="flex gap-1">
+                <div
+                    v-for="(_, index) in stars"
+                    :key="index"
+                    :ref="stars[index]"
+                    @click="rate(index)"
+                    class="cursor-pointer icon-star-small gray" 
+                />
+            </div>
+        </template>
+    </MqResponsive>
 </template>

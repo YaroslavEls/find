@@ -1,5 +1,6 @@
 <script setup>
 import { Link } from '@inertiajs/vue3';
+import { useMq } from "vue3-mq";
 
 defineProps({
     items: {
@@ -8,14 +9,20 @@ defineProps({
     }
 });
 
+const mq = useMq();
+
 </script>
 
 <template>
-    <div class="flex gap-2 items-center">
+    <div 
+        class="flex flex-wrap items-center"
+        :class="mq.desktop ? 'gap-2 mb-12' : 'gap-1 mb-6'"
+    >
         <div
             v-for="(item, index) in items"
             :key="index"
-            class="flex gap-2 items-center"
+            class="flex items-center"
+            :class="mq.desktop ? 'gap-2' : 'gap-1'"
         >
             <Link
                 :href="item.url"

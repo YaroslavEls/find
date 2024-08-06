@@ -1,10 +1,14 @@
 <script setup>
+import { useMq } from "vue3-mq";
+
 const props = defineProps({
     tags: {
         type: Object,
         required: true
     }
 });
+
+const mq = useMq();
 
 const transformed = {
     date: null,
@@ -56,7 +60,14 @@ const icons = {
     experience: 'icon-experience',
     employment: 'icon-employment',
     replacement: 'icon-replacement'
-}
+};
+
+const iconsMob = {
+    date: 'icon-date',
+    experience: 'icon-experience',
+    employment: 'icon-employment',
+    replacement: 'icon-replacement'
+};
 
 </script>
 
@@ -66,7 +77,8 @@ const icons = {
             v-for="(value, key) in transformed"
             :key="key"
             v-show="value !== null"
-            class="flex items-center gap-2 px-4 py-1 h-fit rounded bg-gray60 txt-secondary"
+            class="flex items-center py-1 h-fit rounded bg-gray60 txt-secondary"
+            :class="mq.desktop ? 'gap-2 px-4' : 'gap-1 px-2'"
         >
             <div :class="icons[key]"></div>
             {{ value }}

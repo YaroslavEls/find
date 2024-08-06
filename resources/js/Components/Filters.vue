@@ -5,6 +5,7 @@ import Text from '@/Components/Filters/Text.vue';
 import SubmitButton from '@/Components/SubmitButton.vue';
 import { router } from '@inertiajs/vue3'
 import { ref } from 'vue';
+import { useMq } from 'vue3-mq';
 
 const props = defineProps({
     route: {
@@ -17,6 +18,8 @@ const model = defineModel({
     type: Boolean,
     required: true
 });
+
+const mq = useMq();
 
 const searchParams = new URLSearchParams(window.location.search);
 
@@ -56,6 +59,7 @@ const nonEmpty = (obj) => {
 
 const params = () => {
     const params = {
+        saloon: searchParams.get('saloon') ?? '',
         sort: searchParams.get('sort') ?? '',
         job: '',
         emp: '',
@@ -92,7 +96,10 @@ const filter = () => {
 </script>
 
 <template>
-    <div class="absolute right-0 top-16 z-[10] w-[420px] p-6 border-solid border border-gray40 rounded-lg bg-gray70">
+    <div 
+        class="absolute right-0 z-10 border-solid border border-gray40 rounded-lg bg-gray70"
+        :class="mq.desktop ? 'top-16 w-[420px] p-6' : 'top-[90px] w-full p-4'"
+    >
         <div class="flex justify-between items-center mb-8">
             <div class="txt-h4">Фільтри</div>
             <div

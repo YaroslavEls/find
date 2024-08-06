@@ -1,4 +1,6 @@
 <script setup>
+import { useMq } from 'vue3-mq';
+
 defineProps({
     text: {
         type: String,
@@ -11,16 +13,21 @@ const model = defineModel({
     required: true
 });
 
+const mq = useMq();
+
 </script>
 
 <template>
     <div
         @click="model = !model"
-        class="flex gap-2 w-fit mb-4 cursor-pointer"
+        class="flex items-end gap-2 w-fit mb-4 cursor-pointer"
     >
         <div 
-            class="w-6 h-6 rounded bg-gray50"
-            :class="model ? 'icon-checkbox' : ''"
+            class="rounded bg-gray50"
+            :class="[
+                model ? 'icon-checkbox' : '',
+                mq.desktop ? 'w-6 h-6' : 'w-5 h-5'    
+            ]"
         />
         <div class="txt-secondary">{{ text }}</div>
     </div>

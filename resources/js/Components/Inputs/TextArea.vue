@@ -1,6 +1,7 @@
 <script setup>
 import InputLayout from '@/Layouts/InputLayout.vue';
 import { ref, onMounted } from 'vue';
+import { useMq } from "vue3-mq";
 
 defineProps({
     placeholder: {
@@ -22,6 +23,8 @@ const model = defineModel({
     type: [String, null],
     required: true
 });
+
+const mq = useMq();
 
 const textarea = ref(null);
 
@@ -46,8 +49,11 @@ onMounted(() => {
                 ref="textarea"
                 @input="resize"
                 v-model="model"
-                class="max-h-[500px] p-4 w-full bg-background border-solid border-2 rounded-lg text-gray0 txt-body"
-                :class="error ? 'border-systemred' : 'border-gray40'"
+                class="max-h-[500px] px-4 w-full bg-background border-solid rounded-lg txt-body"
+                :class="[
+                    error ? 'border-systemred' : 'border-gray40',
+                    mq.desktop ? 'py-4 border-2' : 'py-[14px] border'    
+                ]"
             ></textarea>
         </template>
 

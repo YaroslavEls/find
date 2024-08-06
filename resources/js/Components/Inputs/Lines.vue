@@ -1,5 +1,6 @@
 <script setup>
 import InputLayout from '@/Layouts/InputLayout.vue';
+import { useMq } from "vue3-mq";
 
 const props = defineProps({
     heading: {
@@ -16,6 +17,8 @@ const model = defineModel({
     required: true
 });
 
+const mq = useMq();
+
 const errors = () => {
     return Object
         .keys(props.error)
@@ -31,7 +34,7 @@ const errors = () => {
 
         <template #default>
             <div
-                v-for="(link, index) in model"
+                v-for="(_, index) in model"
                 :key="index"
                 class="relative"
             >
@@ -39,13 +42,17 @@ const errors = () => {
                     type="text"
                     placeholder="https://"
                     v-model="model[index]" 
-                    class="pl-4 pr-14 py-4 w-full bg-background border-solid border-2 rounded-lg text-gray0 txt-body"
-                    :class="errors().includes(index) ? 'mb-1 border-systemred' : 'mb-4 border-gray40'"
+                    class="pl-4 pr-14 w-full bg-background border-solid rounded-lg txt-body"
+                    :class="[
+                        errors().includes(index) ? 'mb-1 border-systemred' : 'mb-4 border-gray40',
+                        mq.desktop ? 'py-4 border-2' : 'py-[14px] border'
+                    ]"
                 >
                 <div
                     v-show="index != 0"
                     @click="model.splice(index, 1)" 
                     class="icon-delete absolute top-[18px] right-4 cursor-pointer"
+                    :class="mq.desktop ? 'top-[18px]' : 'top-4'"
                 />
                 <div
                     v-show="errors().includes(index)"

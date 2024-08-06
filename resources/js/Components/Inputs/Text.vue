@@ -1,5 +1,6 @@
 <script setup>
 import InputLayout from '@/Layouts/InputLayout.vue';
+import { useMq } from "vue3-mq";
 
 defineProps({
     type: {
@@ -13,6 +14,9 @@ defineProps({
         type: String,
         required: true
     },
+    note: {
+        type: String
+    },
     error: {
         type: String
     }
@@ -22,6 +26,8 @@ const model = defineModel({
     type: [String, null],
     required: true
 });
+
+const mq = useMq();
 
 </script>
 
@@ -34,11 +40,15 @@ const model = defineModel({
                 :type="type"
                 :placeholder="placeholder"
                 v-model="model" 
-                class="p-4 w-full bg-background border-solid border-2 rounded-lg text-gray0 txt-body"
-                :class="error ? 'border-systemred' : 'border-gray40'"
+                class="px-4 w-full bg-background border-solid rounded-lg text-gray0 txt-body"
+                :class="[
+                    error ? 'border-systemred' : 'border-gray40', 
+                    mq.desktop ? 'py-4 border-2' : 'py-[14px] border'
+                ]"
             >
         </template>
         
+        <template v-if="note" #note>{{ note }}</template>
         <template v-if="error" #error>{{ error }}</template>
     </InputLayout>
 </template>

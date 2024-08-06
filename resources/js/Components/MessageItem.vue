@@ -1,4 +1,6 @@
 <script setup>
+import { useMq } from 'vue3-mq';
+
 const props = defineProps({
     message: {
         type: Object,
@@ -13,6 +15,8 @@ const props = defineProps({
         required: true
     }
 });
+
+const mq = useMq();
 
 const date = new Date(props.message.created_at);
 const today = new Date();
@@ -35,7 +39,7 @@ const separate = () => {
 </script>
 
 <template>
-    <div class="mb-10">
+    <div :class="mq.desktop ? 'mb-10' : 'mb-4'">
         <div class="flex justify-between items-center mb-2">
             <div class="flex items-center gap-2">
                 <img 
@@ -49,6 +53,10 @@ const separate = () => {
             <div class="text-gray40 txt-secondary">{{ formattedDate }}</div>
         </div>
         <div class="whitespace-pre-wrap txt-body">{{ message.text }}</div>
-        <div v-if="!separate() && next" class="w-full h-[1px] mt-10 bg-gray50" />
+        <div 
+            v-if="!separate() && next" 
+            class="w-full h-[1px] bg-gray50"
+            :class="mq.desktop ? 'mt-10' : 'my-6'"
+        />
     </div>
 </template>

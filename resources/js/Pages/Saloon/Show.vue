@@ -1,6 +1,7 @@
 <script setup>
 import MainLayout from '@/Layouts/MainLayout.vue';
 import Breadcrumbs from '@/Components/Breadcrumbs.vue';
+import SaloonHead from '@/Components/SaloonHead.vue';
 import SaloonNav from '@/Components/SaloonNav.vue';
 import Description from '@/Pages/Saloon/Partials/Description.vue';
 import Reviews from '@/Pages/Saloon/Partials/Reviews.vue';
@@ -46,26 +47,11 @@ const isSeeker = usePage().props.auth.user.userable_type === 'App\\Models\\Seeke
     <MainLayout>
         <Breadcrumbs 
             :items="breadcrumbs"
-            class="mb-12"
         />
 
-        <div class="flex items-center gap-6">
-            <img
-                :src="'/' + saloon.logo"
-                class="w-16 h-16 border-solid border-2 border-gray50 rounded-full"
-            >
-            <div>
-                <div class="txt-h1">{{ saloon.name }}</div>
-                <div class="flex gap-1 mt-2">
-                    <div
-                        v-for="x in 5"
-                        :key="x"
-                        class="icon-star-small"
-                        :class="saloon.score < x ? 'gray' : ''"
-                    />
-                </div>
-            </div>
-        </div>
+        <SaloonHead
+            :saloon="saloon"
+        />
 
         <SaloonNav
             :names="names"

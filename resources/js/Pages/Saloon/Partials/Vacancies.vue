@@ -28,19 +28,19 @@ const selected = ref(null);
 
 <template>
     <div class="relative">
+        <CreateNewButton
+            v-if="$page.url.startsWith('/profile')"
+            routeName="vacancy.create"
+            text="Додати вакансію"
+        />
+
         <VacancyItem
-            v-for="(vac, index) in vacancies"
+            v-for="vac in vacancies"
             :key="vac.id"
             :vacancy="vac"
             :index="vac.id"
             :isSeeker="isSeeker"
             v-model="selected"
-        />
-
-        <CreateNewButton
-            v-if="$page.url.startsWith('/profile')"
-            routeName="vacancy.create"
-            text="Додати вакансію"
         />
     </div>
 </template>

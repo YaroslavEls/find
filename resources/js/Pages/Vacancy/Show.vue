@@ -1,4 +1,5 @@
 <script setup>
+import { MqResponsive } from "vue3-mq";
 import MainLayout from '@/Layouts/MainLayout.vue';
 import Breadcrumbs from '@/Components/Breadcrumbs.vue';
 import Tags from '@/Components/Tags.vue';
@@ -47,114 +48,218 @@ const save = () => {
 
 <template>
     <MainLayout>
-        
         <Breadcrumbs
             :items="breadcrumbs"
-            class="mb-12"
         />
 
-        <div class="flex justify-between">
-            <div class="basis-[49%]">
+        <MqResponsive group>
+            <template #desktop>
+                <div class="flex justify-between">
+                    <div class="basis-[49%]">
+                        <Tags
+                            :tags="{ date: vacancy.updated_at, exp: vacancy.experience, empl: vacancy.employment }"
+                            class="mb-10"
+                        />
+
+                        <div class="mb-10 txt-h1">
+                            {{ vacancy.job }} - 
+                            <span class="text-systemgreen txt-h3">{{ vacancy.salary }}₴</span>
+                        </div>
+
+                        <div class="flex gap-4 mb-8">
+                            <div class="basis-6/12">
+                                <div class="mb-2 text-gray40 txt-body">Кав’ярня (Мережа):</div>
+                                <Link
+                                    :href="route('saloons.show', { vacancy: vacancy.id })"
+                                    class="flex items-center gap-2 w-fit"
+                                >
+                                    <img 
+                                        :src="'/' + vacancy.saloon.logo" 
+                                        class="w-6 h-6 rounded-full border-solid border border-gray50"
+                                    >
+                                    <div class="text-blue30 txt-h4">{{ vacancy.saloon.name }}</div>
+                                </Link>
+                            </div>
+                            <div class="basis-6/12">
+                                <div class="mb-2 text-gray40 txt-body">Локація:</div>
+                                <Link
+                                    :href="route('location.show', { vacancy: vacancy.id, location: vacancy.location.id })"
+                                    class="txt-h4"
+                                >
+                                    {{ vacancy.location.city }}, {{ vacancy.location.address }}
+                                </Link>
+                            </div>
+                        </div>
+
+                        <Link
+                            :href="route('saloons.show', { vacancy: vacancy.id, sec: 'reviews' })"
+                            class="block w-fit mb-10"
+                        >
+                            <div class="mb-2 text-gray40 txt-body">Відгуки та рейтинг:</div>
+                            <div class="flex items-center gap-2 txt-h4">
+                                <div>Відгуки</div>
+                                <div>-</div>
+                                <div class="flex gap-1">
+                                    <div
+                                        v-for="x in 5"
+                                        :key="x"
+                                        class="icon-star-small"
+                                        :class="vacancy.score < x ? 'gray' : ''"
+                                    />
+                                </div>
+                            </div>
+                        </Link>
+
+                        <div class="flex gap-4 mb-8">
+                            <div class="basis-6/12">
+                                <div class="mb-2 text-gray40 txt-body">Графік роботи закладу:</div>
+                                <Schedule
+                                    :schedule="vacancy.location.schedule"
+                                />
+                            </div>
+                            <div class="basis-6/12">
+                                <div class="mb-2 text-gray40 txt-body">Наявність світла:</div>
+                                <div class="flex gap-2 items-center">
+                                    <div class="icon-gen" />
+                                    <div class="txt-h4">{{ vacancy.location.gen ? 'Маємо генератор' : 'Генератори відсутні' }}</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-10">
+                            <div class="mb-4 text-gray40 txt-h3">Опис вакансії:</div>
+                            <div class="whitespace-pre-wrap txt-body">{{ vacancy.descr }}</div>
+                        </div>
+
+                        <div class="flex items-center gap-1 mb-4 text-gray40 txt-body">
+                            <div class="icon-date gray" />
+                            Опубліковано - {{ formattedDate }}
+                        </div>
+
+                        <Link :href="route('chat.create', { user: vacancy.saloon.user.id })">
+                            <SubmitButton
+                                v-if="isSeeker"
+                                text="Відгукнутися на вакансію"
+                                regular
+                            />
+                        </Link>
+                    </div>
+
+                    <div class="basis-[728px]">
+                        <div
+                            v-if="isSeeker"
+                            @click="save"
+                            class="flex gap-2 px-6 py-2 mb-6 h-fit w-fit my-0 mr-0 ml-auto bg-blue50 rounded txt-body cursor-pointer"
+                        >
+                            {{ saveData.label }}
+                            <div class="icon-fav" />
+                        </div>
+                        
+                        <Carousel :autoplay="5000" :transition="750" :wrap-around="true">
+                            <Slide 
+                                v-for="(photo, index) in vacancy.location.photos.split(';')" 
+                                :key="index"
+                                class="relative cursor-grab"
+                            >
+                                <img 
+                                    :src="'/' + photo"
+                                    class="w-full h-[448px] border-solid border-gray50 border-2 rounded-xl"
+                                >
+                                <div class="absolute right-4 bottom-2 text-gray90 txt-h5">{{ index + 1 }}/{{ vacancy.location.photos.split(';').length }}</div>
+                            </Slide>
+                        </Carousel>
+
+                        <div class="mt-10">
+                            <div class="mb-4 text-gray40 txt-h3">Соціальні мережі:</div>
+                            <div
+                                v-for="(item, index) in vacancy.saloon.socials.split(';')"
+                                :key="index"
+                                class="mb-6 txt-body"
+                            >
+                                {{ item }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </template>
+
+            <template #mobile>
+                <div class="flex justify-between items-end mb-4">
+                    <div class="txt-h2">{{ vacancy.job }}</div>
+                    <div v-if="isSeeker" @click="save" class="icon-fav" />
+                </div>
+                <div class="mb-4 text-systemgreen txt-h3">{{ vacancy.salary }}₴</div>
+
                 <Tags
                     :tags="{ date: vacancy.updated_at, exp: vacancy.experience, empl: vacancy.employment }"
-                    class="mb-10"
+                    class="mb-8"
                 />
 
-                <div class="mb-10 txt-h1">
-                    {{ vacancy.job }} - 
-                    <span class="text-systemgreen txt-h3">{{ vacancy.salary }}₴</span>
-                </div>
+                <div class="mb-2 text-gray40 txt-body">Кав'ярня (мережа):</div>
+                <Link
+                    :href="route('saloons.show', { vacancy: vacancy.id })"
+                    class="flex items-center gap-2 w-fit mb-6"
+                >
+                    <img 
+                        :src="'/' + vacancy.saloon.logo" 
+                        class="w-6 h-6 rounded-full border-solid border border-gray50"
+                    >
+                    <div class="text-blue30 txt-h4">{{ vacancy.saloon.name }}</div>
+                </Link>
 
-                <div class="flex gap-4 mb-8">
-                    <div class="basis-6/12">
-                        <div class="mb-2 text-gray40 txt-body">Кав’ярня (Мережа):</div>
-                        <Link
-                            :href="route('saloons.show', { vacancy: vacancy.id })"
-                            class="flex items-center gap-2 w-fit"
-                        >
-                            <img 
-                                :src="'/' + vacancy.saloon.logo" 
-                                class="w-6 h-6 rounded-full border-solid border border-gray50"
-                            >
-                            <div class="text-blue30 txt-h4">{{ vacancy.saloon.name }}</div>
-                        </Link>
-                    </div>
-                    <div class="basis-6/12">
-                        <div class="mb-2 text-gray40 txt-body">Локація:</div>
-                        <Link
-                            :href="route('location.show', { vacancy: vacancy.id, location: vacancy.location.id })"
-                            class="txt-h4"
-                        >
-                            {{ vacancy.location.city }}, {{ vacancy.location.address }}
-                        </Link>
-                    </div>
-                </div>
+                <div class="mb-2 text-gray40 txt-body">Локація:</div>
+                <Link
+                    :href="route('location.show', { vacancy: vacancy.id, location: vacancy.location.id })"
+                    class="block mb-6 txt-h5"
+                >
+                    {{ vacancy.location.city }}, {{ vacancy.location.address }}
+                </Link>
 
+                <div class="mb-2 text-gray40 txt-body">Відгуки та рейтинг:</div>
                 <Link
                     :href="route('saloons.show', { vacancy: vacancy.id, sec: 'reviews' })"
-                    class="block w-fit mb-10"
+                    class="flex items-center gap-2 w-fit mb-6 txt-h4"
                 >
-                    <div class="mb-2 text-gray40 txt-body">Відгуки та рейтинг:</div>
-                    <div class="flex items-center gap-2 txt-h4">
-                        <div>Відгуки</div>
-                        <div>-</div>
-                        <div class="flex gap-1">
-                            <div
-                                v-for="x in 5"
-                                :key="x"
-                                class="icon-star-small"
-                                :class="vacancy.score < x ? 'gray' : ''"
-                            />
-                        </div>
+                    <div>Відгуки</div>
+                    <div>-</div>
+                    <div class="flex gap-1">
+                        <div
+                            v-for="x in 5"
+                            :key="x"
+                            class="icon-star-small"
+                            :class="vacancy.score < x ? 'gray' : ''"
+                        />
                     </div>
                 </Link>
 
-                <div class="flex gap-4 mb-8">
-                    <div class="basis-6/12">
-                        <div class="mb-2 text-gray40 txt-body">Графік роботи закладу:</div>
-                        <Schedule
-                            :schedule="vacancy.location.schedule"
-                        />
-                    </div>
-                    <div class="basis-6/12">
-                        <div class="mb-2 text-gray40 txt-body">Наявність світла:</div>
-                        <div class="flex gap-2 items-center">
-                            <div class="icon-gen" />
-                            <div class="txt-h4">{{ vacancy.location.gen ? 'Маємо генератор' : 'Генератори відсутні' }}</div>
-                        </div>
-                    </div>
+                <div class="mb-2 text-gray40 txt-body">Наявність світла:</div>
+                <div class="flex gap-2 items-center mb-6">
+                    <div class="icon-gen" />
+                    <div class="txt-h4">{{ vacancy.location.gen ? 'Маємо генератор' : 'Генератори відсутні' }}</div>
                 </div>
 
-                <div class="mb-10">
-                    <div class="mb-4 text-gray40 txt-h3">Опис вакансії:</div>
-                    <div class="whitespace-pre-wrap txt-body">{{ vacancy.descr }}</div>
-                </div>
+                <div class="mb-2 text-gray40 txt-body">Графік роботи закладу:</div>
+                <Schedule
+                    :schedule="vacancy.location.schedule"
+                    class="mb-10"
+                />
 
-                <div class="flex items-center gap-1 mb-4 text-gray40 txt-body">
-                    <div class="icon-date gray" />
-                    Опубліковано - {{ formattedDate }}
-                </div>
-
-                <Link :href="route('chat.create', { user: vacancy.saloon.user.id })">
+                <Link
+                    v-if="isSeeker"
+                    :href="route('chat.create', { user: vacancy.saloon.user.id })"
+                    class="block mb-10"
+                >
                     <SubmitButton
-                        v-if="isSeeker"
                         text="Відгукнутися на вакансію"
                         regular
                     />
                 </Link>
-            </div>
 
-            <div class="basis-[728px]">
-                <div
-                    v-if="isSeeker"
-                    @click="save"
-                    class="flex gap-2 px-6 py-2 mb-6 h-fit w-fit my-0 mr-0 ml-auto bg-blue50 rounded txt-body cursor-pointer"
-                >
-                    {{ saveData.label }}
-                    <div class="icon-fav" />
-                </div>
-                
-                <Carousel :autoplay="5000" :transition="750" :wrap-around="true">
+                <div class="mb-2 text-gray40 txt-h3">Опис вакансії:</div>
+                <div class="whitespace-pre-wrap mb-10 txt-body">{{ vacancy.descr }}</div>
+
+                <div class="mb-2 text-gray40 txt-h3">Фото:</div>
+                <Carousel :autoplay="5000" :transition="750" :wrap-around="true" class="mb-6">
                     <Slide 
                         v-for="(photo, index) in vacancy.location.photos.split(';')" 
                         :key="index"
@@ -162,25 +267,42 @@ const save = () => {
                     >
                         <img 
                             :src="'/' + photo"
-                            class="w-full h-[448px] border-solid border-gray50 border-2 rounded-xl"
+                            class="w-full h-[202px] border-solid border-2 border-gray50 rounded-lg"
                         >
-                        <div class="absolute right-4 bottom-2 text-gray90 txt-h5">{{ index + 1 }}/{{ vacancy.location.photos.split(';').length }}</div>
+                        <div class="absolute right-4 bottom-2 text-gray90 txt-h5">
+                            {{ index + 1 }}/{{ vacancy.location.photos.split(';').length }}
+                        </div>
                     </Slide>
                 </Carousel>
 
-                <div class="mt-10">
-                    <div class="mb-4 text-gray40 txt-h3">Соціальні мережі:</div>
+                <div class="mb-2 text-gray40 txt-body">Соціальні мережі:</div>
+                <div class="mb-10">
                     <div
                         v-for="(item, index) in vacancy.saloon.socials.split(';')"
                         :key="index"
-                        class="mb-6 txt-body"
+                        class="mb-4 txt-body"
                     >
                         {{ item }}
                     </div>
                 </div>
                 
-            </div>
-        </div>
+                <div class="flex items-center gap-1 mb-4 text-gray40 txt-body">
+                    <div class="icon-date gray" />
+                    Опубліковано - {{ formattedDate }}
+                </div>
+
+                <Link
+                    v-if="isSeeker"
+                    :href="route('chat.create', { user: vacancy.saloon.user.id })"
+                    class="block mb-10"
+                >
+                    <SubmitButton
+                        text="Відгукнутися на вакансію"
+                        regular
+                    />
+                </Link>
+            </template>
+        </MqResponsive>
     </MainLayout>
 </template>
 

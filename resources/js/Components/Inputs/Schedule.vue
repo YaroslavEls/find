@@ -1,6 +1,7 @@
 <script setup>
 import InputLayout from '@/Layouts/InputLayout.vue';
 import { onMounted, ref } from 'vue';
+import { useMq } from "vue3-mq";
 
 defineProps({
     type: {
@@ -20,6 +21,8 @@ const model = defineModel({
     type: Array,
     required: true
 });
+
+const mq = useMq();
 
 const sameInput = ref(null);
 
@@ -60,8 +63,11 @@ onMounted(() => {
                 :type="type"
                 placeholder="07:00 - 20:00"
                 @input="fill($event)"
-                class="p-4 w-full bg-background border-solid border-2 rounded-lg text-gray0 txt-body"
-                :class="error ? 'border-systemred' : 'border-gray40'"
+                class="px-4 w-full bg-background border-solid rounded-lg text-gray0 txt-body"
+                :class="[
+                    error ? 'border-systemred' : 'border-gray40',
+                    mq.desktop ? 'py-4 border-2' : 'py-[14px] border'
+                ]"
             >
 
             <div v-show="mode">
@@ -71,14 +77,16 @@ onMounted(() => {
                 <div
                     v-for="(value, index) in days"
                     :key="index"
-                    class="flex justify-between items-center mb-4"
+                    class="flex justify-between items-center"
+                    :class="mq.desktop ? 'mb-4' : 'mb-2'"
                 >
                     <div class="text-gray40 txt-h5">{{ value }}</div>
                     <input 
                         type="text"
                         placeholder="07:00 - 20:00"
                         v-model="model[index]"
-                        class="w-[272px] text-center py-4 border-solid border-2 border-gray40 rounded-lg bg-background txt-body"
+                        class=" text-center py-4 border-solid border-gray40 rounded-lg bg-background txt-body"
+                        :class="mq.desktop ? 'w-[272px] border-2' : 'w-1/2 border'"
                     >
                 </div>
             </div>

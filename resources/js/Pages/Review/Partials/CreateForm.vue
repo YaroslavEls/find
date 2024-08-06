@@ -1,4 +1,5 @@
 <script setup>
+import { MqResponsive } from "vue3-mq";
 import Stars from '@/Components/Inputs/Stars.vue';
 import SubmitButton from '@/Components/SubmitButton.vue';
 import { ref } from 'vue';
@@ -34,38 +35,62 @@ model.value.regenerate = () => {
 </script>
 
 <template>
-    <div class="flex gap-[3%]">
-        <div class="relative basis-[69%]">
-            <Stars
-                :stars="stars"
-                v-model="model.score"
-                class="absolute right-0 top-[-56px]"
-            />
+    <MqResponsive group>
+        <template #desktop>
+            <div class="flex gap-[3%]">
+                <div class="relative basis-[69%]">
+                    <Stars
+                        :stars="stars"
+                        v-model="model.score"
+                        class="absolute right-0 top-[-56px]"
+                    />
 
-            <textarea
-                rows="1"
-                placeholder="Напишіть свій відгук"
-                ref="textarea"
-                @input="resize"
-                v-model="model.text"
-                class="max-h-[500px] p-4 w-full bg-background border-solid border-2 border-gray40 rounded-lg text-gray0 txt-body"
-            ></textarea>
+                    <textarea
+                        rows="1"
+                        placeholder="Напишіть свій відгук"
+                        ref="textarea"
+                        @input="resize"
+                        v-model="model.text"
+                        class="max-h-[500px] p-4 w-full bg-background border-solid border-2 border-gray40 rounded-lg text-gray0 txt-body"
+                    ></textarea>
 
-            <div v-if="Object.keys(model.errors).length > 0">
-                <div
-                    v-for="(value, key) in model.errors"
-                    :key="key"
-                    class="mt-1 text-systemred txt-secondary"
-                >
-                    {{ value }}
+                    <div v-if="Object.keys(model.errors).length > 0">
+                        <div
+                            v-for="(value, key) in model.errors"
+                            :key="key"
+                            class="mt-1 text-systemred txt-secondary"
+                        >
+                            {{ value }}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="basis-[28%]">
+                    <SubmitButton
+                        text="Опублікувати"
+                    />
                 </div>
             </div>
-        </div>
+        </template>
 
-        <div class="basis-[28%]">
-            <SubmitButton
-                text="Опублікувати"
-            />
-        </div>
-    </div>
+        <template #mobile>
+            <div>
+                <div class="flex justify-between items-end mb-3">
+                    <div class="text-gray40 txt-h3">Залишити відгук</div>
+                    <Stars
+                        :stars="stars"
+                        v-model="model.score"
+                    />
+                </div>
+                <textarea
+                    rows="1"
+                    placeholder="Напишіть свій відгук"
+                    ref="textarea"
+                    @input="resize"
+                    v-model="model.text"
+                    class="max-h-[500px] px-4 py-3 w-full bg-background border-solid border-2 border-gray40 rounded-lg text-gray0 txt-body"
+                ></textarea>
+            </div>
+        </template>
+    </MqResponsive>
 </template>

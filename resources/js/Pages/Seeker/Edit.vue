@@ -5,8 +5,9 @@ import DeleteAccountButton from '@/Components/DeleteAccountButton.vue';
 import Public from '@/Pages/Seeker/Partials/Public.vue';
 import Private from '@/Pages/Seeker/Partials/Private.vue';
 import SubmitButton from '@/Components/SubmitButton.vue';
-import { Head, useForm, usePage } from '@inertiajs/vue3';
+import { Head, useForm } from '@inertiajs/vue3';
 import { ref, watch } from 'vue';
+import { useMq } from 'vue3-mq';
 
 const props = defineProps({
     seeker: {
@@ -14,6 +15,8 @@ const props = defineProps({
         required: true
     }
 });
+
+const mq = useMq();
 
 const tabs = {Public, Private};
 const names = {
@@ -170,13 +173,11 @@ const submit = () => {
         />
 
         <form @submit.prevent="submit">
-            <div class="flex justify-between">
-                <component
-                    :is="tabs[current]"
-                    :seeker="seeker"
-                    v-model="form"
-                />
-            </div>
+            <component
+                :is="tabs[current]"
+                :seeker="seeker"
+                v-model="form"
+            />
 
             <SubmitButton
                 text="Зберегти зміни"

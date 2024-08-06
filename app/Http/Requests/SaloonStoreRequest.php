@@ -23,7 +23,7 @@ class SaloonStoreRequest extends FormRequest
             'socials.*' => ['nullable', 'url:https', 'max:128'],
             
             'locations' => ['required', 'array', 'max:50'],
-            'locations.*' => ['required', 'array:name,city,address,schedule,photos,video'],
+            'locations.*' => ['required', 'array:name,city,address,schedule,gen,photos,video'],
 
             'locations.*.name' => $orig->rules()['name'],
             'locations.*.city' => $orig->rules()['city'],

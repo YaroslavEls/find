@@ -1,6 +1,7 @@
 <script setup>
 import InputLayout from '@/Layouts/InputLayout.vue';
 import { ref } from 'vue';
+import { useMq } from "vue3-mq";
 
 const props = defineProps({
     identifier: { 
@@ -35,6 +36,8 @@ const model = defineModel({
     required: true
 });
 
+const mq = useMq();
+
 const inputEvent = (e) => {
     filename.value = e.target.files[0].name;
     model.value = e.target.files[0];
@@ -61,7 +64,8 @@ if (model.value) {
         <template #default>
             <label 
                 :for="identifier" 
-                class="block py-[15px] w-full bg-background border-solid border-2 border-gray40 rounded-lg text-gray0 txt-buttons text-center cursor-pointer"
+                class="block w-full bg-background border-solid border-gray40 rounded-lg txt-buttons text-center cursor-pointer"
+                :class="mq.desktop ? 'py-[15px] border-2' : 'py-3 border'"
             >
                 {{ filename }}
             </label>

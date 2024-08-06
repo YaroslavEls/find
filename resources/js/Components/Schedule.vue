@@ -1,4 +1,6 @@
 <script setup>
+import { MqResponsive } from "vue3-mq";
+
 const props = defineProps({
     schedule: {
         type: String,
@@ -33,14 +35,33 @@ if (schedule.slice(0, 7).every(value => value === schedule[0])) {
 </script>
 
 <template>
-    <div
-        v-for="(value, key) in formatted"
-        :key="key"
-        class="txt-h4 mb-2"
-    >
-        <div class="flex items-center gap-6">
-            <div>{{ key }}</div>
-            <div>{{ value === '' ? 'Вихідний' : value }}</div>
-        </div>
-    </div>
+    <MqResponsive group>
+        <template #desktop>
+            <div
+                v-for="(value, key) in formatted"
+                :key="key"
+                class="txt-h4 mb-2"
+            >
+                <div class="flex items-center gap-6">
+                    <div>{{ key }}</div>
+                    <div>{{ value === '' ? 'Вихідний' : value }}</div>
+                </div>
+            </div>
+        </template>
+
+        <template #mobile>
+            <div class="flex flex-wrap justify-between gap-y-1">
+                <div
+                    v-for="(value, key) in formatted"
+                    :key="key"
+                    class="basis-1/2 txt-h5"
+                >
+                    <div class="flex items-center gap-6">
+                        <div>{{ key }}</div>
+                        <div>{{ value === '' ? 'Вихідний' : value }}</div>
+                    </div>
+                </div>
+            </div>
+        </template>
+    </MqResponsive>
 </template>

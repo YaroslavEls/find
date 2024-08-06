@@ -1,4 +1,5 @@
 <script setup>
+import { MqResponsive } from "vue3-mq";
 import CreateForm from '@/Pages/Review/Partials/CreateForm.vue';
 import ReviewItem from '@/Components/ReviewItem.vue';
 import { useForm } from '@inertiajs/vue3';
@@ -38,20 +39,42 @@ const active = ref(null);
 
 <template>
     <div>
-        <div class="mb-4 text-gray40 txt-h3">
-            {{ reviews.length }} Відгуків
-        </div>
+        <MqResponsive group>
+            <template #desktop>
+                <div class="mb-4 text-gray40 txt-h3">
+                    {{ reviews.length }} Відгуків
+                </div>
 
-        <form
-            v-if="isSeeker"
-            @submit.prevent="submit" 
-            class="mb-10"
-        >
-            <CreateForm 
-                v-model="form"
-                :count="reviews.length"
-            />
-        </form>
+                <form
+                    v-if="isSeeker"
+                    @submit.prevent="submit" 
+                    class="mb-10"
+                >
+                    <CreateForm 
+                        v-model="form"
+                        :count="reviews.length"
+                    />
+                </form>
+            </template>
+
+            <template #mobile>
+                <form
+                    v-if="isSeeker"
+                    @submit.prevent="submit" 
+                    class="mb-8"
+                >
+                    <CreateForm 
+                        v-model="form"
+                        :count="reviews.length"
+                    />
+                </form>
+
+                <div class="flex items-end gap-2 mb-4">
+                    <div class="txt-h2">Відгуки</div>
+                    <div class="text-gray40 txt-h4">{{ reviews.length }} </div>
+                </div>
+            </template>
+        </MqResponsive>
         
         <ReviewItem
             v-for="(review, index) in reviews"

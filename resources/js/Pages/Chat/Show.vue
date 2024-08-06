@@ -5,6 +5,7 @@ import MessageItem from '@/Components/MessageItem.vue';
 import MessageForm from '@/Components/MessageForm.vue';
 import { Link, useForm, usePage } from '@inertiajs/vue3';
 import { ref, onMounted } from 'vue';
+import { useMq } from 'vue3-mq';
 
 const props = defineProps({
     breadcrumbs: {
@@ -16,6 +17,8 @@ const props = defineProps({
         required: true
     }
 });
+
+const mq = useMq();
 
 const form = useForm({
     text: ''
@@ -70,7 +73,8 @@ const author = (msg) => {
 
             <div
                 v-show="incoming.length > 0"
-                class="mb-10 pb-2 border-solid border-blue50 border-b-[1px] text-blue50  text-right txt-text-buttons"
+                class="border-solid border-blue50 border-b-[1px] text-blue50 text-right txt-text-buttons"
+                :class="mq.desktop ? 'mb-10 pb-2' : 'my-6 pb-1'"
             >
                 Нові повідомлення
             </div>
@@ -86,9 +90,9 @@ const author = (msg) => {
             <form
                 v-if="!chat.archived"
                 @submit.prevent="submit" 
-                class="mb-4"
+                class="mt-10 mb-4"
             >
-                <MessageForm 
+                <MessageForm
                     v-model:form="form"
                     v-model:area="textarea"
                 />

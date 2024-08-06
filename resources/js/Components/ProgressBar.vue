@@ -1,4 +1,6 @@
 <script setup>
+import { useMq } from "vue3-mq";
+
 const props = defineProps({
     heading: {
         type: String,
@@ -14,6 +16,8 @@ const props = defineProps({
     }
 });
 
+const mq = useMq();
+
 const styles = props.steps > 2 
     ? ['w-[25%]', 'w-[50%]', 'w-[75%]', 'w-[100%] rounded-r-xl'] 
     : ['w-[50%]', 'w-[100%] rounded-r-2xl'];
@@ -22,7 +26,10 @@ const styles = props.steps > 2
 
 <template>
     <div class="mb-10">
-        <div class="flex justify-between items-end mb-4">
+        <div 
+            class="flex justify-between items-end"
+            :class="mq.desktop ? 'mb-4' : 'mb-2'"
+        >
             <div class="txt-h1">{{ heading }}</div>
             <div 
                 v-show="current < steps"
@@ -34,7 +41,8 @@ const styles = props.steps > 2
 
         <div 
             v-show="current < steps" 
-            class="w-full h-4 bg-gray10 rounded-2xl"
+            class="w-full bg-gray10 rounded-2xl"
+            :class="mq.desktop ? 'h-4' : 'h-[10px]'"
         >
             <div 
                 :class="styles[current]"

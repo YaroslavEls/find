@@ -1,4 +1,5 @@
 <script setup>
+import { MqResponsive } from "vue3-mq";
 import Schedule from '@/Components/Schedule.vue';
 import OptionsMenu from '@/Components/OptionsMenu.vue';
 import { Link, usePage } from '@inertiajs/vue3';
@@ -39,50 +40,99 @@ const url = !usePage().url.startsWith('/profile')
 </script>
 
 <template>
-    <div class="relative flex mb-12">
+    <MqResponsive group>
+        <template #desktop>
+            <div class="relative flex mb-12">
+                <Link
+                    v-if="!$page.url.startsWith('/profile')"
+                    :href="url"
+                    class="mr-8"
+                >
+                    <img 
+                        :src="'/' + location.photos.split(';')[0]"
+                        class="w-[424px] h-[272px] border-solid border-2 border-gray50 rounded-lg"
+                    >
+                </Link>
 
-        <Link
-            v-if="!$page.url.startsWith('/profile')"
-            :href="url"
-            class="mr-8"
-        >
-            <img 
-                :src="'/' + location.photos.split(';')[0]"
-                class="w-[424px] h-[272px] border-solid border-2 border-gray50 rounded-lg"
-            >
-        </Link>
+                <img
+                    v-else
+                    :src="'/' + location.photos.split(';')[0]"
+                    class="w-[424px] h-[272px] mr-8 border-solid border-2 border-gray50 rounded-lg"
+                >
 
-        <img
-            v-else
-            :src="'/' + location.photos.split(';')[0]"
-            class="w-[424px] h-[272px] mr-8 border-solid border-2 border-gray50 rounded-lg"
-        >
+                <div class="grow mr-8">
+                    <div class="mb-6 txt-h2">{{ location.name }}</div>
+                    <div class="mb-2 text-gray40 txt-body">Адреса:</div>
+                    <div class="mb-6 txt-h4">{{ location.city }}, {{ location.address }}</div>
+                    <div v-if="location.gen" class="flex gap-2 items-center mb-6">
+                        <div class="icon-gen" />
+                        <div class="txt-h4">Маємо генератор</div>
+                    </div>
+                    <div class="mb-2 text-gray40 txt-body">Графік роботи закладу:</div>
+                    <Schedule
+                        :schedule="location.schedule"
+                    />
+                </div>
 
-        <div class="grow mr-8">
-            <div class="mb-6 txt-h2">{{ location.name }}</div>
-            <div class="mb-2 text-gray40 txt-body">Адреса:</div>
-            <div class="mb-6 txt-h4">{{ location.city }}, {{ location.address }}</div>
-            <div v-if="location.gen" class="flex gap-2 items-center mb-6">
-                <div class="icon-gen" />
-                <div class="txt-h4">Маємо генератор</div>
+                <div
+                    v-if="$page.url.startsWith('/profile')"
+                    @click="options(index)"
+                    class="w-14 h-10 rounded-lg icon-options bg-center bg-no-repeat cursor-pointer hover:bg-blue40 duration-300"
+                    :class="model == index ? 'bg-gray70' : 'bg-gray50'"
+                />
+
+                <OptionsMenu
+                    v-if="$page.url.startsWith('/profile')"
+                    v-show="model == index" 
+                    :items="menuItems"
+                />
             </div>
-            <div class="mb-2 text-gray40 txt-body">Графік роботи закладу:</div>
-            <Schedule
-                :schedule="location.schedule"
-            />
-        </div>
+        </template>
 
-        <div
-            v-if="$page.url.startsWith('/profile')"
-            @click="options(index)"
-            class="w-14 h-10 rounded-lg icon-options bg-center bg-no-repeat cursor-pointer hover:bg-blue40 duration-300"
-            :class="model == index ? 'bg-gray70' : 'bg-gray50'"
-        />
+        <template #mobile>
+            <div class="relative mb-8">
+                <div
+                    v-if="$page.url.startsWith('/profile')"
+                    @click="options(index)"
+                    class="absolute top-2 right-2 w-[29px] h-5 rounded icon-options bg-center bg-no-repeat"
+                    :class="model == index ? 'bg-gray70' : 'bg-gray50'"
+                />
 
-        <OptionsMenu
-            v-if="$page.url.startsWith('/profile')"
-            v-show="model == index" 
-            :items="menuItems"
-        />
-    </div>
+                <OptionsMenu
+                    v-if="$page.url.startsWith('/profile')"
+                    v-show="model == index" 
+                    :items="menuItems"
+                />
+
+                <Link 
+                    v-if="!$page.url.startsWith('/profile')"
+                    :href="url" 
+                    class="block mb-4"
+                >
+                    <img
+                        :src="'/' + location.photos.split(';')[0]"
+                        class="w-full h-[202px] border-solid border-2 border-gray50 rounded-lg"
+                    >
+                </Link>
+
+                <img
+                    v-else
+                    :src="'/' + location.photos.split(';')[0]"
+                    class="w-full mb-4 h-[202px] border-solid border-2 border-gray50 rounded-lg"
+                >
+
+                <div class="mb-4 txt-h2">{{ location.name }}</div>
+                <div class="mb-2 text-gray40 txt-body">Адреса:</div>
+                <div class="mb-4 txt-h5">{{ location.city }}, {{ location.address }}</div>
+                <div v-if="location.gen" class="flex gap-1 items-center mb-4">
+                    <div class="icon-gen" />
+                    <div class="txt-h5">Маємо генератор</div>
+                </div>
+                <div class="mb-2 text-gray40 txt-body">Графік роботи закладу:</div>
+                <Schedule
+                    :schedule="location.schedule"
+                />
+            </div>
+        </template>
+    </MqResponsive>
 </template>

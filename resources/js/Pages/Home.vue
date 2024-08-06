@@ -1,4 +1,5 @@
 <script setup>
+import { MqResponsive } from "vue3-mq";
 import MainLayout from '@/Layouts/MainLayout.vue';
 import { Head, Link } from '@inertiajs/vue3';
 import { Carousel, Navigation, Slide } from 'vue3-carousel';
@@ -67,116 +68,230 @@ const currentHowTo = ref(0);
     <Head title="Home" />
     
     <MainLayout>
-        <div class="pb-16">
-            <div class="w-fit px-6 py-3 mb-4 bg-blue50 rounded-lg txt-h5">Платформа для пошуку роботи</div>
-            <div class="max-w-[1032px] font-semibold text-[80px] leading-[110%] mb-4">FIND - шукай роботу, якісно, швидко та зручно</div>
-            <div class="max-w-[728px] mb-16 text-gray30 txt-h3">Місце, для пошуку роботи та кандидатів в сфері загального харчування</div>
-            <div class="flex gap-8 justify-end">
+        <MqResponsive group>
+            <template #desktop>
+                <div class="pb-16">
+                    <div class="w-fit px-6 py-3 mb-4 bg-blue50 rounded-lg txt-h5">Платформа для пошуку роботи</div>
+                    <div class="max-w-[1032px] font-semibold text-[80px] leading-[110%] mb-4">FIND - шукай роботу, якісно, швидко та зручно</div>
+                    <div class="max-w-[728px] mb-16 text-gray30 txt-h3">Місце, для пошуку роботи та кандидатів в сфері загального харчування</div>
+                    <div class="flex gap-8 justify-end">
+                        <Link
+                            :href="route('seekers')"
+                            class="text-center w-[424px] rounded-lg py-[18px] border-solid border-2 border-gray40 txt-buttons"
+                        >
+                            Переглянути кандидатів
+                        </Link>
+                        <Link
+                            :href="route('vacancies')"
+                            class="text-center w-[424px] rounded-lg py-5 bg-blue50 txt-buttons"
+                        >
+                        Переглянути вакансії
+                        </Link>
+                    </div>
+                </div>
+
+                <div class="py-16">
+                    <div class="mb-6 txt-h1">Наші переваги!</div>
+                    <div class="flex justify-between gap-y-8 flex-wrap">
+                        <div class="border-solid border-2 border-gray40 rounded-2xl w-[48.9%] px-8 py-10">
+                            <div class="w-fit px-6 py-3 rounded-xl bg-blue50 mb-4 txt-h4">Швидко та просто</div>
+                            <div class="txt-h4">Простий дизайн який допоможе легко та максимально ефективно знайти нову роботу або новго бариста.</div>
+                        </div>
+                        <div class="border-solid border-2 border-gray40 rounded-2xl w-[48.9%] px-8 py-10">
+                            <div class="w-fit px-6 py-3 rounded-xl bg-blue50 mb-4 txt-h4">Рейтинг</div>
+                            <div class="txt-h4">Переглядай рейтинг та відгуки як про кавʼярні так і про кандидатів, залишай свої відгуки.</div>
+                        </div>
+                        <div class="border-solid border-2 border-gray40 rounded-2xl w-[48.9%] px-8 py-10">
+                            <div class="w-fit px-6 py-3 rounded-xl bg-blue50 mb-4 txt-h4">Варіанти</div>
+                            <div class="txt-h4">FIND - має велику базу як кав’ярень так і барист по всій україні.</div>
+                        </div>
+                        <div class="border-solid border-2 border-gray40 rounded-2xl w-[48.9%] px-8 py-10">
+                            <div class="w-fit px-6 py-3 rounded-xl bg-blue50 mb-4 txt-h4">Чат</div>
+                            <div class="txt-h4">FIND - має свій чат, для твоєї зручності, та спрощення процесу пошуку роботи.</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="py-16">
+                    <div class="mb-6 txt-h1">Відгуки про FIND</div>
+
+                    <Carousel :wrap-around="true">
+                        <Slide v-for="review in reviews" :key="review">
+                            <div class="max-w-[880px] w-full mx-auto my-0">
+                                <div class="flex items-end gap-8 mb-4">
+                                    <img :src="review.photo" class="w-[86px] h-[86px] rounded-full bg-gray0">
+                                    <div>
+                                        <div class="mb-2 txt-h3">{{ review.name }}</div>
+                                        <div class="text-gray40 txt-h4">
+                                            {{ review.job }}
+                                            <span class="text-blue30">{{ review.saloon }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="txt-h5">{{ review.text }}</div>
+                            </div>
+                        </Slide>
+
+                        <template #addons>
+                            <Navigation />
+                        </template>
+                    </Carousel>
+                </div>
+
+                <div class="pt-16">
+                    <div class="flex justify-between items-center">
+                        <div class="mb-6 txt-h1">{{ howto[currentHowTo].heading }}</div>
+                        <div
+                            @click="currentHowTo = currentHowTo === 0 ? 1 : 0"
+                            class="text-blue40 txt-buttons cursor-pointer"
+                        >
+                            {{ howto[currentHowTo].subheading }}
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <div class="border-solid border-2 border-gray40 rounded-2xl px-20 flex h-[152px] items-center mb-6">
+                            <div class="font-semibold text-[64px] leading-[110%] w-10 text-center mr-[206px]">1</div>
+                            <div class="max-w-[835px]">
+                                <div class="mb-2 txt-h3">{{ howto[currentHowTo][1].top }}</div>
+                                <div class="text-blue30 txt-body">{{ howto[currentHowTo][1].bottom }}</div>
+                            </div>
+                        </div>
+                        <div class="border-solid border-2 border-gray40 rounded-2xl px-20 flex h-[152px] items-center mb-6">
+                            <div class="font-semibold text-[64px] leading-[110%] w-10 text-center mr-[206px]">2</div>
+                            <div class="max-w-[835px]">
+                                <div class="mb-2 txt-h3">{{ howto[currentHowTo][2].top }}</div>
+                                <div class="text-blue30 txt-body">{{ howto[currentHowTo][2].bottom }}</div>
+                            </div>
+                        </div>
+                        <div class="border-solid border-2 border-gray40 rounded-2xl px-20 flex h-[152px] items-center mb-6">
+                            <div class="font-semibold text-[64px] leading-[110%] w-10 text-center mr-[206px]">3</div>
+                            <div class="max-w-[835px]">
+                                <div class="mb-2 txt-h3">{{ howto[currentHowTo][3].top }}</div>
+                                <div class="text-blue30 txt-body">{{ howto[currentHowTo][3].bottom }}</div>
+                            </div>
+                        </div>
+                    </div>
+                    <Link
+                        :href="howto[currentHowTo].route" 
+                        class="block w-[576px] bg-blue50 mt-16 mx-auto p-5 text-center rounded-xl txt-buttons"
+                    >
+                        Почати пошук!
+                    </Link>
+                </div>
+            </template>
+
+            <template #mobile>
+                <div class="w-fit mb-4 px-3 py-2 bg-blue50 rounded txt-body">Платформа для пошуку роботи</div>
+                <div class="mb-2 txt-h2">FIND - шукай роботу, якісно, швидко та зручно</div>
+                <div class="mb-10 text-gray30 txt-h5">Місце, для пошуку роботи та кандидатів в сфері загального харчування</div>
+                <Link
+                    :href="route('vacancies')"
+                    class="block mb-4 text-center rounded-lg py-3 bg-blue50 txt-buttons"
+                >
+                    Переглянути вакансії
+                </Link>
                 <Link
                     :href="route('seekers')"
-                    class="text-center w-[424px] rounded-lg py-[18px] border-solid border-2 border-gray40 txt-buttons"
+                    class="block mb-16 text-center rounded-lg py-3 border-solid border border-gray40 txt-buttons"
                 >
                     Переглянути кандидатів
                 </Link>
-                <Link
-                    :href="route('vacancies')"
-                    class="text-center w-[424px] rounded-lg py-5 bg-blue50 txt-buttons"
-                >
-                Переглянути вакансії
-                </Link>
-            </div>
-        </div>
 
-        <div class="py-16">
-            <div class="mb-6 txt-h1">Наші переваги!</div>
-            <div class="flex justify-between gap-y-8 flex-wrap">
-                <div class="border-solid border-2 border-gray40 rounded-2xl w-[48.9%] px-8 py-10">
-                    <div class="w-fit px-6 py-3 rounded-xl bg-blue50 mb-4 txt-h4">Швидко та просто</div>
-                    <div class="txt-h4">Простий дизайн який допоможе легко та максимально ефективно знайти нову роботу або новго бариста.</div>
+                <div class="mb-2 txt-h2">Наші переваги!</div>
+                <div class="mb-4 p-4 border-solid border border-gray40 rounded-lg">
+                    <div class="w-fit mb-2 px-3 py-[6px] bg-blue50 rounded txt-body">Швидко та просто</div>
+                    <div class="txt-h5">Простий дизайн який допоможе легко та максимально ефективно знайти нову роботу або новго бариста.</div>
                 </div>
-                <div class="border-solid border-2 border-gray40 rounded-2xl w-[48.9%] px-8 py-10">
-                    <div class="w-fit px-6 py-3 rounded-xl bg-blue50 mb-4 txt-h4">Рейтинг</div>
-                    <div class="txt-h4">Переглядай рейтинг та відгуки як про кавʼярні так і про кандидатів, залишай свої відгуки.</div>
+                <div class="mb-4 p-4 border-solid border border-gray40 rounded-lg">
+                    <div class="w-fit mb-2 px-3 py-[6px] bg-blue50 rounded txt-body">Рейтинг</div>
+                    <div class="txt-h5">Переглядай рейтинг та відгуки як про кавʼярні так і про кандидатів, залишай свої відгуки.</div>
                 </div>
-                <div class="border-solid border-2 border-gray40 rounded-2xl w-[48.9%] px-8 py-10">
-                    <div class="w-fit px-6 py-3 rounded-xl bg-blue50 mb-4 txt-h4">Варіанти</div>
-                    <div class="txt-h4">FIND - має велику базу як кав’ярень так і барист по всій україні.</div>
+                <div class="mb-4 p-4 border-solid border border-gray40 rounded-lg">
+                    <div class="w-fit mb-2 px-3 py-[6px] bg-blue50 rounded txt-body">Варіанти</div>
+                    <div class="txt-h5">FIND - має велику базу як кав’ярень так і барист по всій україні.</div>
                 </div>
-                <div class="border-solid border-2 border-gray40 rounded-2xl w-[48.9%] px-8 py-10">
-                    <div class="w-fit px-6 py-3 rounded-xl bg-blue50 mb-4 txt-h4">Чат</div>
-                    <div class="txt-h4">FIND - має свій чат, для твоєї зручності, та спрощення процесу пошуку роботи.</div>
+                <div class="mb-16 p-4 border-solid border border-gray40 rounded-lg">
+                    <div class="w-fit mb-2 px-3 py-[6px] bg-blue50 rounded txt-body">Чат</div>
+                    <div class="txt-h5">FIND - має свій чат, для твоєї зручності, та спрощення процесу пошуку роботи.</div>
                 </div>
-            </div>
-        </div>
-        
-        <div class="py-16">
-            <div class="mb-6 txt-h1">Відгуки про FIND</div>
 
-            <Carousel :wrap-around="true">
-                <Slide v-for="review in reviews" :key="review">
-                    <div class="max-w-[880px] w-full mx-auto my-0">
-                        <div class="flex items-end gap-8 mb-4">
-                            <img :src="review.photo" class="w-[86px] h-[86px] rounded-full bg-gray0">
-                            <div>
-                                <div class="mb-2 txt-h3">{{ review.name }}</div>
-                                <div class="text-gray40 txt-h4">
-                                    {{ review.job }}
-                                    <span class="text-blue30">{{ review.saloon }}</span>
+                <div class="mb-2 txt-h2">Відгуки про FIND</div>
+                <Carousel :wrap-around="true" class="mb-16">
+                    <Slide v-for="review in reviews" :key="review">
+                        <div class="max-w-[313px] w-full mx-auto my-0">
+                            <div class="flex items-center gap-2 mb-2">
+                                <img :src="review.photo" class="w-12 h-12 rounded-full bg-gray0">
+                                <div>
+                                    <div class="txt-h4">{{ review.name }}</div>
+                                    <div class="text-gray40 txt-secondary">
+                                        {{ review.job }}
+                                        <span class="text-blue30">{{ review.saloon }}</span>
+                                    </div>
                                 </div>
                             </div>
+                            <div class="txt-h5">{{ review.text }}</div>
                         </div>
-                        <div class="txt-h5">{{ review.text }}</div>
+                    </Slide>
+
+                    <template #addons>
+                        <Navigation />
+                    </template>
+                </Carousel>
+
+                <div class="mb-2 txt-h2">{{ howto[currentHowTo].heading }}</div>
+                <div class="flex mb-4">
+                    <div
+                        @click="currentHowTo = 0"
+                        class="basis-1/2 py-3 rounded-l-lg text-center txt-text-buttons"
+                        :class="currentHowTo === 0 ? 'bg-blue50' : 'bg-gray60'"
+                    >
+                        Я бариста
                     </div>
-                </Slide>
+                    <div
+                        @click="currentHowTo = 1"
+                        class="basis-1/2 py-3 rounded-r-lg text-center txt-text-buttons"
+                        :class="currentHowTo === 1 ? 'bg-blue50' : 'bg-gray60'"
+                    >
+                        Я роботодавець
+                    </div>
+                </div>
+                <div class="mb-4 p-4 border-solid border border-gray40 rounded-lg">
+                    <div class="txt-h5">{{ howto[currentHowTo][1].top }}</div>
+                    <div 
+                        v-show="howto[currentHowTo][1].bottom" 
+                        class="mt-2 text-blue30 txt-secondary"
+                    >
+                        {{ howto[currentHowTo][1].bottom }}
+                    </div>
+                </div>
+                <div class="mb-4 p-4 border-solid border border-gray40 rounded-lg">
+                    <div class="txt-h5">{{ howto[currentHowTo][2].top }}</div>
+                    <div
+                        v-show="howto[currentHowTo][1].bottom"
+                        class="mt-2 text-blue30 txt-secondary"
+                    >
+                        {{ howto[currentHowTo][2].bottom }}
+                    </div>
+                </div>
+                <div class="mb-16 p-4 border-solid border border-gray40 rounded-lg">
+                    <div class="txt-h5">{{ howto[currentHowTo][3].top }}</div>
+                    <div
+                        v-show="howto[currentHowTo][1].bottom"
+                        class="mt-2 text-blue30 txt-secondary"
+                    >
+                        {{ howto[currentHowTo][3].bottom }}
+                    </div>
+                </div>
 
-                <template #addons>
-                    <Navigation />
-                </template>
-            </Carousel>
-        </div>
-
-        <div class="pt-16">
-            <div class="flex justify-between items-center">
-                <div class="mb-6 txt-h1">{{ howto[currentHowTo].heading }}</div>
-                <div
-                    @click="currentHowTo = currentHowTo === 0 ? 1 : 0"
-                    class="text-blue40 txt-buttons cursor-pointer"
+                <Link
+                    :href="howto[currentHowTo].route" 
+                    class="block text-center rounded-lg py-3 bg-blue50 txt-buttons"
                 >
-                    {{ howto[currentHowTo].subheading }}
-                </div>
-            </div>
-            
-            <div>
-                <div class="border-solid border-2 border-gray40 rounded-2xl px-20 flex h-[152px] items-center mb-6">
-                    <div class="font-semibold text-[64px] leading-[110%] w-10 text-center mr-[206px]">1</div>
-                    <div class="max-w-[835px]">
-                        <div class="mb-2 txt-h3">{{ howto[currentHowTo][1].top }}</div>
-                        <div class="text-blue30 txt-body">{{ howto[currentHowTo][1].bottom }}</div>
-                    </div>
-                </div>
-                <div class="border-solid border-2 border-gray40 rounded-2xl px-20 flex h-[152px] items-center mb-6">
-                    <div class="font-semibold text-[64px] leading-[110%] w-10 text-center mr-[206px]">2</div>
-                    <div class="max-w-[835px]">
-                        <div class="mb-2 txt-h3">{{ howto[currentHowTo][2].top }}</div>
-                        <div class="text-blue30 txt-body">{{ howto[currentHowTo][2].bottom }}</div>
-                    </div>
-                </div>
-                <div class="border-solid border-2 border-gray40 rounded-2xl px-20 flex h-[152px] items-center mb-6">
-                    <div class="font-semibold text-[64px] leading-[110%] w-10 text-center mr-[206px]">3</div>
-                    <div class="max-w-[835px]">
-                        <div class="mb-2 txt-h3">{{ howto[currentHowTo][3].top }}</div>
-                        <div class="text-blue30 txt-body">{{ howto[currentHowTo][3].bottom }}</div>
-                    </div>
-                </div>
-            </div>
-            <Link
-                :href="howto[currentHowTo].route" 
-                class="block w-[576px] bg-blue50 mt-16 mx-auto p-5 text-center rounded-xl txt-buttons"
-            >
-                Почати пошук!
-            </Link>
-        </div>
-
+                    Почати пошук
+                </Link>
+            </template>
+        </MqResponsive>
     </MainLayout>
 </template>
 
@@ -201,5 +316,23 @@ section.carousel {
 .carousel__prev .carousel__icon,
 .carousel__next .carousel__icon {
     display: none;
+}
+
+@media only screen and (max-width: 768px) {
+    .carousel__prev {
+        margin: 0;
+        left: -15px;
+        width: 40px;
+        height: 40px;
+        background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cmask id='mask0_584_7519' style='mask-type:alpha' maskUnits='userSpaceOnUse' x='0' y='0' width='40' height='40'%3E%3Crect width='40' height='40' fill='%23D9D9D9'/%3E%3C/mask%3E%3Cg mask='url(%23mask0_584_7519)'%3E%3Cpath d='M17.2773 19.972L24.3607 27.0553C24.629 27.3239 24.7586 27.6481 24.7494 28.0278C24.7403 28.4073 24.6014 28.7313 24.3328 28.9999C24.0641 29.2685 23.7354 29.4028 23.3465 29.4028C22.9576 29.4028 22.629 29.2685 22.3607 28.9999L14.3048 20.9445C14.1568 20.7962 14.0526 20.6434 13.9923 20.4862C13.9323 20.3287 13.9023 20.1573 13.9023 19.972C13.9023 19.787 13.9323 19.6158 13.9923 19.4583C14.0526 19.3008 14.1568 19.148 14.3048 18.9999L22.3882 10.9166C22.6568 10.648 22.9855 10.5137 23.3744 10.5137C23.7633 10.5137 24.0921 10.648 24.3607 10.9166C24.629 11.1852 24.7632 11.5139 24.7632 11.9028C24.7632 12.2917 24.629 12.6203 24.3607 12.8887L17.2773 19.972Z' fill='%23A9B2C2'/%3E%3C/g%3E%3C/svg%3E");
+    }
+
+    .carousel__next {
+        margin: 0;
+        right: -15px;
+        width: 40px;
+        height: 40px;
+        background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cmask id='mask0_584_7513' style='mask-type:alpha' maskUnits='userSpaceOnUse' x='0' y='0' width='40' height='40'%3E%3Crect width='40' height='40' fill='%23D9D9D9'/%3E%3C/mask%3E%3Cg mask='url(%23mask0_584_7513)'%3E%3Cpath d='M21.7225 19.9719L14.6392 12.8886C14.3709 12.6203 14.2413 12.2962 14.2505 11.9165C14.2596 11.5368 14.3985 11.2128 14.6671 10.9444C14.9357 10.6758 15.2645 10.5415 15.6534 10.5415C16.0423 10.5415 16.3709 10.6758 16.6392 10.9444L24.695 18.9998C24.8431 19.1479 24.9473 19.3007 25.0075 19.4582C25.0675 19.6157 25.0975 19.7869 25.0975 19.9719C25.0975 20.1572 25.0675 20.3286 25.0075 20.4861C24.9473 20.6433 24.8431 20.7961 24.695 20.9444L16.6117 29.0278C16.3431 29.2961 16.0189 29.4257 15.6392 29.4165C15.2598 29.4073 14.9357 29.2684 14.6671 28.9998C14.3985 28.7312 14.2642 28.4025 14.2642 28.0136C14.2642 27.6247 14.3985 27.2961 14.6671 27.0278L21.7225 19.9719Z' fill='%23A9B2C2'/%3E%3C/g%3E%3C/svg%3E");
+    }
 }
 </style>

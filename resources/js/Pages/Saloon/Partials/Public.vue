@@ -1,4 +1,5 @@
 <script setup>
+import { MqResponsive } from "vue3-mq";
 import EmailPasswordPlaceholders from '@/Components/EmailPasswordPlaceholders.vue';
 import DeleteAccountButton from '@/Components/DeleteAccountButton.vue';
 import Text from '@/Components/Inputs/Text.vue';
@@ -96,47 +97,93 @@ const selectedFile = props.saloon.logo;
 </script>
 
 <template>
-    <div class="flex justify-between">
-        <form @submit.prevent="submit" class="w-[576px]">
-            <div class="mb-4 text-gray40 txt-h3">Загальні:</div>
-            <Text
-                type="text"
-                heading="Назва закладу або мережі"
-                :error="form.errors.name"
-                v-model="form.name"
-            />
-            <TextArea
-                heading="Про вас"
-                :error="form.errors.descr"
-                v-model="form.descr"
-            />
-            <EmailPasswordPlaceholders
-                :email="$page.props.auth.user.email"
-            />
-            <SubmitButton
-                text="Зберегти зміни"
-                :class="Object.values(modified).some(value => value !== false) ? 'bg-blue50' : 'bg-gray70 text-gray40 pointer-events-none'"
-            />
-            <DeleteAccountButton />
-        </form>
+    <MqResponsive group>
+        <template #desktop>
+            <div class="flex justify-between">
+                <form @submit.prevent="submit" class="w-[576px]">
+                    <div class="mb-4 text-gray40 txt-h3">Загальні:</div>
+                    <Text
+                        type="text"
+                        heading="Назва закладу або мережі"
+                        :error="form.errors.name"
+                        v-model="form.name"
+                    />
+                    <TextArea
+                        heading="Про вас"
+                        :error="form.errors.descr"
+                        v-model="form.descr"
+                    />
+                    <div class="mb-4 text-gray40 txt-h3">Персональні:</div>
+                    <EmailPasswordPlaceholders
+                        :email="$page.props.auth.user.email"
+                    />
+                    <SubmitButton
+                        text="Зберегти зміни"
+                        :class="Object.values(modified).some(value => value !== false) ? 'bg-blue50' : 'bg-gray70 text-gray40 pointer-events-none'"
+                    />
+                    <DeleteAccountButton />
+                </form>
 
-        <div class="w-[728px]">
-            <div class="mb-4 text-gray40 txt-h3">Логотип:</div>
-            <UpdatePhoto
-                identifier="saloon_logo"
-                allowed=".png,.jpg,.svg"
-                :original="saloon.logo"
-                button="Змінити фото"
-                :error="form.errors.logo"
-                v-model="form.logo"
-            />
-            <div class="mb-4 text-gray40 txt-h3">Соціальні мережі:</div>
-            <Lines
-                :error="form.errors"
-                v-model="form.socials"
-            />
-        </div>
-    </div>
+                <div class="w-[728px]">
+                    <div class="mb-4 text-gray40 txt-h3">Логотип:</div>
+                    <UpdatePhoto
+                        identifier="saloon_logo"
+                        allowed=".png,.jpg,.svg"
+                        :original="saloon.logo"
+                        button="Змінити фото"
+                        :error="form.errors.logo"
+                        v-model="form.logo"
+                    />
+                    <div class="mb-4 text-gray40 txt-h3">Соціальні мережі:</div>
+                    <Lines
+                        :error="form.errors"
+                        v-model="form.socials"
+                    />
+                </div>
+            </div>
+        </template>
+
+        <template #mobile>
+            <form @submit.prevent="submit" class="w-full">
+                <div class="mb-4 text-gray40 txt-h3">Загальні:</div>
+                <Text
+                    type="text"
+                    heading="Назва закладу або мережі"
+                    :error="form.errors.name"
+                    v-model="form.name"
+                />
+                <TextArea
+                    heading="Про вас"
+                    :error="form.errors.descr"
+                    v-model="form.descr"
+                />
+                <div class="mb-4 text-gray40 txt-h3">Персональні:</div>
+                <EmailPasswordPlaceholders
+                    :email="$page.props.auth.user.email"
+                />
+                <div class="mb-4 text-gray40 txt-h3">Логотип:</div>
+                <UpdatePhoto
+                    identifier="saloon_logo"
+                    allowed=".png,.jpg,.svg"
+                    :original="saloon.logo"
+                    button="Змінити фото"
+                    :error="form.errors.logo"
+                    v-model="form.logo"
+                />
+                <div class="mb-4 text-gray40 txt-h3">Соціальні мережі:</div>
+                <Lines
+                    :error="form.errors"
+                    v-model="form.socials"
+                />
+                <SubmitButton
+                    text="Зберегти зміни"
+                    :class="Object.values(modified).some(value => value !== false) ? 'bg-blue50' : 'bg-gray70 text-gray40 pointer-events-none'"
+                />
+                <DeleteAccountButton />
+            </form>
+        </template>
+    </MqResponsive>
+    
 
     <!-- <VueCropper 
         v-show="selectedFile" 

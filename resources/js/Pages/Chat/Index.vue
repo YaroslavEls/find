@@ -4,6 +4,7 @@ import ChatsNav from '@/Components/ChatsNav.vue';
 import ChatItem from '@/Components/ChatItem.vue';
 import { Link } from '@inertiajs/vue3';
 import { ref } from 'vue';
+import { useMq } from 'vue3-mq';
 
 defineProps({
     chats: {
@@ -11,6 +12,8 @@ defineProps({
         required: true
     }
 });
+
+const mq = useMq();
 
 const path = window.location.origin + window.location.pathname;
 const urlParams = new URLSearchParams(window.location.search);
@@ -32,6 +35,7 @@ const selected = ref(null);
         />
 
         <Link
+            v-if="mq.desktop"
             :href="sort === 'archive' ? path : path + '?sort=archive'" 
             class="block w-fit mt-14 mr-0 ml-auto px-6 py-2 h-fit rounded txt-body bg-blue50">
             {{ sort === 'archive' ? 'Повернутись з архіву' : 'Перейти до архіву' }}
