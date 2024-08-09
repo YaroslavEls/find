@@ -16,24 +16,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', HomeController::class)
     ->name('home');
 
-Route::get('/register/seeker', [SeekerController::class, 'create'])
-    ->name('register.seeker');
-Route::post('/register/seeker', [SeekerController::class, 'store'])
-    ->name('register.seeker');
-Route::post('/register/seeker/validate', [SeekerController::class, 'validate'])
-    ->name('seeker.validate');
-
-Route::get('/register/saloon', [SaloonController::class, 'create'])
-    ->name('register.saloon');
-Route::post('/register/saloon', [SaloonController::class, 'store'])
-    ->name('register.saloon');
-Route::post('/register/saloon/validate', [SaloonController::class, 'validate'])
-    ->name('saloon.validate');
-
-Route::post('/registe/location/validate', [LocationController::class, 'validate'])
-    ->name('location.validate');
-
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth', 'completed'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])
         ->name('profile');
 
@@ -79,12 +62,33 @@ Route::middleware('auth')->group(function () {
         ->name('chat.unarchive');
 });
 
-Route::middleware(['auth', 'seeker'])->group(function () {
+Route::middleware(['auth', 'seeker', 'incompleted'])->group(function () {
+    Route::get('/register/seeker', [SeekerController::class, 'create'])
+        ->name('register.seeker');
+    Route::post('/register/seeker', [SeekerController::class, 'store'])
+        ->name('register.seeker');
+    Route::post('/register/seeker/validate', [SeekerController::class, 'validate'])
+        ->name('seeker.validate');
+});
+
+Route::middleware(['auth', 'seeker', 'completed'])->group(function () {
     Route::patch('/seeker', [SeekerController::class, 'update'])
         ->name('seeker.update');
 });
 
-Route::middleware(['auth', 'saloon'])->group(function () {
+Route::middleware(['auth', 'saloon', 'incompleted'])->group(function () {
+    Route::get('/register/saloon', [SaloonController::class, 'create'])
+        ->name('register.saloon');
+    Route::post('/register/saloon', [SaloonController::class, 'store'])
+        ->name('register.saloon');
+    Route::post('/register/saloon/validate', [SaloonController::class, 'validate'])
+        ->name('saloon.validate');
+
+    Route::post('/register/location/validate', [LocationController::class, 'validate'])
+        ->name('location.validate');
+});
+
+Route::middleware(['auth', 'saloon', 'completed'])->group(function () {
     Route::patch('/saloon', [SaloonController::class, 'update'])
         ->name('saloon.update');
 

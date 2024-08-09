@@ -88,7 +88,7 @@ watch (
             modified.value.gen = false;
             return;
         }
-        modified.value.gen = newData;
+        modified.value.gen = +newData;
     }
 );
 watch (
@@ -134,9 +134,9 @@ const submit = () => {
 </script>
 
 <template>
-    <MainLayout>
-        <Head title="Add a Location" />
+    <Head title="Редагування Локації" />
 
+    <MainLayout>
         <form 
             @submit.prevent="submit" 
             class="w-full"

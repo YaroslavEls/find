@@ -70,7 +70,7 @@ const menuItems = () => {
                         <div class="txt-h5">{{ latestSender }}</div>
                         <div class="text-gray30 txt-secondary">{{ formattedDate }}</div>
                     </div>
-                    <div class="text-gray40 txt-body cropped-4">{{ chat.latest_message.text }}</div>
+                    <div class="text-gray40 txt-body crop crop-4">{{ chat.latest_message.text }}</div>
                 </Link>
 
                 <div
@@ -102,7 +102,7 @@ const menuItems = () => {
                     :href="route('chat.show', { chat: chat })"
                     class="block w-[80%]"
                 >
-                    <div class="mb-2 txt-body cropped-2">{{ chat.latest_message.text }}</div>
+                    <div class="mb-2 txt-body crop crop-2">{{ chat.latest_message.text }}</div>
                     <div class="text-gray30 txt-secondary">{{ formattedDate }}</div>
                 </Link>
 

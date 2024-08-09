@@ -115,9 +115,9 @@ const submit = () => {
 </script>
 
 <template>
-    <MainLayout>
-        <Head title="Add a Location" />
+    <Head title="Редагування Вакансії" />
 
+    <MainLayout>
         <form 
             @submit.prevent="submit" 
             :class="mq.desktop ? 'w-[576px] mt-6 mb-32 mx-auto' : 'w-full'"

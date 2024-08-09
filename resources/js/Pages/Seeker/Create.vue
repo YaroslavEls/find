@@ -7,7 +7,7 @@ import RegForm2 from '@/Pages/Seeker/Partials/RegForm2.vue';
 import RegForm3 from '@/Pages/Seeker/Partials/RegForm3.vue';
 import RegForm4 from '@/Pages/Seeker/Partials/RegForm4.vue';
 import { Head, useForm } from '@inertiajs/vue3';
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 
 const tabs = [RegForm1, RegForm2, RegForm3, RegForm4];
 const current = ref(0);
@@ -24,7 +24,7 @@ const forms = [
         salary: null
     }),
     useForm({
-        city: null,
+        city: 'Київ',
         employment: ['Повна', 'Неповна', 'Підміни']
     }),
     useForm({
@@ -61,12 +61,32 @@ const next = () => {
     });
 };
 
+const isFilled = (form) => {
+    const data = form.data();
+    if (data.hasOwnProperty('cv')) delete data['cv'];
+
+    const values = Object.values(data);
+    for (let i = 0; i < values.length; i++) {
+        if (values[i] === null || values[i] === '') return false;
+    }
+    return true;
+};
+
+const allow = computed(() => {
+    return [
+        isFilled(forms[0]),
+        isFilled(forms[1]),
+        isFilled(forms[2]),
+        isFilled(forms[3]),
+    ];
+});
+
 </script>
 
 <template>
-    <AuthLayout>
-        <Head title="Register" />
+    <Head title="Реєстрація Кандидата" />
 
+    <AuthLayout>
         <div class="w-full">
             <div
                 @click="current = move(--current)"
@@ -90,6 +110,7 @@ const next = () => {
                 <SubmitButton 
                     :text="current == 3 ? 'Почати пошук' : 'Продовжити'"
                     class="mt-auto"
+                    :class="allow[current] ? 'bg-blue50' : 'bg-gray70 text-gray40 pointer-events-none'"
                 />
             </form>
         </div>

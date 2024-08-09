@@ -1,6 +1,5 @@
 <script setup>
 import { MqResponsive } from "vue3-mq";
-import ApplicationLogo from '@/Components/ApplicationLogo.vue';
 import { Link } from '@inertiajs/vue3';
 
 const scrollTop = () => {
@@ -18,9 +17,7 @@ const scrollTop = () => {
             <footer class="border-solid border-t-2 border-gray50">
                 <div class="flex justify-between max-w-[1512px] w-full mx-auto px-6 py-8">
                     <div>
-                        <Link href="/" class="w-fit">
-                            <ApplicationLogo />
-                        </Link>
+                        <Link href="/" class="w-fit"><div class="icon-logo" /></Link>
                         <div class="flex items-center gap-2 mt-6">
                             <div class="txt-body">Зроблено в Україні!</div>
                             <div class="icon-flag" />
@@ -43,7 +40,7 @@ const scrollTop = () => {
             <footer class="px-4 pt-4 pb-12">
                 <div class="flex justify-between items-center mb-4">
                     <Link href="/">
-                        <div class="icon-mob-logo" />
+                        <div class="icon-logo" />
                     </Link>
                     <div @click="scrollTop" class="text-blue40 txt-buttons">Повернутися вгору</div>
                 </div>

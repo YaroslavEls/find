@@ -1,5 +1,6 @@
 <script setup>
 import Text from '@/Components/Inputs/Text.vue';
+import City from '@/Components/Inputs/City.vue';
 import Schedule from '@/Components/Inputs/Schedule.vue';
 import Checkbox from '@/Components/Inputs/Checkbox.vue';
 import File from '@/Components/Inputs/File.vue';
@@ -20,13 +21,13 @@ const model = defineModel({
         :error="model.errors.name"
         v-model="model.name"
     />
-    <Text
-        type="text"
-        placeholder="Київ"
-        heading="Місто"
-        :error="model.errors.city"
-        v-model="model.city"
-    />
+    <Suspense>
+        <City 
+            heading="Місто"
+            :error="model.errors.city"
+            v-model="model.city"
+        />
+    </Suspense>
     <Text
         type="text"
         placeholder="Свободи 32"

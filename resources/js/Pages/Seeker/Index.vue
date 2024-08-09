@@ -3,6 +3,7 @@ import MainLayout from '@/Layouts/MainLayout.vue';
 import ListingNav from '@/Components/ListingNav.vue';
 import SeekerItem from '@/Components/SeekerItem.vue';
 import Pagination from '@/Components/Pagination.vue';
+import { Head } from '@inertiajs/vue3';
 import { ref } from 'vue';
 
 defineProps({
@@ -17,6 +18,8 @@ const selected = ref(null);
 </script>
 
 <template>
+    <Head title="Кандидати" />
+
     <MainLayout>
         <ListingNav
             heading="Кандидати"

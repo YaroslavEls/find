@@ -55,6 +55,11 @@ class User extends Authenticatable
         return $this->morphTo();
     }
 
+    public function is_completed(): bool
+    {
+        return ! is_null($this->userable_id);
+    }
+
     public function is_seeker(): bool
     {
         return $this->userable_type === 'App\Models\Seeker';

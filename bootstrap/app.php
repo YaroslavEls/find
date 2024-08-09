@@ -1,13 +1,15 @@
 <?php
 
+use App\Http\Middleware\EnsureUserIsCompleted;
+use App\Http\Middleware\EnsureUserIsIncompleted;
 use App\Http\Middleware\EnsureUserIsSaloon;
 use App\Http\Middleware\EnsureUserIsSeeker;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 use Illuminate\Http\Request;
-
-// use Illuminate\Routing\Exceptions\InvalidSignatureException;
+use Inertia\Inertia;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -23,6 +25,8 @@ return Application::configure(basePath: dirname(__DIR__))
         ]);
 
         $middleware->alias([
+            'completed' => EnsureUserIsCompleted::class,
+            'incompleted' => EnsureUserIsIncompleted::class,
             'seeker' => EnsureUserIsSeeker::class,
             'saloon' => EnsureUserIsSaloon::class
         ]);
@@ -35,7 +39,11 @@ return Application::configure(basePath: dirname(__DIR__))
         });
     })
     ->withExceptions(function (Exceptions $exceptions) {
-        // $exceptions->render(function (InvalidSignatureException $e) {
-        //     return redirect(route('home'));
-        // });
+        $exceptions->render(function (HttpException $e, Request $request) {
+            return Inertia::render('Error' ,[
+                'code' => $e->getStatusCode()
+            ])
+            ->toResponse($request)
+            ->setStatusCode($e->getStatusCode());
+        });
     })->create();

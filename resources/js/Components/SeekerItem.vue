@@ -41,11 +41,11 @@ const menuItems = () => {
                 <Link :href="route('seekers.show', { seeker: seeker.id })" class="mr-8">
                     <img
                         :src="seeker.photo" 
-                        class="w-[272px] h-[272px] border-solid border-2 border-gray50 rounded-lg"
+                        class="min-w-[272px] w-[272px] h-[272px] border-solid border-2 border-gray50 rounded-lg"
                     >
                 </Link>
 
-                <div class="max-w-[880px] grow mr-8">
+                <div class="max-w-[880px] w-full mr-8">
                     <Tags
                         :tags="{ date: seeker.updated_at, exp: seeker.experience, empl: seeker.employment }"
                         class="mb-4"
@@ -65,7 +65,7 @@ const menuItems = () => {
                         <div class="icon-person" />
                         <div>{{ seeker.name }}</div>
                     </Link>
-                    <div class="mb-2 text-gray40 txt-body cropped-2">
+                    <div class="mb-2 text-gray40 txt-body crop crop-2">
                         {{ seeker.info }}
                     </div>
                     <Link
@@ -78,7 +78,7 @@ const menuItems = () => {
 
                 <div
                     @click="options(seeker.id)"
-                    class="w-14 h-10 my-0 mr-0 ml-auto rounded-lg icon-options bg-center bg-no-repeat cursor-pointer hover:bg-blue40 duration-300"
+                    class="max-w-14 w-full h-10 my-0 mr-0 ml-auto rounded-lg icon-options bg-center bg-no-repeat cursor-pointer hover:bg-blue40 duration-300"
                     :class="model == seeker.id ? 'bg-gray70' : 'bg-gray50'"
                 />
 
@@ -132,7 +132,7 @@ const menuItems = () => {
                     <div>{{ seeker.name }}</div>
                 </Link>
 
-                <div class="text-gray40 txt-body cropped-2">
+                <div class="text-gray40 txt-body crop crop-2">
                     {{ seeker.info }}
                 </div>
             </div>

@@ -4,7 +4,7 @@ import MainLayout from '@/Layouts/MainLayout.vue';
 import Breadcrumbs from '@/Components/Breadcrumbs.vue';
 import CreateForm from '@/Pages/Review/Partials/CreateForm.vue';
 import ReviewItem from '@/Components/ReviewItem.vue';
-import { useForm } from '@inertiajs/vue3';
+import { Head, useForm } from '@inertiajs/vue3';
 import { ref } from 'vue';
 
 const props = defineProps({
@@ -39,6 +39,8 @@ const active = ref(null);
 </script>
 
 <template>
+    <Head :title="'Відгуки про ' + seeker.name" />
+
     <MainLayout>
         <Breadcrumbs
             :items="breadcrumbs"

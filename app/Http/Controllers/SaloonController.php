@@ -40,6 +40,10 @@ class SaloonController extends Controller
     {
         $validated = $request->validated();
 
+        if (!array_key_exists('locations', $validated)) {
+            $validated['locations'] = [];
+        }
+
         $locations = $validated['locations'];
         unset($validated['locations']);
 

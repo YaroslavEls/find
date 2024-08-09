@@ -20,8 +20,10 @@ const textarea = ref(null);
 const stars = [ref(null), ref(null), ref(null), ref(null), ref(null)];
 
 const resize = () => {
+    const posY = window.scrollY;
     textarea.value.style.height = 'auto';
     textarea.value.style.height = (textarea.value.scrollHeight + 5) + 'px';
+    window.scrollTo(0, posY);
 };
 
 model.value.regenerate = () => {

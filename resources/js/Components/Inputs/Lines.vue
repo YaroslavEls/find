@@ -39,6 +39,7 @@ const errors = () => {
                 class="relative"
             >
                 <input
+                    @keydown.enter.prevent
                     type="text"
                     placeholder="https://"
                     v-model="model[index]" 

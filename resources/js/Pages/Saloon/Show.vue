@@ -42,7 +42,7 @@ const isSeeker = usePage().props.auth.user.userable_type === 'App\\Models\\Seeke
 </script>
 
 <template>
-    <Head title="Profile" />
+    <Head :title="saloon.name" />
 
     <MainLayout>
         <Breadcrumbs 

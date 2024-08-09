@@ -6,6 +6,7 @@ import AgreeCheckbox from '@/Pages/Auth/Partials/AgreeCheckbox.vue';
 import SubmitButton from '@/Components/SubmitButton.vue';
 import Text from '@/Components/Inputs/Text.vue';
 import { Head, Link, useForm } from '@inertiajs/vue3';
+import { computed } from 'vue';
 
 const props = defineProps({
     type: {
@@ -28,12 +29,18 @@ const submit = () => {
     });
 };
 
+const allow = computed(() => {
+    return form.email !== '' 
+        && form.password !== ''
+        && form.agree === true;
+});
+
 </script>
 
 <template>
-    <AuthLayout>
-        <Head title="Register" />
+    <Head title="Реєстрація" />
 
+    <AuthLayout>
         <form @submit.prevent="submit" class="w-full">
             <BackButton />
             <div class="txt-h1 mb-4">Реєстрація</div>
@@ -61,6 +68,7 @@ const submit = () => {
             />
             <SubmitButton
                 text="Продовжити"
+                :class="allow ? 'bg-blue50' : 'bg-gray70 text-gray40 pointer-events-none'"
             />
 
             <Link

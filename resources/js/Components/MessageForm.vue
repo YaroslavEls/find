@@ -14,8 +14,10 @@ const area = defineModel('area', {
 const mq = useMq();
 
 const resize = () => {
+    const posY = window.scrollY;
     area.value.style.height = 'auto';
     area.value.style.height = (area.value.scrollHeight + 4) + 'px';
+    window.scrollTo(0, posY);
 };
 
 </script>

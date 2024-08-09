@@ -2,7 +2,7 @@
 import MainLayout from '@/Layouts/MainLayout.vue';
 import ChatsNav from '@/Components/ChatsNav.vue';
 import ChatItem from '@/Components/ChatItem.vue';
-import { Link } from '@inertiajs/vue3';
+import { Head, Link } from '@inertiajs/vue3';
 import { ref } from 'vue';
 import { useMq } from 'vue3-mq';
 
@@ -24,6 +24,8 @@ const selected = ref(null);
 </script>
 
 <template>
+    <Head title="Чати" />
+
     <MainLayout>
         <ChatsNav />
 

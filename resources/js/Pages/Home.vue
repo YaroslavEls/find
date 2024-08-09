@@ -1,7 +1,7 @@
 <script setup>
 import { MqResponsive } from "vue3-mq";
 import MainLayout from '@/Layouts/MainLayout.vue';
-import { Head, Link } from '@inertiajs/vue3';
+import { Head, Link, usePage } from '@inertiajs/vue3';
 import { Carousel, Navigation, Slide } from 'vue3-carousel';
 import 'vue3-carousel/dist/carousel.css';
 import { ref } from 'vue';
@@ -60,12 +60,19 @@ const howto = [
     },
 ];
 
-const currentHowTo = ref(0);
+const isSeeker = () => usePage().props.auth.user
+    ? usePage().props.auth.user.userable_type === 'App\\Models\\Seeker'
+    : false;
+const isSaloon = () => usePage().props.auth.user
+    ? usePage().props.auth.user.userable_type === 'App\\Models\\Saloon'
+    : false;
+
+const currentHowTo = ref(isSaloon() ? 1 : 0);
 
 </script>
 
 <template>
-    <Head title="Home" />
+    <Head title="Головна" />
     
     <MainLayout>
         <MqResponsive group>
@@ -76,16 +83,19 @@ const currentHowTo = ref(0);
                     <div class="max-w-[728px] mb-16 text-gray30 txt-h3">Місце, для пошуку роботи та кандидатів в сфері загального харчування</div>
                     <div class="flex gap-8 justify-end">
                         <Link
+                            v-show="!isSeeker()"
                             :href="route('seekers')"
-                            class="text-center w-[424px] rounded-lg py-[18px] border-solid border-2 border-gray40 txt-buttons"
+                            class="text-center w-[424px] rounded-lg txt-buttons"
+                            :class="isSaloon() ? 'py-5 bg-blue50' : 'py-[18px] border-solid border-2 border-gray40'"
                         >
                             Переглянути кандидатів
                         </Link>
                         <Link
+                            v-show="!isSaloon()"
                             :href="route('vacancies')"
                             class="text-center w-[424px] rounded-lg py-5 bg-blue50 txt-buttons"
                         >
-                        Переглянути вакансії
+                            Переглянути вакансії
                         </Link>
                     </div>
                 </div>
@@ -117,7 +127,7 @@ const currentHowTo = ref(0);
 
                     <Carousel :wrap-around="true">
                         <Slide v-for="review in reviews" :key="review">
-                            <div class="max-w-[880px] w-full mx-auto my-0">
+                            <div class="max-w-[1080px] w-full px-[100px] mx-auto my-0">
                                 <div class="flex items-end gap-8 mb-4">
                                     <img :src="review.photo" class="w-[86px] h-[86px] rounded-full bg-gray0">
                                     <div>
@@ -142,6 +152,7 @@ const currentHowTo = ref(0);
                     <div class="flex justify-between items-center">
                         <div class="mb-6 txt-h1">{{ howto[currentHowTo].heading }}</div>
                         <div
+                            v-show="!isSeeker() && !isSaloon()"
                             @click="currentHowTo = currentHowTo === 0 ? 1 : 0"
                             class="text-blue40 txt-buttons cursor-pointer"
                         >
@@ -150,25 +161,15 @@ const currentHowTo = ref(0);
                     </div>
                     
                     <div>
-                        <div class="border-solid border-2 border-gray40 rounded-2xl px-20 flex h-[152px] items-center mb-6">
-                            <div class="font-semibold text-[64px] leading-[110%] w-10 text-center mr-[206px]">1</div>
+                        <div
+                            v-for="i in 3"
+                            :key="i"
+                            class="border-solid border-2 border-gray40 rounded-2xl min-h-[154px] py-5 px-20 flex items-center mb-6"
+                        >
+                            <div class="font-semibold text-[64px] leading-[110%] w-10 text-center mr-[14%]">{{ i }}</div>
                             <div class="max-w-[835px]">
-                                <div class="mb-2 txt-h3">{{ howto[currentHowTo][1].top }}</div>
-                                <div class="text-blue30 txt-body">{{ howto[currentHowTo][1].bottom }}</div>
-                            </div>
-                        </div>
-                        <div class="border-solid border-2 border-gray40 rounded-2xl px-20 flex h-[152px] items-center mb-6">
-                            <div class="font-semibold text-[64px] leading-[110%] w-10 text-center mr-[206px]">2</div>
-                            <div class="max-w-[835px]">
-                                <div class="mb-2 txt-h3">{{ howto[currentHowTo][2].top }}</div>
-                                <div class="text-blue30 txt-body">{{ howto[currentHowTo][2].bottom }}</div>
-                            </div>
-                        </div>
-                        <div class="border-solid border-2 border-gray40 rounded-2xl px-20 flex h-[152px] items-center mb-6">
-                            <div class="font-semibold text-[64px] leading-[110%] w-10 text-center mr-[206px]">3</div>
-                            <div class="max-w-[835px]">
-                                <div class="mb-2 txt-h3">{{ howto[currentHowTo][3].top }}</div>
-                                <div class="text-blue30 txt-body">{{ howto[currentHowTo][3].bottom }}</div>
+                                <div class="mb-2 txt-h3">{{ howto[currentHowTo][i].top }}</div>
+                                <div class="text-blue30 txt-body">{{ howto[currentHowTo][i].bottom }}</div>
                             </div>
                         </div>
                     </div>
@@ -186,14 +187,18 @@ const currentHowTo = ref(0);
                 <div class="mb-2 txt-h2">FIND - шукай роботу, якісно, швидко та зручно</div>
                 <div class="mb-10 text-gray30 txt-h5">Місце, для пошуку роботи та кандидатів в сфері загального харчування</div>
                 <Link
+                    v-show="!isSaloon()"
                     :href="route('vacancies')"
-                    class="block mb-4 text-center rounded-lg py-3 bg-blue50 txt-buttons"
+                    class="block text-center rounded-lg py-3 bg-blue50 txt-buttons"
+                    :class="isSeeker() ? 'mb-16' : 'mb-4'"
                 >
                     Переглянути вакансії
                 </Link>
                 <Link
+                    v-show="!isSeeker()"
                     :href="route('seekers')"
-                    class="block mb-16 text-center rounded-lg py-3 border-solid border border-gray40 txt-buttons"
+                    class="block mb-16 text-center rounded-lg py-3 txt-buttons"
+                    :class="isSaloon() ? 'bg-blue50' : 'border-solid border border-gray40'"
                 >
                     Переглянути кандидатів
                 </Link>
@@ -240,7 +245,7 @@ const currentHowTo = ref(0);
                 </Carousel>
 
                 <div class="mb-2 txt-h2">{{ howto[currentHowTo].heading }}</div>
-                <div class="flex mb-4">
+                <div v-show="!isSeeker() && !isSaloon()" class="flex mb-4">
                     <div
                         @click="currentHowTo = 0"
                         class="basis-1/2 py-3 rounded-l-lg text-center txt-text-buttons"

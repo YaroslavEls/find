@@ -7,7 +7,7 @@ import Schedule from '@/Components/Schedule.vue';
 import SubmitButton from '@/Components/SubmitButton.vue';
 import { Carousel, Slide } from 'vue3-carousel';
 import 'vue3-carousel/dist/carousel.css';
-import { router, Link, usePage } from '@inertiajs/vue3';
+import { Head, router, Link, usePage } from '@inertiajs/vue3';
 
 const props = defineProps({
     breadcrumbs: {
@@ -19,6 +19,14 @@ const props = defineProps({
         required: true
     }
 });
+
+const reviews = props.vacancy.score == 0
+    ? 'Відгуки відсутні'
+    : props.vacancy.score < 2
+        ? 'Негативні відгуки'
+        : props.vacancy.score < 3.5
+            ? 'Середні відгуки'
+            : 'Позитивні відгуки';
 
 const formatter = new Intl.DateTimeFormat('uk-UA', { day: 'numeric', month: 'long', year: 'numeric' });
 const date = new Date(props.vacancy.created_at);
@@ -47,6 +55,8 @@ const save = () => {
 </script>
 
 <template>
+    <Head :title="vacancy.job" />
+
     <MainLayout>
         <Breadcrumbs
             :items="breadcrumbs"
@@ -54,8 +64,8 @@ const save = () => {
 
         <MqResponsive group>
             <template #desktop>
-                <div class="flex justify-between">
-                    <div class="basis-[49%]">
+                <div class="flex justify-between gap-6">
+                    <div class="basis-[728px]">
                         <Tags
                             :tags="{ date: vacancy.updated_at, exp: vacancy.experience, empl: vacancy.employment }"
                             class="mb-10"
@@ -97,7 +107,7 @@ const save = () => {
                         >
                             <div class="mb-2 text-gray40 txt-body">Відгуки та рейтинг:</div>
                             <div class="flex items-center gap-2 txt-h4">
-                                <div>Відгуки</div>
+                                <div>{{ reviews }}</div>
                                 <div>-</div>
                                 <div class="flex gap-1">
                                     <div
@@ -220,7 +230,7 @@ const save = () => {
                     :href="route('saloons.show', { vacancy: vacancy.id, sec: 'reviews' })"
                     class="flex items-center gap-2 w-fit mb-6 txt-h4"
                 >
-                    <div>Відгуки</div>
+                    <div>{{ reviews }}</div>
                     <div>-</div>
                     <div class="flex gap-1">
                         <div

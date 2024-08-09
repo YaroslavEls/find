@@ -52,14 +52,15 @@ const show = ref(false);
             </div>
             <div 
                 v-show="show" 
-                class="absolute w-full border-solid border-gray40 rounded-lg bg-background z-10"
-                :class="mq.desktop ? 'border-2' : 'border'"
+                class="absolute w-full overflow-scroll border-solid border-gray40 rounded-lg bg-background z-10"
+                :class="mq.desktop ? 'max-h-[500px] border-2' : 'max-h-[300px] border'"
             >
                 <div
                     v-for="opt in options"
                     :key="opt"
                     @click="model = opt" 
-                    class="flex justify-between p-4 cursor-pointer"
+                    class="flex justify-between cursor-pointer"
+                    :class="mq.desktop ? 'p-4' : 'px-3 py-2'"
                 >
                     <div class="txt-body">{{ opt }}</div>
                     <div 

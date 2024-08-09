@@ -4,6 +4,7 @@ import TextArea from '@/Components/Inputs/TextArea.vue';
 import File from '@/Components/Inputs/File.vue';
 import Lines from '@/Components/Inputs/Lines.vue';
 import SubmitButton from '@/Components/SubmitButton.vue';
+import { computed } from 'vue';
 
 const model = defineModel({
     type: Object,
@@ -25,6 +26,12 @@ const submit = () => {
         onSuccess: () => current.value = ++current.value
     });
 };
+
+const allow = computed(() => {
+    return (model.value.name !== '' && model.value.name !== null)
+        && (model.value.descr !== '' && model.value.descr !== null)
+        && model.value.logo !== null;
+});
 
 </script>
 
@@ -61,6 +68,7 @@ const submit = () => {
         <SubmitButton
             text="Продовжити"
             class="mt-2"
+            :class="allow ? 'bg-blue50' : 'bg-gray70 text-gray40 pointer-events-none'"
         />
     </form>
 </template>

@@ -58,6 +58,7 @@ onMounted(() => {
 
         <template #default>
             <input
+                @keydown.enter.prevent
                 ref="sameInput"
                 v-show="!mode"
                 :type="type"
@@ -81,7 +82,8 @@ onMounted(() => {
                     :class="mq.desktop ? 'mb-4' : 'mb-2'"
                 >
                     <div class="text-gray40 txt-h5">{{ value }}</div>
-                    <input 
+                    <input
+                        @keydown.enter.prevent
                         type="text"
                         placeholder="07:00 - 20:00"
                         v-model="model[index]"

@@ -21,9 +21,9 @@ const form = useForm({
 </script>
 
 <template>
-    <AuthLayout>
-        <Head title="Register" />
+    <Head title="Реєстрація Закладу" />
 
+    <AuthLayout>
         <div class="w-full">
             <div
                 @click="current = --current"

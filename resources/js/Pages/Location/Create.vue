@@ -4,13 +4,14 @@ import BackButton from '@/Components/BackButton.vue';
 import SubmitButton from '@/Components/SubmitButton.vue';
 import FormContent from '@/Pages/Location/Partials/FormContent.vue';
 import { Head, useForm } from '@inertiajs/vue3';
+import { computed } from 'vue';
 import { useMq } from 'vue3-mq';
 
 const mq = useMq();
 
 const form = useForm({
     name: null,
-    city: null,
+    city: 'Київ',
     address: null,
     schedule: [null, null, null, null, null, null, null],
     gen: false,
@@ -24,12 +25,25 @@ const submit = () => {
     });
 };
 
+const allow = computed(() => {
+    const data = form.data();
+    delete data['video'];
+
+    if (data.photos.length === 0) return false;
+
+    const values = Object.values(data);
+    for (let i = 0; i < values.length; i++) {
+        if (values[i] === null || values[i] === '') return false;
+    }
+    return true;
+})
+
 </script>
 
 <template>
-    <MainLayout>
-        <Head title="Add a Location" />
+    <Head title="Створення Локації" />
 
+    <MainLayout>
         <form 
             @submit.prevent="submit" 
             class="w-full"
@@ -45,6 +59,7 @@ const submit = () => {
 
             <SubmitButton
                 text="Створити"
+                :class="allow ? 'bg-blue50' : 'bg-gray70 text-gray40 pointer-events-none'"
             />
         </form>
     </MainLayout>

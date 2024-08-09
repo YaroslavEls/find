@@ -1,5 +1,5 @@
 <script setup>
-import Text from '@/Components/Inputs/Text.vue';
+import City from '@/Components/Inputs/City.vue';
 import DropdownMulti from '@/Components/Inputs/DropdownMulti.vue';
 
 const model = defineModel({ 
@@ -10,13 +10,13 @@ const model = defineModel({
 </script>
 
 <template>
-    <Text
-        type="text"
-        placeholder="Київ"
-        heading="Місто"
-        :error="model.errors.city"
-        v-model="model.city"
-    />
+    <Suspense>
+        <City 
+            heading="Місто"
+            :error="model.errors.city"
+            v-model="model.city"
+        />
+    </Suspense>
     <DropdownMulti
         heading="Тип зайнятості"
         :error="model.errors.employment"

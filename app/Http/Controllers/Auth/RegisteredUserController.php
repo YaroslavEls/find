@@ -9,7 +9,6 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\URL;
 use Illuminate\Validation\Rules;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -33,12 +32,16 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
+        $messages = [
+            'email.unique' => 'Користувач з даною електронною адресою вже зареєстрований.'
+        ];
+
         $request->validate([
             'userable_type' => 'required|in:App\Models\Seeker,App\Models\Saloon',
             'email' => 'required|string|lowercase|email|max:255|unique:'.User::class,
             'password' => ['required', Rules\Password::defaults()],
             'agree' => ['required', 'accepted']
-        ]);
+        ], $messages);
 
         $user = User::create([
             'userable_type' => $request->userable_type,

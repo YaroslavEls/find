@@ -4,7 +4,7 @@ import MainLayout from '@/Layouts/MainLayout.vue';
 import Breadcrumbs from '@/Components/Breadcrumbs.vue';
 import Tags from '@/Components/Tags.vue';
 import SubmitButton from '@/Components/SubmitButton.vue';
-import { router, Link, usePage } from '@inertiajs/vue3';
+import { Head, router, Link, usePage } from '@inertiajs/vue3';
 
 const props = defineProps({
     breadcrumbs: {
@@ -20,6 +20,28 @@ const props = defineProps({
 const age = Math.floor(
     (new Date() - new Date(props.seeker.birthday).getTime()) / 3.15576e+10
 );
+let suffix = '';
+
+switch (age % 10) {
+    case 1:
+        suffix = 'рік';
+        break;
+    case 2:
+    case 3:
+    case 4:
+        suffix = 'роки';
+        break;
+    default:
+        suffix = 'років';
+}
+
+const reviews = props.seeker.score == 0
+    ? 'Відгуки відсутні'
+    : props.seeker.score < 2
+        ? 'Негативні відгуки'
+        : props.seeker.score < 3.5
+            ? 'Середні відгуки'
+            : 'Позитивні відгуки';
 
 const formatter = new Intl.DateTimeFormat('uk-UA', { day: 'numeric', month: 'long', year: 'numeric' });
 const date = new Date(props.seeker.created_at);
@@ -46,6 +68,8 @@ const save = () => {
 </script>
 
 <template>
+    <Head :title="seeker.name" />
+
     <MainLayout>
         <Breadcrumbs
             :items="breadcrumbs"
@@ -53,8 +77,8 @@ const save = () => {
 
         <MqResponsive group>
             <template #desktop>
-                <div class="flex justify-between">
-                    <div class="basis-[49%]">
+                <div class="flex justify-between gap-6">
+                    <div class="basis-[728px]">
                         <Tags
                             :tags="{ date: seeker.updated_at, exp: seeker.experience, empl: seeker.employment }"
                             class="mb-10"
@@ -72,7 +96,7 @@ const save = () => {
                             </div>
                             <div class="basis-4/12">
                                 <div class="mb-2 text-gray40 txt-body">Вік:</div>
-                                <div class="txt-h4">{{ age }} рік</div>
+                                <div class="txt-h4">{{ age }} {{ suffix }}</div>
                             </div>
                             <div class="basis-4/12">
                                 <div class="mb-2 text-gray40 txt-body">Локація:</div>
@@ -86,7 +110,7 @@ const save = () => {
                         >
                             <div class="mb-2 text-gray40 txt-body">Відгуки та рейтинг:</div>
                             <div class="flex items-center gap-2 txt-h4">
-                                <div>Відгуки</div>
+                                <div>{{ reviews }}</div>
                                 <div>-</div>
                                 <div class="flex gap-1">
                                     <div
@@ -147,7 +171,7 @@ const save = () => {
                 <div class="mb-2 text-gray40 txt-body">Ім'я:</div>
                 <div class="mb-6 txt-h5">{{ seeker.name }}</div>
                 <div class="mb-2 text-gray40 txt-body">Вік:</div>
-                <div class="mb-6 txt-h5">{{ age }}</div>
+                <div class="mb-6 txt-h5">{{ age }} {{ suffix }}</div>
                 <div class="mb-2 text-gray40 txt-body">Локація:</div>
                 <div class="mb-6 txt-h5">{{ seeker.city }}</div>
                 <div class="mb-2 text-gray40 txt-body">Відгуки та рейтинг:</div>
@@ -155,7 +179,7 @@ const save = () => {
                     :href="route('seekers.reviews', { seeker: seeker.id })"
                     class="flex items-center gap-2 w-fit mb-10 txt-h4"
                 >
-                    <div>Відгуки</div>
+                    <div>{{ reviews }}</div>
                     <div>-</div>
                     <div class="flex gap-1">
                         <div

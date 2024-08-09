@@ -3,6 +3,7 @@ import { MqResponsive } from "vue3-mq";
 import DropdownSingle from '@/Components/Inputs/DropdownSingle.vue';
 import Range from '@/Components/Inputs/Range.vue';
 import Text from '@/Components/Inputs/Text.vue';
+import City from '@/Components/Inputs/City.vue';
 import DropdownMulti from '@/Components/Inputs/DropdownMulti.vue';
 import TextArea from '@/Components/Inputs/TextArea.vue';
 import File from '@/Components/Inputs/File.vue';
@@ -25,7 +26,7 @@ const model = defineModel({
 <template>
     <MqResponsive group>
         <template #desktop>
-            <div class="flex justify-between">
+            <div class="flex justify-between gap-6">
                 <div class="w-[576px]">
                     <DropdownSingle
                         heading="Посада"
@@ -48,13 +49,14 @@ const model = defineModel({
                         :error="model.errors.salary"
                         v-model="model.salary"
                     />
-                    <Text
-                        type="text"
-                        heading="Місто"
-                        note="Ваше місце проживання"
-                        :error="model.errors.city"
-                        v-model="model.city"
-                    />
+                    <Suspense>
+                        <City 
+                            heading="Місто"
+                            note="Ваше місце проживання"
+                            :error="model.errors.city"
+                            v-model="model.city"
+                        />
+                    </Suspense>
                     <DropdownMulti
                         heading="Тип зайнятості"
                         :error="model.errors.employment"
@@ -119,13 +121,14 @@ const model = defineModel({
                 :error="model.errors.salary"
                 v-model="model.salary"
             />
-            <Text
-                type="text"
-                heading="Місто"
-                note="Ваше місце проживання"
-                :error="model.errors.city"
-                v-model="model.city"
-            />
+            <Suspense>
+                <City 
+                    heading="Місто"
+                    note="Ваше місце проживання"
+                    :error="model.errors.city"
+                    v-model="model.city"
+                />
+            </Suspense>
             <DropdownMulti
                 heading="Тип зайнятості"
                 :error="model.errors.employment"

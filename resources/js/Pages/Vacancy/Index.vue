@@ -3,7 +3,7 @@ import MainLayout from '@/Layouts/MainLayout.vue';
 import ListingNav from '@/Components/ListingNav.vue';
 import VacancyItem from '@/Components/VacancyItem.vue';
 import Pagination from '@/Components/Pagination.vue';
-import { usePage } from '@inertiajs/vue3';
+import { Head, usePage } from '@inertiajs/vue3';
 import { ref } from 'vue';
 
 const props = defineProps({
@@ -20,6 +20,8 @@ const isSeeker = usePage().props.auth.user.userable_type === 'App\\Models\\Seeke
 </script>
 
 <template>
+    <Head title="Вакансії" />
+
     <MainLayout>
         <ListingNav
             heading="Вакансії"

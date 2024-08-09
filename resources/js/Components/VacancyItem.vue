@@ -59,11 +59,11 @@ const menuItems = () => {
                 >
                     <img
                         :src="'/' + vacancy.location.photos.split(';')[0]" 
-                        class="w-[424px] h-[272px] border-solid border-2 border-gray50 rounded-lg"
+                        class="min-w-[272px] w-[424px] h-[272px] border-solid border-2 border-gray50 rounded-lg"
                     >
                 </Link>
                 
-                <div class="grow mr-8 max-w-[728px]">
+                <div class="mr-8 max-w-[728px] w-full">
                     <Tags
                         :tags="{ date: vacancy.updated_at, exp: vacancy.experience, empl: vacancy.employment }"
                         class="mb-4"
@@ -94,7 +94,7 @@ const menuItems = () => {
                         >
                         <div class="text-blue30 txt-h5">{{ vacancy.saloon.name }}</div>
                     </Link>
-                    <div class="mb-2 text-gray40 txt-body cropped-2">
+                    <div class="mb-2 text-gray40 txt-body crop crop-2">
                         {{ vacancy.descr }}
                     </div>
                     <Link
@@ -108,7 +108,7 @@ const menuItems = () => {
                 <div
                     v-if="isSeeker"
                     @click="options(index)"
-                    class="w-14 h-10 my-0 mr-0 ml-auto rounded-lg icon-options bg-center bg-no-repeat cursor-pointer hover:bg-blue40 duration-300"
+                    class="max-w-14 w-full h-10 my-0 mr-0 ml-auto rounded-lg icon-options bg-center bg-no-repeat cursor-pointer hover:bg-blue40 duration-300"
                     :class="model == index ? 'bg-gray70' : 'bg-gray50'"
                 />
 
@@ -174,7 +174,7 @@ const menuItems = () => {
                     <div class="text-blue30 txt-h5">{{ vacancy.saloon.name }}</div>
                 </Link>
 
-                <div class="text-gray40 txt-body cropped-2">
+                <div class="text-gray40 txt-body crop crop-2">
                     {{ vacancy.descr }}
                 </div>
             </div>

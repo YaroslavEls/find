@@ -68,6 +68,10 @@ class LocationController extends Controller
     {
         $validated = $request->validated();
 
+        if (!array_key_exists('oldPhotos', $validated)) {
+            $validated['oldPhotos'] = [];
+        }
+
         $validated['schedule'] = implode(';', $validated['schedule']);
 
         $pathes = [];

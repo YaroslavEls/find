@@ -99,7 +99,7 @@ const selectedFile = props.saloon.logo;
 <template>
     <MqResponsive group>
         <template #desktop>
-            <div class="flex justify-between">
+            <div class="flex justify-between gap-6">
                 <form @submit.prevent="submit" class="w-[576px]">
                     <div class="mb-4 text-gray40 txt-h3">Загальні:</div>
                     <Text

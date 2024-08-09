@@ -31,6 +31,14 @@ class HandleInertiaRequests extends Middleware
     {
         $data = null;
 
+        if ($request->user()) {
+            $data = [
+                'user_id' => $request->user()->id,
+                'userable_type' => $request->user()->userable_type,
+                'email' => $request->user()->email,
+            ];
+        }
+
         if ($request->user() && $request->user()->userable) {
             $data = [
                 'user_id' => $request->user()->id,

@@ -3,7 +3,7 @@ import { MqResponsive } from "vue3-mq";
 import MainLayout from '@/Layouts/MainLayout.vue';
 import Breadcrumbs from '@/Components/Breadcrumbs.vue';
 import VacancyItem from '@/Components/VacancyItem.vue';
-import { usePage } from '@inertiajs/vue3';
+import { Head, usePage } from '@inertiajs/vue3';
 import { ref } from 'vue';
 
 defineProps({
@@ -24,6 +24,8 @@ const isSeeker = usePage().props.auth.user.userable_type === 'App\\Models\\Seeke
 </script>
 
 <template>
+    <Head :title="location.name" />
+
     <MainLayout>
         <Breadcrumbs 
             :items="breadcrumbs"

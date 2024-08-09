@@ -3,7 +3,7 @@ import MainLayout from '@/Layouts/MainLayout.vue';
 import Breadcrumbs from '@/Components/Breadcrumbs.vue';
 import MessageItem from '@/Components/MessageItem.vue';
 import MessageForm from '@/Components/MessageForm.vue';
-import { Link, useForm, usePage } from '@inertiajs/vue3';
+import { Head, Link, useForm, usePage } from '@inertiajs/vue3';
 import { ref, onMounted } from 'vue';
 import { useMq } from 'vue3-mq';
 
@@ -56,6 +56,8 @@ const author = (msg) => {
 </script>
 
 <template>
+    <Head title="Чат" />
+
     <MainLayout>
         <Breadcrumbs
             :items="breadcrumbs"

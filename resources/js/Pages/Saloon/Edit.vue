@@ -35,7 +35,7 @@ const current = useRemember(props.section ?? 'public');
 </script>
 
 <template>
-    <Head title="Profile" />
+    <Head title="Профіль" />
 
     <MainLayout>
         <ProfileNav

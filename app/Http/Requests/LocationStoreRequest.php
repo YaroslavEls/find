@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use App\Models\Location;
+use App\Rules\LocationUnique;
 use Illuminate\Foundation\Http\FormRequest;
 
 class LocationStoreRequest extends FormRequest
@@ -15,7 +16,7 @@ class LocationStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string', 'max:128'],
+            'name' => ['required', 'string', 'max:128', new LocationUnique],
             'city' => ['required', 'string', 'max:128'],
             'address' => ['required', 'string', 'max:128'],
             'schedule' => ['required', 'array', 'size:7'],

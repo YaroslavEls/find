@@ -24,6 +24,7 @@ const mq = useMq();
 
 <template>
     <input
+        @keydown.enter.prevent
         :type="type"
         :placeholder="placeholder"
         v-model="model" 

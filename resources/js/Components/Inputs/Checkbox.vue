@@ -19,7 +19,8 @@ const model = defineModel({
 <template>
     <div class="mb-10">
         <div class="flex gap-2">
-            <input 
+            <input
+                @keydown.enter.prevent
                 type="checkbox" 
                 v-model="model"
                 class="w-6 h-6 border-none rounded bg-gray50"

@@ -2,7 +2,7 @@
 import MainLayout from '@/Layouts/MainLayout.vue';
 import Breadcrumbs from '@/Components/Breadcrumbs.vue';
 import MessageForm from '@/Components/MessageForm.vue';
-import { useForm } from '@inertiajs/vue3';
+import { Head, useForm } from '@inertiajs/vue3';
 import { ref } from 'vue';
 
 const props = defineProps({
@@ -29,6 +29,8 @@ const submit = () => {
 </script>
 
 <template>
+    <Head title="Новий чат" />
+
     <MainLayout>
         <Breadcrumbs
             :items="breadcrumbs"

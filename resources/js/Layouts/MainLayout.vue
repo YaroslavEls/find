@@ -1,6 +1,7 @@
 <script setup>
 import HeaderMain from '@/Components/HeaderMain.vue';
 import Footer from '@/Components/Footer.vue';
+import { Head } from '@inertiajs/vue3';
 import { useMq } from "vue3-mq";
 
 const mq = useMq();
@@ -8,6 +9,10 @@ const mq = useMq();
 </script>
 
 <template>
+    <Head>
+        <link rel="icon" type="image/x-icon" href="/storage/favicon.ico" />
+    </Head>
+
     <HeaderMain />
 
     <main :class="mq.current" >

@@ -5,6 +5,7 @@ import RoleSelector from '@/Pages/Auth/Partials/RoleSelector.vue';
 import SubmitButton from '@/Components/SubmitButton.vue';
 import Text from '@/Components/Inputs/Text.vue';
 import { Head, Link, useForm } from '@inertiajs/vue3';
+import { computed } from 'vue';
 
 const props = defineProps({
     type: {
@@ -22,16 +23,21 @@ const form = useForm({
 
 const submit = () => {
     form.post(route('login'), {
+        onError: () => console.log(form),
         onFinish: () => form.reset('password'),
     });
 };
 
+const allow = computed(() => {
+    return form.email !== '' && form.password !== '';
+});
+
 </script>
 
 <template>
-    <AuthLayout>
-        <Head title="Login" />
+    <Head title="Вхід" />
 
+    <AuthLayout>
         <form @submit.prevent="submit" class="w-full">
             <BackButton />
 
@@ -47,14 +53,12 @@ const submit = () => {
                 type="email"
                 placeholder="example@gmail.com"
                 heading="Ел. пошта"
-                :error="form.errors.email"
                 v-model="form.email"
             />
             <Text
                 type="password"
                 placeholder="********"
                 heading="Пароль"
-                :error="form.errors.password"
                 v-model="form.password"
             />
 
@@ -65,9 +69,17 @@ const submit = () => {
                 Забув пароль?
             </Link>
 
+            <div
+                v-if="form.errors.email"
+                class="text-systemred txt-secondary"
+            >
+                {{ form.errors.email }}
+            </div>
+
             <SubmitButton
                 text="Увійти"
                 class="mt-4"
+                :class="allow ? 'bg-blue50' : 'bg-gray70 text-gray40 pointer-events-none'"
             />
 
             <Link 
