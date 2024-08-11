@@ -10,7 +10,7 @@ const mq = useMq();
 
 <template>
     <Head>
-        <link rel="icon" type="image/x-icon" href="/storage/favicon.ico" />
+        <link rel="icon" type="image/x-icon" href="/favicon.ico" />
     </Head>
 
     <HeaderMain />

@@ -209,30 +209,62 @@
         cursor: pointer;
     }
       
-      /* Removes default focus */
     input[type="range"]:focus {
         outline: none;
     }
 
-    /* slider track */
+    input[type=range]::-webkit-slider-runnable-track {
+        @apply bg-gray40;
+        border-radius: 8px;
+        height: 4px;
+    }
     input[type="range"]::-moz-range-track {
         @apply bg-gray40;
         border-radius: 8px;
         height: 4px;
     }
+    input[type="range"]::-ms-track {
+        @apply bg-gray40;
+        border-radius: 8px;
+        height: 4px;
+    }
     
-    /* slider thumb */
+    input[type="range"]::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        position: relative;
+        top: -10px;
+        @apply bg-gray0;
+        border: none; 
+        border-radius: 16px;
+        height: 24px;
+        width: 8px;
+    }
     input[type="range"]::-moz-range-thumb {
         @apply bg-gray0;
         border: none; 
         border-radius: 16px;
         height: 24px;
         width: 8px;
-        /* z-index: 1; */
     }
-    
-    input[type="range"]:focus::-moz-range-thumb{
-        outline: none;
+    input[type="range"]::-ms-thumb {
+        @apply bg-gray0;
+        border: none; 
+        border-radius: 16px;
+        height: 24px;
+        width: 8px;
+    }
+
+    ::-webkit-scrollbar {
+        @apply w-1;
+    }
+    ::-webkit-scrollbar-track {
+        @apply bg-background; 
+    }
+    ::-webkit-scrollbar-thumb {
+        @apply rounded bg-gray50;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+        @apply bg-gray60;
     }
 
     .icon-logo {

@@ -41,6 +41,7 @@ class SeekerController extends Controller
         }
 
         $seekers = $seekers
+            ->where('active', true)
             ->when($job, function(Builder $query, string $job) {
                 $jobs = explode(';', $job);
                 $query->whereIn('job', $jobs);

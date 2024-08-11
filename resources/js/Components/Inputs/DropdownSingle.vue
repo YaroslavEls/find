@@ -52,7 +52,7 @@ const show = ref(false);
             </div>
             <div 
                 v-show="show" 
-                class="absolute w-full overflow-scroll border-solid border-gray40 rounded-lg bg-background z-10"
+                class="absolute w-full overflow-y-scroll border-solid border-gray40 rounded-lg bg-background z-10"
                 :class="mq.desktop ? 'max-h-[500px] border-2' : 'max-h-[300px] border'"
             >
                 <div

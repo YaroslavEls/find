@@ -11,19 +11,10 @@ class LocationFactory extends Factory
 {
     protected function photos(): string
     {
-        $photos = [
-            'uploads/loc-photo-example-1.jpg',
-            'uploads/loc-photo-example-2.jpg',
-            'uploads/loc-photo-example-3.jpg',
-            'uploads/loc-photo-example-4.jpg',
-            'uploads/loc-photo-example-5.jpg',
-            'uploads/loc-photo-example-6.jpg',
-            'uploads/loc-photo-example-7.jpg',
-            'uploads/loc-photo-example-8.jpg',
-            'uploads/loc-photo-example-9.jpg',
-            'uploads/loc-photo-example-10.jpg',
-            'uploads/loc-photo-example-11.jpg',
-        ];
+        $photos = [];
+        for ($i = 0; $i < 11; $i++) {
+            $photos[] = 'storage/test_images/loc-photo-example-'.($i+1).'.jpg';
+        }
 
         $randomKeys = array_rand($photos, 5);
 

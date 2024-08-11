@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\LocationUnique;
 use Illuminate\Foundation\Http\FormRequest;
 
 class SaloonStoreRequest extends FormRequest
@@ -20,9 +21,9 @@ class SaloonStoreRequest extends FormRequest
             'descr' => ['required', 'string', 'max:4096'],
             'logo' => ['required', 'mimes:png,jpg,svg', 'max:2048'],
             'socials' => ['required', 'array', 'max:5'],
-            'socials.*' => ['nullable', 'url:https', 'max:128'],
+            'socials.*' => ['nullable', 'url:http,https', 'max:128'],
             
-            'locations' => ['array', 'max:50'],
+            'locations' => ['required', 'array', 'min:1', 'max:50', new LocationUnique],
             'locations.*' => ['required', 'array:name,city,address,schedule,gen,photos,video'],
 
             'locations.*.name' => $orig->rules()['name'],
@@ -34,6 +35,13 @@ class SaloonStoreRequest extends FormRequest
             'locations.*.photos' => $orig->rules()['photos'],
             'locations.*.photos.*' => $orig->rules()['photos.*'],
             'locations.*.video' => $orig->rules()['video'],
+        ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            'locations.required' => 'Необхідно додати хоча б 1 локацію.',
         ];
     }
 }

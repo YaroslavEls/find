@@ -10,11 +10,11 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 class SaloonFactory extends Factory
 {
     protected static array $logos = [
-        'uploads/logo-example-1.jpg',
-        'uploads/logo-example-2.png',
-        'uploads/logo-example-3.png',
-        'uploads/logo-example-4.png',
-        'uploads/logo-example-5.png',
+        'storage/test_images/logo-example-1.png',
+        'storage/test_images/logo-example-2.png',
+        'storage/test_images/logo-example-3.png',
+        'storage/test_images/logo-example-4.png',
+        'storage/test_images/logo-example-5.png',
     ];
 
     /**

@@ -20,7 +20,8 @@ class Seeker extends Model
         'city',
         'employment',
         'info',
-        'cv'
+        'cv',
+        'active'
     ];
 
     public function user(): MorphOne

@@ -10,11 +10,11 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 class SeekerFactory extends Factory
 {
     protected static array $photos = [
-        'uploads/seeker-photo-example-1.jpg',
-        'uploads/seeker-photo-example-2.jpg',
-        'uploads/seeker-photo-example-3.jpg',
-        'uploads/seeker-photo-example-4.jpg',
-        'uploads/seeker-photo-example-5.jpg',
+        'storage/test_images/seeker-photo-example-1.jpg',
+        'storage/test_images/seeker-photo-example-2.jpg',
+        'storage/test_images/seeker-photo-example-3.jpg',
+        'storage/test_images/seeker-photo-example-4.jpg',
+        'storage/test_images/seeker-photo-example-5.jpg',
     ];
 
     protected static array $jobs = ['Бариста', 'Старший Бариста'];

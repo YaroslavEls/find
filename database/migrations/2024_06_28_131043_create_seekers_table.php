@@ -23,6 +23,7 @@ return new class extends Migration
             $table->string('employment');
             $table->text('info');
             $table->string('cv')->nullable();
+            $table->boolean('active')->default(true);
             $table->timestamps();
         });
     }

@@ -36,6 +36,7 @@ const form = useForm({
     info: props.seeker.info,
     cv: null,
     photo: null,
+    active: props.seeker.active,
     _method: 'patch',
 });
 
@@ -144,6 +145,16 @@ watch (
     () => form.photo,
     (newData, _) => {
         modified.value.photo = newData;
+    }
+);
+watch (
+    () => form.active,
+    (newData, _) => {
+        if (newData == props.seeker.active) {
+            modified.value.name = false;
+            return;
+        }
+        modified.value.name = +newData;
     }
 );
 

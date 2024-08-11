@@ -1,5 +1,6 @@
 <script setup>
 import { MqResponsive } from "vue3-mq";
+import Radio from '@/Components/Inputs/Radio.vue';
 import DropdownSingle from '@/Components/Inputs/DropdownSingle.vue';
 import Range from '@/Components/Inputs/Range.vue';
 import Text from '@/Components/Inputs/Text.vue';
@@ -28,6 +29,10 @@ const model = defineModel({
         <template #desktop>
             <div class="flex justify-between gap-6">
                 <div class="w-[576px]">
+                    <Radio
+                        heading="Ви зараз шукаєте роботу?"
+                        v-model="model.active"
+                    />
                     <DropdownSingle
                         heading="Посада"
                         note="Посада яку ви шукаєте"
@@ -92,6 +97,10 @@ const model = defineModel({
         </template>
 
         <template #mobile>
+            <Radio
+                heading="Ви зараз шукаєте роботу?"
+                v-model="model.active"
+            />
             <UpdatePhoto
                 identifier="profile_photo"
                 allowed=".png,.jpg"

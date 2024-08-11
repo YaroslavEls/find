@@ -1,7 +1,7 @@
 <script setup>
 import { MqResponsive } from "vue3-mq";
 import OptionsMenu from '@/Components/OptionsMenu.vue';
-import { usePage } from '@inertiajs/vue3';
+import { Link } from '@inertiajs/vue3';
 
 const props = defineProps({
     review: {
@@ -19,9 +19,13 @@ const formatter = new Intl.DateTimeFormat('uk-UA', { day: 'numeric', month: 'lon
 const date = new Date(props.review.created_at);
 const formattedDate = formatter.format(date);
 
-const photo = usePage().url.startsWith('/seekers') 
-    ? props.review.author.userable.logo 
-    : props.review.author.userable.photo;
+const author = props.review.author.userable_type === 'App\\Models\\Saloon'
+    ? { name: props.review.author.userable.name,
+        photo: props.review.author.userable.logo,
+        route: route('vacancies', { saloon: props.review.author.userable_id }) }
+    : { name: props.review.author.userable.name,
+        photo: props.review.author.userable.photo,
+        route: route('seekers.show', { seeker: props.review.author.userable_id }) };
 
 const options = (x) => {
     if (model.value == x) {
@@ -42,14 +46,18 @@ const menuItems = {
         <template #desktop>
             <div class="relative flex justify-between">
                 <div class="flex gap-4 w-[69%] mb-8 p-4 bg-gray70 rounded-xl">
-                    <img 
-                        :src="'/' + photo" 
-                        class="w-14 h-14 border-solid border-1 border-gray50 rounded-full"
-                    >
-
+                    <Link :href="author.route">
+                        <img 
+                            :src="'/' + author.photo" 
+                            class="w-14 h-14 border-solid border-1 border-gray50 rounded-full"
+                        >
+                    </Link>
+                    
                     <div class="grow">
                         <div class="flex justify-between items-center">
-                            <div class="txt-h4">{{ review.author.userable.name }}</div>
+                            <Link :href="author.route">
+                                <div class="txt-h4">{{ author.name }}</div>
+                            </Link>
                             <div class="text-gray30 txt-secondary">{{ formattedDate }}</div>
                         </div>
 
@@ -100,13 +108,13 @@ const menuItems = {
                     </div>
                 </div>
 
-                <div class="flex gap-2 items-center mb-4">
+                <Link :href="author.route" class="flex gap-2 items-center mb-4 w-fit">
                     <img 
-                        :src="'/' + photo" 
+                        :src="'/' + author.photo" 
                         class="w-12 h-12 border-solid border-1 border-gray50 rounded-full"
                     >
                     <div>
-                        <div class="mb-1 txt-h4">{{ review.author.userable.name }}</div>
+                        <div class="mb-1 txt-h4">{{ author.name }}</div>
                         <div class="flex gap-1">
                             <div
                                 v-for="x in 5"
@@ -116,7 +124,7 @@ const menuItems = {
                             />
                         </div>
                     </div>
-                </div>
+                </Link>
 
                 <div class="mb-4 whitespace-pre-wrap txt-body">{{ review.text }}</div>
                 <div class="text-right text-gray30 txt-secondary">{{ formattedDate }}</div>

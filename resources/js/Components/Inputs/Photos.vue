@@ -39,6 +39,9 @@ const oldPhotos = defineModel('oldPhotos', {
 const mq = useMq();
 
 const urls = ref([]);
+for (let i = 0; i < photos.value.length; i++) {
+    urls.value.push(URL.createObjectURL(photos.value[i]));
+}
 
 const count = () => {
     return urls.value.length + oldPhotos.value.length;

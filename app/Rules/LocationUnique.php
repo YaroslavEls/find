@@ -15,9 +15,17 @@ class LocationUnique implements ValidationRule
      */
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
-        $exists = Location::where('saloon_id', request()->user()->userable_id)
-            ->where('name', $value)
-            ->exists();
+        if (is_array($value)) {
+            $names = [];
+            foreach ($value as $loc) {
+                $names[] = $loc['name'];
+            }
+            $exists = count($names) !== count(array_unique($names));
+        } else {
+            $exists = Location::where('saloon_id', request()->user()->userable_id)
+                ->where('name', $value)
+                ->exists();
+        }
 
         if ($exists) {
             $fail('validation.location_unique')->translate();

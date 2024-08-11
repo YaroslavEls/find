@@ -1,5 +1,6 @@
 <script setup>
 import InputLayout from '@/Layouts/InputLayout.vue';
+import { ref, onMounted } from 'vue';
 import { useMq } from "vue3-mq";
 
 defineProps({
@@ -26,35 +27,21 @@ const model = defineModel({
 
 const mq = useMq();
 
-const positions = [
-    'left-[46px]',
-    'left-[90px]',
-    'left-[134px]',
-    'left-[178px]',
-    'left-[222px]',
-    'left-[266px]',
-    'left-[308px]',
-    'left-[352px]',
-    'left-[396px]',
-    'left-[440px]',
-    'left-[484px]',
-    'left-[528px]',
-];
+const bar = ref(null);
 
-const positionsMobile = [
-    'left-[29px]',
-    'left-[57px]',
-    'left-[83px]',
-    'left-[111px]',
-    'left-[137px]',
-    'left-[165px]',
-    'left-[193px]',
-    'left-[220px]',
-    'left-[246px]',
-    'left-[273px]',
-    'left-[302px]',
-    'left-[330px]',
-]
+const positions = [];
+for (let i = 0; i < 12; i++) {
+    positions.push(ref(null));
+}
+
+onMounted(() => {
+    const width = window.getComputedStyle(bar.value).width;
+    const num = +width.slice(0, -2) / 13;
+
+    for (let i = 1; i <= 12; i++) {
+        positions[i-1].value[0].style.left = `${i * num}px`;
+    }
+});
 
 </script>
 
@@ -65,6 +52,7 @@ const positionsMobile = [
         
         <template #default>
             <input
+                ref="bar"
                 type="range"
                 min="0"
                 max="6.5"
@@ -75,10 +63,11 @@ const positionsMobile = [
             >
 
             <div 
-                v-for="pos in (mq.desktop ? positions : positionsMobile)" 
+                v-for="pos in positions" 
                 :key="pos"
+                :ref="pos"
                 class="absolute w-[2px] h-[10px] bg-gray40 rounded-2xl z-[-1]"
-                :class="[pos, mq.desktop ? 'top-[53px]' : 'top-[46px]']"
+                :class="mq.desktop ? 'top-[53px]' : 'top-[46px]'"
             />
         </template>
 

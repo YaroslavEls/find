@@ -28,7 +28,8 @@ class SeekerUpdateRequest extends FormRequest
             'employment' => ['required', 'array', 'max:3'],
             'employment.*' => ['filled', 'string', Rule::in($employments)],
             'info' => ['required', 'string', 'max:4096'],
-            'cv' => ['nullable', 'mimes:pdf', 'max:2048']
+            'cv' => ['nullable', 'mimes:pdf', 'max:2048'],
+            'active' => ['required', 'boolean'],
         ];
     }
 
