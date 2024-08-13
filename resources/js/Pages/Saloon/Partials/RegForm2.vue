@@ -55,11 +55,11 @@ const submit = () => {
         :class="mq.desktop ? 'mb-10' : 'mb-6'"
     >
         <div class="flex">
-            <img
-                :src="url.createObjectURL(location.photos[0])"
-                class="border-solid border border-gray0 rounded-full"
+            <div
+                class="border-solid border border-gray0 rounded-full image"
                 :class="mq.desktop ? 'w-14 h-14 mr-4' : 'w-12 h-12 mr-2'"
-            >
+                :style="{ backgroundImage: `url('${url.createObjectURL(location.photos[0])}')` }"
+            />
             <div class="flex flex-col justify-around">
                 <div class="txt-h5">{{ '' + location.name }}</div>
                 <div class="text-gray30 txt-secondary">{{ location.city + ', ' + location.address}}</div>

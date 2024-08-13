@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
+use Illuminate\Support\Facades\Storage;
 
 class Saloon extends Model
 {
@@ -17,6 +18,19 @@ class Saloon extends Model
         'logo',
         'socials'
     ];
+
+    protected static function booted(): void
+    {
+        static::deleting(function (Saloon $saloon) {
+            Storage::delete($saloon->logo);
+
+            foreach ($saloon->locations as $location) {
+                foreach (explode(';', $location->photos) as $photo) {
+                    Storage::delete($photo);
+                }
+            }
+        });
+    }
 
     public function user(): MorphOne
     {

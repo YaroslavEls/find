@@ -15,17 +15,21 @@ const props = defineProps({
     }
 });
 
-const model = defineModel({ 
+const selected = defineModel('selected', { 
     type: [Number, null],
     required: true 
 });
+const modal = defineModel('modal', {
+    type: [String, null],
+    required: false
+});
 
 const options = (x) => {
-    if (model.value == x) {
-        model.value = null;
+    if (selected.value == x) {
+        selected.value = null;
         return;
     }
-    model.value = x;
+    selected.value = x;
 };
 
 const menuItems = {
@@ -48,17 +52,17 @@ const url = !usePage().url.startsWith('/profile')
                     :href="url"
                     class="mr-8"
                 >
-                    <img 
-                        :src="'/' + location.photos.split(';')[0]"
-                        class="w-[424px] h-[272px] border-solid border-2 border-gray50 rounded-lg"
-                    >
+                    <div
+                        class="w-[424px] h-[272px] border-solid border-2 border-gray50 rounded-lg image"
+                        :style="{ backgroundImage: `url('/${location.photos.split(';')[0]}')` }"
+                    />
                 </Link>
 
-                <img
+                <div
                     v-else
-                    :src="'/' + location.photos.split(';')[0]"
-                    class="w-[424px] h-[272px] mr-8 border-solid border-2 border-gray50 rounded-lg"
-                >
+                    class="w-[424px] h-[272px] mr-8 border-solid border-2 border-gray50 rounded-lg image"
+                    :style="{ backgroundImage: `url('/${location.photos.split(';')[0]}')` }"
+                />
 
                 <div class="grow mr-8">
                     <div class="mb-6 txt-h2">{{ location.name }}</div>
@@ -78,13 +82,14 @@ const url = !usePage().url.startsWith('/profile')
                     v-if="$page.url.startsWith('/profile')"
                     @click="options(index)"
                     class="w-14 h-10 rounded-lg icon-options bg-center bg-no-repeat cursor-pointer hover:bg-blue40 duration-300"
-                    :class="model == index ? 'bg-gray70' : 'bg-gray50'"
+                    :class="selected == index ? 'bg-gray70' : 'bg-gray50'"
                 />
 
                 <OptionsMenu
                     v-if="$page.url.startsWith('/profile')"
-                    v-show="model == index" 
+                    v-show="selected == index" 
                     :items="menuItems"
+                    v-model="modal"
                 />
             </div>
         </template>
@@ -95,13 +100,14 @@ const url = !usePage().url.startsWith('/profile')
                     v-if="$page.url.startsWith('/profile')"
                     @click="options(index)"
                     class="absolute top-2 right-2 w-[29px] h-5 rounded icon-options bg-center bg-no-repeat"
-                    :class="model == index ? 'bg-gray70' : 'bg-gray50'"
+                    :class="selected == index ? 'bg-gray70' : 'bg-gray50'"
                 />
 
                 <OptionsMenu
                     v-if="$page.url.startsWith('/profile')"
-                    v-show="model == index" 
+                    v-show="selected == index" 
                     :items="menuItems"
+                    v-model="modal"
                 />
 
                 <Link 
@@ -109,17 +115,17 @@ const url = !usePage().url.startsWith('/profile')
                     :href="url" 
                     class="block mb-4"
                 >
-                    <img
-                        :src="'/' + location.photos.split(';')[0]"
-                        class="w-full h-[202px] border-solid border-2 border-gray50 rounded-lg"
-                    >
+                    <div
+                        class="w-full h-[202px] border-solid border-2 border-gray50 rounded-lg image"
+                        :style="{ backgroundImage: `url('/${location.photos.split(';')[0]}')` }"
+                    />
                 </Link>
 
-                <img
+                <div
                     v-else
-                    :src="'/' + location.photos.split(';')[0]"
-                    class="w-full mb-4 h-[202px] border-solid border-2 border-gray50 rounded-lg"
-                >
+                    class="w-full mb-4 h-[202px] border-solid border-2 border-gray50 rounded-lg image"
+                    :style="{ backgroundImage: `url('/${location.photos.split(';')[0]}')` }"
+                />
 
                 <div class="mb-4 txt-h2">{{ location.name }}</div>
                 <div class="mb-2 text-gray40 txt-body">Адреса:</div>

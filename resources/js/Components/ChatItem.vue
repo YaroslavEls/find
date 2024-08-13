@@ -57,10 +57,10 @@ const menuItems = () => {
             <div class="relative flex gap-10 mb-12 pb-5 border-solid border-b-[1px] border-gray50">
                 <Link :href="chatter.route" class="basis-[30%]">
                     <div class="flex items-center gap-2 mb-4">
-                        <img 
-                            :src="'/' + chatter.photo"
-                            class="w-8 h-8 border-solid border-1 border-gray50 rounded-full"
-                        >
+                        <div
+                            class="w-8 h-8 border-solid border-1 border-gray50 rounded-full image"
+                            :style="{ backgroundImage: `url('/${chatter.photo}')` }"
+                        />
                         <div class="txt-h4">{{ chatter.name }}</div>
                     </div>
                 </Link>
@@ -92,10 +92,10 @@ const menuItems = () => {
                     :href="chatter.route"
                     class="flex items-center gap-2 max-w-[80%] w-fit mb-2"
                 >
-                    <img 
-                        :src="'/' + chatter.photo"
-                        class="w-8 h-8 border-solid border-1 border-gray50 rounded-full"
-                    >
+                    <div
+                        class="w-8 h-8 border-solid border-1 border-gray50 rounded-full image"
+                        :style="{ backgroundImage: `url('/${chatter.photo}')` }"
+                    />
                     <div class="text-gray30 txt-h5">{{ chatter.name }}</div>
                 </Link>
                 <Link 

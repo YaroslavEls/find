@@ -13,6 +13,7 @@ export default {
     theme: {
         colors: {
             background: '#282b34',
+            'background-dim': '#272a33e6',
             gray0: '#ffffff',
             gray10: '#eceef2',
             gray20: '#d7dbe4',

@@ -19,17 +19,21 @@ const props = defineProps({
     }
 });
 
-const model = defineModel({ 
+const selected = defineModel('selected', { 
     type: [Number, null],
     required: true 
 });
+const modal = defineModel('modal', {
+    type: [String, null],
+    required: false
+});
 
 const options = (x) => {
-    if (model.value == x) {
-        model.value = null;
+    if (selected.value == x) {
+        selected.value = null;
         return;
     }
-    model.value = x;
+    selected.value = x;
 };
 
 const menuItems = () => {
@@ -57,10 +61,10 @@ const menuItems = () => {
                     :href="route('vacancies.show', { vacancy: vacancy.id })"
                     class="mr-8"
                 >
-                    <img
-                        :src="'/' + vacancy.location.photos.split(';')[0]" 
-                        class="min-w-[272px] w-[424px] h-[272px] border-solid border-2 border-gray50 rounded-lg"
-                    >
+                    <div
+                        class="min-w-[272px] w-[424px] h-[272px] border-solid border-2 border-gray50 rounded-lg image"
+                        :style="{ backgroundImage: `url('/${vacancy.location.photos.split(';')[0]}')` }"
+                    />
                 </Link>
                 
                 <div class="mr-8 max-w-[728px] w-full">
@@ -88,10 +92,10 @@ const menuItems = () => {
                         :href="route('saloons.show', { vacancy: vacancy.id })"
                         class="flex items-center gap-2 mb-4 w-fit"
                     >
-                        <img 
-                            :src="'/' + vacancy.saloon.logo" 
-                            class="w-6 h-6 rounded-full border-solid border border-gray50"
-                        >
+                        <div
+                            class="w-6 h-6 rounded-full border-solid border border-gray50 image"
+                            :style="{ backgroundImage: `url('/${vacancy.saloon.logo}')` }"
+                        />
                         <div class="text-blue30 txt-h5">{{ vacancy.saloon.name }}</div>
                     </Link>
                     <div class="mb-2 text-gray40 txt-body crop crop-2">
@@ -109,13 +113,14 @@ const menuItems = () => {
                     v-if="isSeeker"
                     @click="options(index)"
                     class="max-w-14 w-full h-10 my-0 mr-0 ml-auto rounded-lg icon-options bg-center bg-no-repeat cursor-pointer hover:bg-blue40 duration-300"
-                    :class="model == index ? 'bg-gray70' : 'bg-gray50'"
+                    :class="selected == index ? 'bg-gray70' : 'bg-gray50'"
                 />
 
                 <OptionsMenu
                     v-if="isSeeker"
-                    v-show="model == index" 
+                    v-show="selected == index" 
                     :items="menuItems()"
+                    v-model="modal"
                 />
             </div>
         </template>
@@ -126,20 +131,21 @@ const menuItems = () => {
                     v-if="isSeeker"
                     @click="options(index)"
                     class="absolute top-2 right-2 w-[29px] h-5 rounded icon-options bg-center bg-no-repeat"
-                    :class="model == index ? 'bg-gray70' : 'bg-gray50'"
+                    :class="selected == index ? 'bg-gray70' : 'bg-gray50'"
                 />
 
                 <OptionsMenu
                     v-if="isSeeker"
-                    v-show="model == index" 
+                    v-show="selected == index" 
                     :items="menuItems()"
+                    v-model="modal"
                 />
 
                 <Link :href="route('vacancies.show', { vacancy: vacancy.id })" class="block mb-4">
-                    <img
-                        :src="'/' + vacancy.location.photos.split(';')[0]" 
-                        class="w-full h-[202px] border-solid border-2 border-gray50 rounded-lg"
-                    >
+                    <div
+                        class="w-full h-[202px] border-solid border-2 border-gray50 rounded-lg image"
+                        :style="{ backgroundImage: `url('/${vacancy.location.photos.split(';')[0]}')` }"
+                    />
                 </Link>
 
                 <Tags
@@ -167,10 +173,10 @@ const menuItems = () => {
                     :href="route('saloons.show', { vacancy: vacancy.id })"
                     class="flex items-center gap-2 mb-2 w-fit"
                 >
-                    <img 
-                        :src="'/' + vacancy.saloon.logo" 
-                        class="w-6 h-6 rounded-full border-solid border border-gray50"
-                    >
+                    <div
+                        class="w-6 h-6 rounded-full border-solid border border-gray50 image"
+                        :style="{ backgroundImage: `url('/${vacancy.saloon.logo}')` }"
+                    />
                     <div class="text-blue30 txt-h5">{{ vacancy.saloon.name }}</div>
                 </Link>
 

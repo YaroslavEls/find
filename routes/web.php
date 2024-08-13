@@ -19,6 +19,8 @@ Route::get('/', HomeController::class)
 Route::middleware(['auth', 'completed'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])
         ->name('profile');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])
+        ->name('profile.delete');
 
     Route::get('/vacancies', [VacancyController::class, 'index'])
         ->name('vacancies');

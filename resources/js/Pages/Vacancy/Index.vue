@@ -36,7 +36,7 @@ const isSeeker = usePage().props.auth.user.userable_type === 'App\\Models\\Seeke
             :vacancy="vacancy"
             :index="index"
             :isSeeker="isSeeker"
-            v-model="selected"
+            v-model:selected="selected"
         />
 
         <Pagination

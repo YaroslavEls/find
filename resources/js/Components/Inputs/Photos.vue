@@ -104,11 +104,11 @@ const removeOld = (x) => {
                     @click="removeOld(index)"
                     class="relative"
                 >
-                    <img 
-                        :src="'/' + item" 
-                        class="bg-gray0 rounded"
+                    <div
+                        class="bg-gray0 rounded image"
                         :class="mq.desktop ? 'w-[120px] h-[88px]' : 'w-[75px] h-[75px]'"
-                    >
+                        :style="{ backgroundImage: `url('/${item}')` }"
+                    />
                     <div class="absolute opacity-0 flex justify-center items-center gap-1 w-full h-full top-0 bg-[#000] bg-opacity-50 border-solid border-2 border-gray0 rounded txt-secondary cursor-pointer hover:opacity-100">
                         <div class="icon-delete" />
                     </div>
@@ -120,11 +120,11 @@ const removeOld = (x) => {
                     @click="remove(index)"
                     class="relative"
                 >
-                    <img
-                        :src="url"
-                        class="bg-gray0 rounded"
+                    <div
+                        class="bg-gray0 rounded image"
                         :class="mq.desktop ? 'w-[120px] h-[88px]' : 'w-[75px] h-[75px]'"
-                    >
+                        :style="{ backgroundImage: `url('${url}')` }"
+                    />
                     <div class="absolute opacity-0 flex justify-center items-center gap-1 w-full h-full top-0 bg-[#000] bg-opacity-50 border-solid border-2 border-gray0 rounded txt-secondary cursor-pointer hover:opacity-100">
                         <div class="icon-delete" />
                     </div>

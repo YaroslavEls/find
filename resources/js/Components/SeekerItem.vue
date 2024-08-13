@@ -39,10 +39,10 @@ const menuItems = () => {
         <template #desktop>
             <div class="relative flex mb-12">
                 <Link :href="route('seekers.show', { seeker: seeker.id })" class="mr-8">
-                    <img
-                        :src="seeker.photo" 
-                        class="min-w-[272px] w-[272px] h-[272px] border-solid border-2 border-gray50 rounded-lg"
-                    >
+                    <div
+                        class="min-w-[272px] w-[272px] h-[272px] border-solid border-2 border-gray50 rounded-lg image"
+                        :style="{ backgroundImage: `url('/${seeker.photo}')` }"
+                    />
                 </Link>
 
                 <div class="max-w-[880px] w-full mr-8">
@@ -103,10 +103,10 @@ const menuItems = () => {
                 />
 
                 <Link :href="route('seekers.show', { seeker: seeker.id })" class="block mb-4">
-                    <img
-                        :src="seeker.photo" 
-                        class="w-full h-[202px] border-solid border-2 border-gray50 rounded-lg"
-                    >
+                    <div
+                        class="w-full h-[202px] border-solid border-2 border-gray50 rounded-lg image"
+                        :style="{ backgroundImage: `url('/${seeker.photo}')` }"
+                    />
                 </Link>
 
                 <Tags

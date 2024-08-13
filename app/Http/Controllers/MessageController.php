@@ -3,17 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Events\MessageSent;
+use App\Http\Requests\MessageStoreRequest;
 use App\Models\Chat;
-use Illuminate\Http\Request;
 
 class MessageController extends Controller
 {
-    public function store(Request $request, Chat $chat): void
+    public function store(MessageStoreRequest $request, Chat $chat): void
     {
-        if ($request->user()->cannot('message', $chat)) {
-            abort(403);
-        }
-
         $receiver_id = $request->user()->is_seeker()
             ? $chat->saloon->user->id
             : $chat->seeker->user->id;

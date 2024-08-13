@@ -14,6 +14,11 @@ defineProps({
     }
 });
 
+const model = defineModel({
+    type: [String, null],
+    required: false
+});
+
 const mq = useMq();
 
 const params = {
@@ -49,6 +54,11 @@ const params = {
     }
 };
 
+const show = (href) => {
+    document.documentElement.style.overflow = 'hidden';
+    model.value = href;
+};
+
 </script>
 
 <template>
@@ -62,19 +72,33 @@ const params = {
                 bg ? 'bg-gray50' : 'bg-gray70'
             ]"
         >
-            <Link
-                v-for="(value, key) in items"
+            <div 
+                v-for="(value, key) in items" 
                 :key="key"
-                :href="value"
-                :method="params[key]['method']"
-                as="button"
-                preserve-scroll
-                class="flex justify-between w-full last:mb-0 txt-secondary"
+                class="last:mb-0"
                 :class="mq.desktop ? 'mb-4' : 'mb-2'"
             >
-                {{ params[key]['text'] }}
-                <div :class="params[key]['icon']" />
-            </Link>
+                <div 
+                    v-if="key === 'delete'"
+                    @click="show(value)"
+                    class="flex justify-between w-full txt-secondary cursor-pointer"
+                >
+                    {{ params[key]['text'] }}
+                    <div :class="params[key]['icon']" />
+                </div>
+                <Link
+                    v-else
+                    :href="value"
+                    :method="params[key]['method']"
+                    as="button"
+                    preserve-scroll
+                    class="flex justify-between w-full txt-secondary"
+                    
+                >
+                    {{ params[key]['text'] }}
+                    <div :class="params[key]['icon']" />
+                </Link>
+            </div>
         </div>
     </Transition>
 </template>

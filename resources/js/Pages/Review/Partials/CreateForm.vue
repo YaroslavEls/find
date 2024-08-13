@@ -84,14 +84,28 @@ model.value.regenerate = () => {
                         v-model="model.score"
                     />
                 </div>
-                <textarea
-                    rows="1"
-                    placeholder="Напишіть свій відгук"
-                    ref="textarea"
-                    @input="resize"
-                    v-model="model.text"
-                    class="max-h-[500px] px-4 py-3 w-full bg-background border-solid border-2 border-gray40 rounded-lg text-gray0 txt-body"
-                ></textarea>
+                <div class="flex gap-2">
+                    <textarea
+                        rows="1"
+                        placeholder="Напишіть свій відгук"
+                        ref="textarea"
+                        @input="resize"
+                        v-model="model.text"
+                        class="w-full max-h-[500px] px-4 py-3 bg-background border-solid border-2 border-gray40 rounded-lg text-gray0 txt-body"
+                    ></textarea>
+                    <button
+                        class="max-w-12 w-full h-12 rounded-lg bg-center bg-no-repeat bg-blue50 icon-send" 
+                    />
+                </div>
+                <div v-if="Object.keys(model.errors).length > 0">
+                    <div
+                        v-for="(value, key) in model.errors"
+                        :key="key"
+                        class="mt-1 text-systemred txt-secondary"
+                    >
+                        {{ value }}
+                    </div>
+                </div>
             </div>
         </template>
     </MqResponsive>

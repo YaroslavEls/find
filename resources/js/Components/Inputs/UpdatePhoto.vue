@@ -42,12 +42,11 @@ const updatePhoto = (e) => {
 </script>
 
 <template>
-    <img 
-        :src="current" 
-        alt=""
-        class="w-full border-solid border-2 border-gray50 rounded-xl"
+    <div
+        class="w-full border-solid border-2 border-gray50 rounded-xl image"
         :class="mq.desktop ? 'h-[448px] mb-4' : 'h-[202px] mb-2'"
-    >
+        :style="{ backgroundImage: `url('${current}')` }"
+    />
 
     <label 
         :for="identifier" 

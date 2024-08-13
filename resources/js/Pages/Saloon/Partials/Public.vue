@@ -7,11 +7,8 @@ import TextArea from '@/Components/Inputs/TextArea.vue';
 import Lines from '@/Components/Inputs/Lines.vue';
 import UpdatePhoto from '@/Components/Inputs/UpdatePhoto.vue';
 import SubmitButton from '@/Components/SubmitButton.vue';
-import { useForm, usePage } from '@inertiajs/vue3';
+import { useForm } from '@inertiajs/vue3';
 import { ref, watch } from 'vue';
-
-// import VueCropper from 'vue-cropperjs';
-// import 'cropperjs/dist/cropper.css';
 
 const props = defineProps({
     saloon: {
@@ -183,16 +180,4 @@ const selectedFile = props.saloon.logo;
             </form>
         </template>
     </MqResponsive>
-    
-
-    <!-- <VueCropper 
-        v-show="selectedFile" 
-        ref="cropper" 
-        :src="selectedFile" 
-        :aspectRatio="16/9" 
-        :initialAspectRatio="16/9" 
-        :autoCropArea="1"
-        :zoomable="false"
-    /> -->
-
 </template>

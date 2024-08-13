@@ -42,10 +42,10 @@ const separate = () => {
     <div :class="mq.desktop ? 'mb-10' : 'mb-4'">
         <div class="flex justify-between items-center mb-2">
             <div class="flex items-center gap-2">
-                <img 
-                    :src="'/' + author.photo"
-                    class="w-8 h-8 border-solid border-1 border-gray50 rounded-full"
-                >
+                <div
+                    class="w-8 h-8 border-solid border-1 border-gray50 rounded-full image"
+                    :style="{ backgroundImage: `url('/${author.photo}')` }"
+                />
                 <div class="text-gray30 txt-h5">
                     {{ author.name !== $page.props.auth.user.name ? author.name : 'Ви' }}
                 </div>

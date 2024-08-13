@@ -1,6 +1,7 @@
 <script setup>
 import VacancyItem from '@/Components/VacancyItem.vue';
 import CreateNewButton from '@/Components/CreateNewButton.vue';
+import Confirm from '@/Components/Modals/Confirm.vue';
 import { ref } from 'vue';
 
 defineProps({
@@ -23,6 +24,7 @@ defineProps({
 });
 
 const selected = ref(null);
+const modal = ref(null);
 
 </script>
 
@@ -40,7 +42,15 @@ const selected = ref(null);
             :vacancy="vac"
             :index="vac.id"
             :isSeeker="isSeeker"
-            v-model="selected"
+            v-model:selected="selected"
+            v-model:modal="modal"
+        />
+
+        <Confirm
+            title="Видалити вакансію?"
+            subtitle="Видалену вакансію неможливо буде відновити. Ви впевнені що бажаєте видалити вакансію?"
+            v-show="modal"
+            v-model="modal"
         />
     </div>
 </template>

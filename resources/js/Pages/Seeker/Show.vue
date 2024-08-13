@@ -150,10 +150,10 @@ const save = () => {
                             <div class="icon-fav" />
                         </div>
 
-                        <img 
-                            :src="'/' + seeker.photo"
-                            class="w-full h-[448px] border-solid border-gray50 border-2 rounded-xl"
-                        >
+                        <div
+                            class="w-full h-[448px] border-solid border-gray50 border-2 rounded-xl image"
+                            :style="{ backgroundImage: `url('/${seeker.photo}')` }"
+                        />
                     </div>
                 </div>
             </template>
@@ -202,10 +202,10 @@ const save = () => {
                 <div class="mb-2 text-gray40 txt-h3">Про кандидата:</div>
                 <div class="whitespace-pre-wrap mb-10 txt-body">{{ seeker.info }}</div>
                 <div class="mb-2 text-gray40 txt-h3">Фото:</div>
-                <img
-                    :src="'/' + seeker.photo" 
-                    class="mb-10 w-full h-[202px] border-solid border-2 border-gray50 rounded-lg"
-                >
+                <div
+                    class="mb-10 w-full h-[202px] border-solid border-2 border-gray50 rounded-lg image"
+                    :style="{ backgroundImage: `url('/${seeker.photo}')` }"
+                />
                 <div class="flex items-center gap-1 mb-4 text-gray40 txt-body">
                     <div class="icon-date gray" />
                     Опубліковано - {{ formattedDate }}

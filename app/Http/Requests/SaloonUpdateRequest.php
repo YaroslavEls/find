@@ -18,7 +18,7 @@ class SaloonUpdateRequest extends FormRequest
             'descr' => ['required', 'string', 'max:4096'],
             'logo' => ['nullable', 'mimes:png,jpg,svg', 'max:2048'],
             'socials' => ['required', 'array', 'max:5'],
-            'socials.*' => ['nullable', 'url:https', 'max:128'],
+            'socials.*' => ['nullable', 'url:http,https', 'max:128'],
         ];
     }
 }

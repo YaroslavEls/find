@@ -10,9 +10,13 @@ const props = defineProps({
     }
 });
 
-const model = defineModel({
+const selected = defineModel('selected', {
     type: [Number, null],
     required: true
+});
+const modal = defineModel('modal', {
+    type: [String, null],
+    required: false
 });
 
 const formatter = new Intl.DateTimeFormat('uk-UA', { day: 'numeric', month: 'long', year: 'numeric' });
@@ -28,11 +32,11 @@ const author = props.review.author.userable_type === 'App\\Models\\Saloon'
         route: route('seekers.show', { seeker: props.review.author.userable_id }) };
 
 const options = (x) => {
-    if (model.value == x) {
-        model.value = null;
+    if (selected.value == x) {
+        selected.value = null;
         return;
     }
-    model.value = x;
+    selected.value = x;
 };
 
 const menuItems = {
@@ -47,10 +51,10 @@ const menuItems = {
             <div class="relative flex justify-between">
                 <div class="flex gap-4 w-[69%] mb-8 p-4 bg-gray70 rounded-xl">
                     <Link :href="author.route">
-                        <img 
-                            :src="'/' + author.photo" 
-                            class="w-14 h-14 border-solid border-1 border-gray50 rounded-full"
-                        >
+                        <div
+                            class="w-14 h-14 border-solid border-1 border-gray50 rounded-full image"
+                            :style="{ backgroundImage: `url('/${author.photo}')` }"
+                        />
                     </Link>
                     
                     <div class="grow">
@@ -78,12 +82,13 @@ const menuItems = {
                     v-if="review.author_id == $page.props.auth.user.user_id"
                     @click="options(review.id)"
                     class="w-14 h-10 my-0 mr-0 ml-auto rounded-lg icon-options bg-center bg-no-repeat cursor-pointer hover:bg-blue40 duration-300"
-                    :class="model == review.id ? 'bg-gray70' : 'bg-gray50'"
+                    :class="selected == review.id ? 'bg-gray70' : 'bg-gray50'"
                 />
 
                 <OptionsMenu
-                    v-show="model == review.id" 
+                    v-show="selected == review.id" 
                     :items="menuItems"
+                    v-model="modal"
                 />
             </div>
         </template>
@@ -101,18 +106,19 @@ const menuItems = {
                     />
                     <div class="absolute top-[-4px] right-[-8px]">
                         <OptionsMenu
-                            v-show="model == review.id" 
+                            v-show="selected == review.id" 
                             :items="menuItems"
+                            v-model="modal"
                             bg
                         />
                     </div>
                 </div>
 
                 <Link :href="author.route" class="flex gap-2 items-center mb-4 w-fit">
-                    <img 
-                        :src="'/' + author.photo" 
-                        class="w-12 h-12 border-solid border-1 border-gray50 rounded-full"
-                    >
+                    <div
+                        class="w-12 h-12 border-solid border-1 border-gray50 rounded-full image"
+                        :style="{ backgroundImage: `url('/${author.photo}')` }"
+                    />
                     <div>
                         <div class="mb-1 txt-h4">{{ author.name }}</div>
                         <div class="flex gap-1">

@@ -83,10 +83,10 @@ const save = () => {
                                     :href="route('saloons.show', { vacancy: vacancy.id })"
                                     class="flex items-center gap-2 w-fit"
                                 >
-                                    <img 
-                                        :src="'/' + vacancy.saloon.logo" 
-                                        class="w-6 h-6 rounded-full border-solid border border-gray50"
-                                    >
+                                    <div
+                                        class="w-6 h-6 rounded-full border-solid border border-gray50 image"
+                                        :style="{ backgroundImage: `url('/${vacancy.saloon.logo}')` }"
+                                    />
                                     <div class="text-blue30 txt-h4">{{ vacancy.saloon.name }}</div>
                                 </Link>
                             </div>
@@ -171,10 +171,10 @@ const save = () => {
                                 :key="index"
                                 class="relative cursor-grab"
                             >
-                                <img 
-                                    :src="'/' + photo"
-                                    class="w-full h-[448px] border-solid border-gray50 border-2 rounded-xl"
-                                >
+                                <div
+                                    class="w-full h-[448px] border-solid border-gray50 border-2 rounded-xl image"
+                                    :style="{ backgroundImage: `url('/${photo}')` }"
+                                />
                                 <div class="absolute right-4 bottom-2 text-gray90 txt-h5">{{ index + 1 }}/{{ vacancy.location.photos.split(';').length }}</div>
                             </Slide>
                         </Carousel>
@@ -210,10 +210,10 @@ const save = () => {
                     :href="route('saloons.show', { vacancy: vacancy.id })"
                     class="flex items-center gap-2 w-fit mb-6"
                 >
-                    <img 
-                        :src="'/' + vacancy.saloon.logo" 
-                        class="w-6 h-6 rounded-full border-solid border border-gray50"
-                    >
+                    <div
+                        class="w-6 h-6 rounded-full border-solid border border-gray50 image"
+                        :style="{ backgroundImage: `url('/${vacancy.saloon.logo}')` }"
+                    />
                     <div class="text-blue30 txt-h4">{{ vacancy.saloon.name }}</div>
                 </Link>
 
@@ -275,10 +275,10 @@ const save = () => {
                         :key="index"
                         class="relative cursor-grab"
                     >
-                        <img 
-                            :src="'/' + photo"
-                            class="w-full h-[202px] border-solid border-2 border-gray50 rounded-lg"
-                        >
+                        <div
+                            class="w-full h-[202px] border-solid border-2 border-gray50 rounded-lg image"
+                            :style="{ backgroundImage: `url('/${photo}')` }"
+                        />
                         <div class="absolute right-4 bottom-2 text-gray90 txt-h5">
                             {{ index + 1 }}/{{ vacancy.location.photos.split(';').length }}
                         </div>

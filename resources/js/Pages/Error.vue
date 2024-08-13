@@ -21,7 +21,7 @@ const descriptions = {
 </script>
 
 <template>
-    <Head :title="code" />
+    <Head :title="String(code)" />
 
     <ErrorLayout>
         <MqResponsive group>

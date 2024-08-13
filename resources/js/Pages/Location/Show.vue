@@ -51,7 +51,7 @@ const isSeeker = usePage().props.auth.user.userable_type === 'App\\Models\\Seeke
             :vacancy="vac"
             :index="index"
             :isSeeker="isSeeker"
-            v-model="selected"
+            v-model:selected="selected"
         />
     </MainLayout>
 </template>

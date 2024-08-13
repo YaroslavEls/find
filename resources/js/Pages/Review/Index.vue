@@ -4,6 +4,7 @@ import MainLayout from '@/Layouts/MainLayout.vue';
 import Breadcrumbs from '@/Components/Breadcrumbs.vue';
 import CreateForm from '@/Pages/Review/Partials/CreateForm.vue';
 import ReviewItem from '@/Components/ReviewItem.vue';
+import Confirm from '@/Components/Modals/Confirm.vue';
 import { Head, useForm } from '@inertiajs/vue3';
 import { ref } from 'vue';
 
@@ -35,6 +36,7 @@ const submit = () => {
 };
 
 const active = ref(null);
+const modal = ref(null);
 
 </script>
 
@@ -62,10 +64,10 @@ const active = ref(null);
 
             <template #mobile>
                 <div class="flex items-center gap-2 mb-8">
-                    <img 
-                        :src="'/' + seeker.photo" 
-                        class="w-14 h-14 border-solid border-2 border-gray50 rounded-full"
-                    >
+                    <div
+                        class="w-14 h-14 border-solid border-2 border-gray50 rounded-full image"
+                        :style="{ backgroundImage: `url('/${seeker.photo}')` }"
+                    />
                     <div>
                         <div class="mb-1 txt-h4">{{ seeker.name }}</div>
                         <div class="flex gap-1">
@@ -97,7 +99,15 @@ const active = ref(null);
             v-for="review in reviews"
             :key="review.id"
             :review="review"
-            v-model="active"
+            v-model:selected="active"
+            v-model:modal="modal"
+        />
+
+        <Confirm
+            title="Видалити відгук?"
+            subtitle="Ви впевнені що бажаєте видалити відгук?"
+            v-show="modal"
+            v-model="modal"
         />
     </MainLayout>
 </template>

@@ -2,6 +2,7 @@
 import { MqResponsive } from "vue3-mq";
 import CreateForm from '@/Pages/Review/Partials/CreateForm.vue';
 import ReviewItem from '@/Components/ReviewItem.vue';
+import Confirm from '@/Components/Modals/Confirm.vue';
 import { useForm } from '@inertiajs/vue3';
 import { ref } from 'vue';
 
@@ -34,6 +35,7 @@ const submit = () => {
 };
 
 const active = ref(null);
+const modal = ref(null);
 
 </script>
 
@@ -80,7 +82,15 @@ const active = ref(null);
             v-for="(review, index) in reviews"
             :key="index"
             :review="review"
-            v-model="active"
+            v-model:selected="active"
+            v-model:modal="modal"
+        />
+
+        <Confirm
+            title="Видалити відгук?"
+            subtitle="Ви впевнені що бажаєте видалити відгук?"
+            v-show="modal"
+            v-model="modal"
         />
     </div>
 </template>

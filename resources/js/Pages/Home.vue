@@ -129,7 +129,10 @@ const currentHowTo = ref(isSaloon() ? 1 : 0);
                         <Slide v-for="review in reviews" :key="review">
                             <div class="max-w-[1080px] w-full px-[100px] mx-auto my-0">
                                 <div class="flex items-end gap-8 mb-4">
-                                    <img :src="review.photo" class="w-[86px] h-[86px] rounded-full bg-gray0">
+                                    <div
+                                        class="w-[86px] h-[86px] rounded-full bg-gray0 image"
+                                        :style="{ backgroundImage: `url('${review.photo}')` }"
+                                    />
                                     <div>
                                         <div class="mb-2 txt-h3">{{ review.name }}</div>
                                         <div class="text-gray40 txt-h4">
@@ -226,7 +229,10 @@ const currentHowTo = ref(isSaloon() ? 1 : 0);
                     <Slide v-for="review in reviews" :key="review">
                         <div class="max-w-[313px] w-full mx-auto my-0">
                             <div class="flex items-center gap-2 mb-2">
-                                <img :src="review.photo" class="w-12 h-12 rounded-full bg-gray0">
+                                <div
+                                    class="w-12 h-12 rounded-full bg-gray0 image"
+                                    :style="{ backgroundImage: `url('${review.photo}')` }"
+                                />
                                 <div>
                                     <div class="txt-h4">{{ review.name }}</div>
                                     <div class="text-gray40 txt-secondary">

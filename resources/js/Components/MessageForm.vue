@@ -23,7 +23,7 @@ const resize = () => {
 </script>
 
 <template>
-    <div class="flex gap-[2.5%]">
+    <div class="flex" :class="mq.desktop ? 'gap-[2.5%]' : 'gap-2'">
         <textarea
             rows="1"
             placeholder="Повідомлення"
@@ -38,6 +38,11 @@ const resize = () => {
             v-if="mq.desktop"
             text="Надіслати"
             class="basis-[22.5%] h-fit"
+        />
+
+        <button
+            v-if="mq.mobile"
+            class="max-w-12 w-full h-12 rounded-lg bg-center bg-no-repeat bg-blue50 icon-send" 
         />
     </div>
 </template>
