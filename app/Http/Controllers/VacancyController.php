@@ -99,7 +99,13 @@ class VacancyController extends Controller
     public function show(Vacancy $vacancy)
     {
         $vacancy->load(['saloon', 'location']);
-        $vacancy->score = round($vacancy->saloon->user->reviews->avg('score'));
+
+        $score = $vacancy->saloon->user->reviews->avg('score');
+        if ($score) {
+            $vacancy->score = $score;
+        } else {
+            $vacancy->score = 0;
+        }
 
         $breadcrumbs = Breadcrumbs::generate('vacancy', $vacancy);
 

@@ -77,7 +77,7 @@ const iconsMob = {
             v-for="(value, key) in transformed"
             :key="key"
             v-show="value !== null"
-            class="flex items-center py-1 h-fit rounded bg-gray60 txt-secondary"
+            class="flex items-center py-1 h-fit rounded bg-gray70 txt-secondary"
             :class="mq.desktop ? 'gap-2 px-4' : 'gap-1 px-2'"
         >
             <div :class="icons[key]"></div>

@@ -1,4 +1,5 @@
 <script setup>
+import EmptyListing from '@/Components/EmptyListing.vue';
 import LocationItem from '@/Components/LocationItem.vue';
 import CreateNewButton from '@/Components/CreateNewButton.vue';
 import Confirm from '@/Components/Modals/Confirm.vue';
@@ -23,6 +24,8 @@ const modal = ref(null);
             routeName="location.create"
             text="Додати локацію"
         />
+
+        <EmptyListing v-if="locations.length === 0" />
 
         <LocationItem
             v-for="loc in locations"

@@ -56,7 +56,7 @@ const move = (name) => {
             @click="move(key)"
             class="rounded cursor-pointer txt-body"
             :class="[
-                model == key ? 'bg-blue50' : 'bg-gray50',
+                model == key ? 'bg-blue50' : 'bg-gray60',
                 mq.desktop ? 'px-6 py-2' : 'px-[14px] py-1'    
             ]"
         >

@@ -1,4 +1,5 @@
 <script setup>
+import EmptyListing from '@/Components/EmptyListing.vue';
 import VacancyItem from '@/Components/VacancyItem.vue';
 import CreateNewButton from '@/Components/CreateNewButton.vue';
 import Confirm from '@/Components/Modals/Confirm.vue';
@@ -34,7 +35,10 @@ const modal = ref(null);
             v-if="$page.url.startsWith('/profile')"
             routeName="vacancy.create"
             text="Додати вакансію"
+            :disabled="locations.length === 0"
         />
+
+        <EmptyListing v-if="vacancies.length === 0" />
 
         <VacancyItem
             v-for="vac in vacancies"

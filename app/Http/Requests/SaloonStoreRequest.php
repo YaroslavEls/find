@@ -19,7 +19,7 @@ class SaloonStoreRequest extends FormRequest
         return [
             'name' => ['required', 'string', 'max:128'],
             'descr' => ['required', 'string', 'max:4096'],
-            'logo' => ['required', 'mimes:png,jpg,svg', 'max:2048'],
+            'logo' => ['required', 'mimes:png,jpg,svg', 'max:10240'],
             'socials' => ['required', 'array', 'max:5'],
             'socials.*' => ['nullable', 'url:http,https', 'max:128'],
             

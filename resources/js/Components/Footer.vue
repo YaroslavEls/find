@@ -37,7 +37,7 @@ const scrollTop = () => {
         </template>
 
         <template #mobile>
-            <footer class="px-4 pt-4 pb-12">
+            <footer class="px-4 pt-6 pb-12 border-t-2 border-gray50">
                 <div class="flex justify-between items-center mb-4">
                     <Link href="/">
                         <div class="icon-logo" />

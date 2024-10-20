@@ -1,5 +1,6 @@
 <script setup>
 import { useMq } from "vue3-mq";
+import { ref, onMounted } from 'vue';
 
 const model = defineModel({
     type: [String, Number],
@@ -8,41 +9,28 @@ const model = defineModel({
 
 const mq = useMq();
 
-const positions = [
-    'left-[30px]',
-    'left-[60px]',
-    'left-[88px]',
-    'left-[118px]',
-    'left-[144px]',
-    'left-[173px]',
-    'left-[202px]',
-    'left-[228px]',
-    'left-[255px]',
-    'left-[280px]',
-    'left-[308px]',
-    'left-[336px]',
-];
+const bar = ref(null);
 
-const positionsMobile = [
-    'left-[29px]',
-    'left-[53px]',
-    'left-[77px]',
-    'left-[101px]',
-    'left-[125px]',
-    'left-[149px]',
-    'left-[174px]',
-    'left-[198px]',
-    'left-[226px]',
-    'left-[250px]',
-    'left-[274px]',
-    'left-[298px]',
-];
+const positions = [];
+for (let i = 0; i < 12; i++) {
+    positions.push(ref(null));
+}
+
+onMounted(() => {
+    const width = window.getComputedStyle(bar.value).width;
+    const num = +width.slice(0, -2) / 13;
+
+    for (let i = 1; i <= 12; i++) {
+        positions[i-1].value[0].style.left = `${i * num}px`;
+    }
+});
 
 </script>
 
 <template>
     <div class="relative" :class="mq.desktop ? 'h-14' : 'h-[52px]'">
         <input
+            ref="bar"
             type="range"
             min="0"
             max="6.5"
@@ -53,8 +41,9 @@ const positionsMobile = [
         >
 
         <div 
-            v-for="pos in (mq.desktop ? positions : positionsMobile)" 
+            v-for="pos in positions" 
             :key="pos"
+            :ref="pos"
             class="absolute w-[2px] h-[10px] bg-gray40 rounded-2xl z-[1]"
             :class="[pos, mq.desktop ? 'top-[23px]' : 'top-[21px]']"
         />

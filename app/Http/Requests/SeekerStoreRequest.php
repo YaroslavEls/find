@@ -20,7 +20,7 @@ class SeekerStoreRequest extends FormRequest
         return [
             'name' => ['required', 'string', 'max:128'],
             'birthday' => ['required', 'date', 'before:-16 years'],
-            'photo' => ['required', 'mimes:png,jpg', 'max:2048'],
+            'photo' => ['required', 'mimes:png,jpg', 'max:10240'],
             'job' => ['required', 'string', Rule::in($jobs)],
             'experience' => ['required', 'numeric', 'min:0', 'max:6.5'],
             'salary' => ['required', 'numeric', 'min:0', 'max:999999'],
@@ -28,7 +28,7 @@ class SeekerStoreRequest extends FormRequest
             'employment' => ['required', 'array', 'max:3'],
             'employment.*' => ['filled', 'string', Rule::in($employments)],
             'info' => ['required', 'string', 'max:4096'],
-            'cv' => ['nullable', 'mimes:pdf', 'max:2048']
+            'cv' => ['nullable', 'mimes:pdf', 'max:10240']
         ];
     }
 

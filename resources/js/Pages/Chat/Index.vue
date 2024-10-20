@@ -1,6 +1,7 @@
 <script setup>
 import MainLayout from '@/Layouts/MainLayout.vue';
 import ChatsNav from '@/Components/ChatsNav.vue';
+import EmptyListing from '@/Components/EmptyListing.vue';
 import ChatItem from '@/Components/ChatItem.vue';
 import { Head, Link } from '@inertiajs/vue3';
 import { ref } from 'vue';
@@ -28,6 +29,8 @@ const selected = ref(null);
 
     <MainLayout>
         <ChatsNav />
+
+        <EmptyListing v-if="chats.length === 0" />
 
         <ChatItem
             v-for="chat in chats"

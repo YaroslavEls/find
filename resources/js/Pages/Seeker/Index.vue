@@ -1,6 +1,7 @@
 <script setup>
 import MainLayout from '@/Layouts/MainLayout.vue';
 import ListingNav from '@/Components/ListingNav.vue';
+import EmptyListing from '@/Components/EmptyListing.vue';
 import SeekerItem from '@/Components/SeekerItem.vue';
 import Pagination from '@/Components/Pagination.vue';
 import { Head } from '@inertiajs/vue3';
@@ -26,6 +27,8 @@ const selected = ref(null);
             :count="seekers.total"
             route="seekers"
         />
+
+        <EmptyListing v-if="seekers.data.length === 0" />
 
         <SeekerItem
             v-for="seeker in seekers.data"

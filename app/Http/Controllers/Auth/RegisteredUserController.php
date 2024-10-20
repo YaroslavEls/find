@@ -53,11 +53,6 @@ class RegisteredUserController extends Controller
 
         Auth::login($user);
 
-        if ($user->is_seeker()) {
-            return redirect(route('register.seeker'));
-        }
-        if ($user->is_saloon()) {
-            return redirect(route('register.saloon'));
-        }
+        return redirect(route('verification.notice'));
     }
 }

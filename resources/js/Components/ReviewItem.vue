@@ -81,8 +81,8 @@ const menuItems = {
                 <div
                     v-if="review.author_id == $page.props.auth.user.user_id"
                     @click="options(review.id)"
-                    class="w-14 h-10 my-0 mr-0 ml-auto rounded-lg icon-options bg-center bg-no-repeat cursor-pointer hover:bg-blue40 duration-300"
-                    :class="selected == review.id ? 'bg-gray70' : 'bg-gray50'"
+                    class="max-w-14 w-full h-10 my-0 mr-0 ml-auto rounded-lg icon-options bg-center bg-no-repeat bg-gray60 cursor-pointer hover:bg-gray70 duration-300"
+                    :class="selected == review.id ? 'close' : ''"
                 />
 
                 <OptionsMenu

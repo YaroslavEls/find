@@ -59,19 +59,19 @@ const expanded = ref(false);
                         </Link>
                     </div>
                     <div v-else class="flex items-center gap-6">
-                        <Link :href="route('logout')" method="post" as="button" class="font-semibold text-[20px]">
+                        <Link :href="route('logout')" method="post" as="button" class="font-semibold text-[20px] px-6 py-[10px] rounded-xl border-gray50 border-2">
                             Вийти
                         </Link>
-                        <Link :href="route('profile')" class="font-semibold text-[20px] px-6 py-3 bg-gray60 rounded-xl">
+                        <Link :href="route('profile')" class="font-semibold text-[20px] px-6 py-[10px] rounded-xl border-gray50 border-2">
                             Продовжити реєстрацію
                         </Link>
                     </div>
                 </div>
                 <div v-else class="flex items-center gap-6">
-                    <Link :href="route('login')" class="font-semibold text-[20px]">
+                    <Link :href="route('login')" class="font-semibold text-[20px] px-6 py-[10px] rounded-xl border-gray50 border-2">
                         Увійти
                     </Link>
-                    <Link :href="route('register')" class="font-semibold text-[20px] px-6 py-3 bg-gray60 rounded-xl">
+                    <Link :href="route('register')" class="font-semibold text-[20px] px-6 py-[10px] rounded-xl border-gray50 border-2">
                         Зареєструватися
                     </Link>
                 </div>
@@ -130,19 +130,19 @@ const expanded = ref(false);
                         </nav>
                     </div>
                     <div v-else class="flex items-center gap-1">
-                        <Link :href="route('logout')" method="post" as="button" class="py-1 px-[14px] txt-body">
+                        <Link :href="route('logout')" method="post" as="button" class="py-1 px-[14px] py-1 rounded border border-gray60 txt-body">
                             Вийти
                         </Link>
-                        <Link :href="route('profile')" class="py-1 px-[14px] rounded bg-gray60 txt-body">
+                        <Link :href="route('profile')" class="py-1 px-[14px] py-1 rounded border border-gray60 txt-body">
                             Продовжити
                         </Link>
                     </div>
                 </div>
                 <div v-else class="flex items-center gap-1">
-                    <Link :href="route('login')" class="py-1 px-[14px] txt-body">
+                    <Link :href="route('login')" class="py-1 px-[14px] py-1 rounded border border-gray60 txt-body">
                         Увійти
                     </Link>
-                    <Link :href="route('register')" class="py-1 px-[14px] rounded bg-gray60 txt-body">
+                    <Link :href="route('register')" class="py-1 px-[14px] py-1 rounded border border-gray60 txt-body">
                         Зареєструватися
                     </Link>
                 </div>

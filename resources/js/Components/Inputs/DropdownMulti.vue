@@ -56,7 +56,7 @@ const update = (key) => {
             <div 
                 class="flex justify-between items-center px-3 mb-1 w-full bg-background border-solid rounded-lg txt-body"
                 :class="[
-                    error ? 'border-systemred' : 'border-gray40',
+                    show ? 'border-blue50' : 'border-gray40',
                     mq.desktop ? 'min-h-[61.2px] py-3 border-2' : 'py-[10px] border'
                 ]"
             >

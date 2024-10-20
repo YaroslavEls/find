@@ -15,7 +15,7 @@ const mq = useMq();
 
     <HeaderMain />
 
-    <main :class="mq.current" >
+    <main :class="[mq.current, $page.component === 'Home' ? 'home' : '']" >
         <slot />
     </main>
 

@@ -44,7 +44,7 @@ const model = defineModel({
     <Photos
         identifier="loc_photo"
         heading="Фото вашого закладу"
-        subheading="Максимум 12 фото"
+        subheading="Максимум 12 фото, до 10МБ кожне"
         button="Додати фото"
         :error="model.errors.photos"
         v-model:photos="model.photos"
@@ -54,7 +54,7 @@ const model = defineModel({
         identifier="loc_video"
         allowed=".mpeg,.mp4,.avi"
         heading="Відео огляд закладу"
-        subheading="Максимум 1 відео"
+        subheading="Максимум 1 відео, до 100МБ"
         button="Додати відео"
         :error="model.errors.video"
         v-model="model.video"

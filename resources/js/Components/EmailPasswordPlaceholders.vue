@@ -1,6 +1,7 @@
 <script setup>
-import { Link } from '@inertiajs/vue3';
+import UpdatePassword from '@/Components/Modals/UpdatePassword.vue';
 import { useMq } from 'vue3-mq';
+import { ref } from 'vue';
 
 defineProps({
     email: { 
@@ -10,6 +11,13 @@ defineProps({
 });
 
 const mq = useMq();
+
+const modal = ref(false);
+
+const show = () => {
+    document.documentElement.style.overflow = 'hidden';
+    modal.value = true;
+};
 
 </script>
 
@@ -28,7 +36,11 @@ const mq = useMq();
     >
         ********
     </div>
-    <Link :href="route('home')" class="block mb-10 text-blue40 text-right txt-text-buttons">
+    <div @click="show" class="block w-fit ml-auto mr-0 mb-10 text-blue40 text-right txt-text-buttons cursor-pointer">
         Змінити пароль
-    </Link>
+    </div>
+    <UpdatePassword
+        v-show="modal"
+        v-model="modal"
+    />
 </template>

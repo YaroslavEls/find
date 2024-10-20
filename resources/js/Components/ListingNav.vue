@@ -46,14 +46,14 @@ const active = ref(false);
                         <Link
                             :href="path"
                             class="px-6 py-2 h-fit rounded txt-body"
-                            :class="(sort !== 'new' && sort !== 'saved') ? 'bg-blue50' : 'bg-gray50'"
+                            :class="(sort !== 'new' && sort !== 'saved') ? 'bg-blue50' : 'bg-gray60'"
                         >
                             Усі
                         </Link>
                         <Link
                             :href="path + '?sort=new'"
                             class="px-6 py-2 h-fit rounded txt-body"
-                            :class="sort == 'new' ? 'bg-blue50' : 'bg-gray50'"
+                            :class="sort == 'new' ? 'bg-blue50' : 'bg-gray60'"
                         >
                             Нові
                         </Link>
@@ -61,7 +61,7 @@ const active = ref(false);
                             v-if="isSeeker"
                             :href="path + '?sort=saved'"
                             class="flex gap-2 px-6 py-2 h-fit rounded txt-body"
-                            :class="sort == 'saved' ? 'bg-blue50' : 'bg-gray50'"
+                            :class="sort == 'saved' ? 'bg-blue50' : 'bg-gray60'"
                         >
                             Обрані
                             <div class="icon-fav" />
@@ -80,7 +80,7 @@ const active = ref(false);
 
                     <Transition>
                         <Filters
-                            v-show="active"
+                            v-if="active"
                             :route="route"
                             v-model="active"
                         />
@@ -101,14 +101,14 @@ const active = ref(false);
                         <Link
                             :href="path"
                             class="px-3 py-1 h-7 rounded txt-body"
-                            :class="(sort !== 'new' && sort !== 'saved') ? 'bg-blue50' : 'bg-gray50'"
+                            :class="(sort !== 'new' && sort !== 'saved') ? 'bg-blue50' : 'bg-gray60'"
                         >
                             Усі
                         </Link>
                         <Link
                             :href="path + '?sort=new'"
                             class="px-3 py-1 h-7 rounded txt-body"
-                            :class="sort == 'new' ? 'bg-blue50' : 'bg-gray50'"
+                            :class="sort == 'new' ? 'bg-blue50' : 'bg-gray60'"
                         >
                             Нові
                         </Link>
@@ -116,7 +116,7 @@ const active = ref(false);
                             v-if="isSeeker"
                             :href="path + '?sort=saved'"
                             class="px-3 py-1 h-7 rounded txt-body"
-                            :class="sort == 'saved' ? 'bg-blue50' : 'bg-gray50'"
+                            :class="sort == 'saved' ? 'bg-blue50' : 'bg-gray60'"
                         >
                             Обрані
                         </Link>
@@ -132,7 +132,7 @@ const active = ref(false);
 
                     <Transition>
                         <Filters
-                            v-show="active"
+                            v-if="active"
                             :route="route"
                             v-model="active"
                         />

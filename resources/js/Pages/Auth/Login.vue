@@ -63,7 +63,7 @@ const allow = computed(() => {
             />
 
             <Link
-                :href="route('home')"
+                :href="route('password.request')"
                 class="relative top-[-24px] text-blue40 txt-text-buttons block text-right"
             >
                 Забув пароль?

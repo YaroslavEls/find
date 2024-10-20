@@ -55,7 +55,7 @@ const allow = computed(() => {
             identifier="logo"
             allowed=".png,.jpg,.svg"
             heading="Логотип вашого закладу"
-            subheading="Максимум 1 фото"
+            subheading="Максимум 1 фото, до 10МБ"
             button="Додати фото"
             :error="model.errors.logo"
             v-model="model.logo"

@@ -97,7 +97,7 @@ const filter = () => {
 
 <template>
     <div 
-        class="absolute right-0 z-10 border-solid border border-gray40 rounded-lg bg-gray70"
+        class="absolute right-0 z-10 border-solid border border-gray40 rounded-lg bg-background"
         :class="mq.desktop ? 'top-16 w-[420px] p-6' : 'top-[90px] w-full p-4'"
     >
         <div class="flex justify-between items-center mb-8">

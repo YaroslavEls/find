@@ -67,7 +67,13 @@ class SaloonController extends Controller
     {
         $saloon = $vacancy->saloon()->get()[0];
         $saloon->load(['vacancies', 'locations']);
-        $saloon->score = round($saloon->user->reviews->avg('score'));
+
+        $score = $saloon->user->reviews->avg('score');
+        if ($score) {
+            $saloon->score = $score;
+        } else {
+            $saloon->score = 0;
+        }
 
         $reviews = $saloon
             ->user

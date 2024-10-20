@@ -64,8 +64,8 @@ if (model.value) {
         <template #default>
             <label 
                 :for="identifier" 
-                class="block w-full bg-background border-solid border-gray40 rounded-lg txt-buttons text-center cursor-pointer"
-                :class="mq.desktop ? 'py-[15px] border-2' : 'py-3 border'"
+                class="block w-full bg-background border-solid border-gray40 rounded-lg txt-buttons text-center cursor-pointer crop crop-1"
+                :class="mq.desktop ? 'p-[15px] border-2' : 'p-3 border'"
             >
                 {{ filename }}
             </label>

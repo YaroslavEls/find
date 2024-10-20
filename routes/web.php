@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', HomeController::class)
     ->name('home');
 
-Route::middleware(['auth', 'completed'])->group(function () {
+Route::middleware(['auth', 'verified', 'completed'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])
         ->name('profile');
     Route::delete('/profile', [ProfileController::class, 'destroy'])
@@ -64,7 +64,7 @@ Route::middleware(['auth', 'completed'])->group(function () {
         ->name('chat.unarchive');
 });
 
-Route::middleware(['auth', 'seeker', 'incompleted'])->group(function () {
+Route::middleware(['auth', 'verified', 'seeker', 'incompleted'])->group(function () {
     Route::get('/register/seeker', [SeekerController::class, 'create'])
         ->name('register.seeker');
     Route::post('/register/seeker', [SeekerController::class, 'store'])
@@ -73,12 +73,12 @@ Route::middleware(['auth', 'seeker', 'incompleted'])->group(function () {
         ->name('seeker.validate');
 });
 
-Route::middleware(['auth', 'seeker', 'completed'])->group(function () {
+Route::middleware(['auth', 'verified', 'seeker', 'completed'])->group(function () {
     Route::patch('/seeker', [SeekerController::class, 'update'])
         ->name('seeker.update');
 });
 
-Route::middleware(['auth', 'saloon', 'incompleted'])->group(function () {
+Route::middleware(['auth', 'verified', 'saloon', 'incompleted'])->group(function () {
     Route::get('/register/saloon', [SaloonController::class, 'create'])
         ->name('register.saloon');
     Route::post('/register/saloon', [SaloonController::class, 'store'])
@@ -90,7 +90,7 @@ Route::middleware(['auth', 'saloon', 'incompleted'])->group(function () {
         ->name('location.validate');
 });
 
-Route::middleware(['auth', 'saloon', 'completed'])->group(function () {
+Route::middleware(['auth', 'verified', 'saloon', 'completed'])->group(function () {
     Route::patch('/saloon', [SaloonController::class, 'update'])
         ->name('saloon.update');
 

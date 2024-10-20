@@ -81,6 +81,14 @@ const model = defineModel({
                         :error="model.errors.cv"
                         v-model="model.cv"
                     />
+                    <a
+                        v-if="seeker.cv"
+                        :href="seeker.cv" 
+                        target="_blank" 
+                        class="relative bottom-7 block w-fit ml-auto mt-1 mb-4 text-right text-blue40 txt-text-buttons"
+                    >
+                        Переглянути
+                    </a>
                 </div>
 
                 <div class="w-[576px]">
@@ -157,6 +165,14 @@ const model = defineModel({
                 :error="model.errors.cv"
                 v-model="model.cv"
             />
+            <a
+                v-if="seeker.cv"
+                :href="seeker.cv" 
+                target="_blank" 
+                class="relative bottom-7 block mt-1 mb-4 text-right text-blue40 txt-text-buttons"
+            >
+                Переглянути
+            </a>
         </template>
     </MqResponsive>
 </template>

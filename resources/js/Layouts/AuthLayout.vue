@@ -12,7 +12,7 @@ const mq = useMq();
         v-if="mq.desktop"
     />
 
-    <main :class="mq.desktop ? 'max-w-[624px] w-full px-6 mt-10 mb-20 mx-auto' : 'mobile'">
+    <main :class="mq.desktop ? 'desktop-auth' : 'mobile'">
         <slot />
     </main>
 

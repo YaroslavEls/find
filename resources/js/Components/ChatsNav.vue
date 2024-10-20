@@ -22,7 +22,7 @@ const sort = ref(urlParams.get('sort'));
                 :href="path"
                 class="h-fit rounded txt-body"
                 :class="[
-                    sort !== 'archive' ? 'bg-blue50' : 'bg-gray50',
+                    sort !== 'archive' ? 'bg-blue50' : 'bg-gray60',
                     mq.desktop ? 'px-6 py-2' : 'px-[14px] py-1'
                 ]"
             >
@@ -32,7 +32,7 @@ const sort = ref(urlParams.get('sort'));
                 :href="path + '?sort=archive'"
                 class="h-fit rounded txt-body"
                 :class="[
-                    sort === 'archive' ? 'bg-blue50' : 'bg-gray50',
+                    sort === 'archive' ? 'bg-blue50' : 'bg-gray60',
                     mq.desktop ? 'px-6 py-2' : 'px-[14px] py-1'
                 ]"
             >

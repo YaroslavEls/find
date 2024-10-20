@@ -28,7 +28,7 @@ const mq = useMq();
         :type="type"
         :placeholder="placeholder"
         v-model="model" 
-        class="px-4 w-full bg-gray70 border-solid border-gray40 rounded-lg text-gray0 txt-body"
+        class="px-4 w-full bg-background border-solid border-gray40 rounded-lg text-gray0 txt-body"
         :class="mq.desktop ? 'py-4 border-2' : 'py-[14px] border'"
     >
 </template>

@@ -26,6 +26,17 @@ class LocationFactory extends Factory
         return implode(';', $randomElements);
     }
 
+    protected function video(): string|null
+    {
+        $num = rand(0, 2);
+
+        if (!$num) {
+            return null;
+        }
+
+        return 'storage/test_videos/loc-video-example-'.$num.'.mp4';
+    }
+
     /**
      * Define the model's default state.
      *
@@ -40,7 +51,7 @@ class LocationFactory extends Factory
             'schedule' => '07:00 - 20:00',
             'gen' => fake()->boolean(),
             'photos' => $this->photos(),
-            'video' => null
+            'video' => $this->video()
         ];
     }
 }

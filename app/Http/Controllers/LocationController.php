@@ -40,6 +40,11 @@ class LocationController extends Controller
         }
         $validated['photos'] = implode(';', $pathes);
 
+        if ($validated['video']) {
+            $path = $validated['video']->store('uploads');
+            $validated['video'] = $path;
+        }
+
         $request->user()->userable->locations()->create($validated);
 
         return redirect(route('profile', ['sec' => 'locations']));
@@ -75,9 +80,11 @@ class LocationController extends Controller
         $validated['schedule'] = implode(';', $validated['schedule']);
 
         $pathes = [];
-        foreach ($validated['photos'] as $photo) {
-            $path = $photo->store('uploads');
-            $pathes[] = $path;
+        if (array_key_exists('photos', $validated)) {
+            foreach ($validated['photos'] as $photo) {
+                $path = $photo->store('uploads');
+                $pathes[] = $path;
+            }
         }
         $pathes = array_merge($validated['oldPhotos'], $pathes);
         $validated['photos'] = implode(';', $pathes);

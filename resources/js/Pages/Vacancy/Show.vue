@@ -8,6 +8,7 @@ import SubmitButton from '@/Components/SubmitButton.vue';
 import { Carousel, Slide } from 'vue3-carousel';
 import 'vue3-carousel/dist/carousel.css';
 import { Head, router, Link, usePage } from '@inertiajs/vue3';
+import { ref } from 'vue';
 
 const props = defineProps({
     breadcrumbs: {
@@ -31,6 +32,8 @@ const reviews = props.vacancy.score == 0
 const formatter = new Intl.DateTimeFormat('uk-UA', { day: 'numeric', month: 'long', year: 'numeric' });
 const date = new Date(props.vacancy.created_at);
 const formattedDate = formatter.format(date);
+
+const mediaMode = ref(0);
 
 const isSeeker = usePage().props.auth.user.userable_type === 'App\\Models\\Seeker';
 
@@ -155,27 +158,59 @@ const save = () => {
                         </Link>
                     </div>
 
-                    <div class="basis-[728px]">
+                    <div class="basis-[576px]">
                         <div
                             v-if="isSeeker"
                             @click="save"
-                            class="flex gap-2 px-6 py-2 mb-6 h-fit w-fit my-0 mr-0 ml-auto bg-blue50 rounded txt-body cursor-pointer"
+                            class="flex gap-2 px-6 py-2 mb-[125px] h-fit w-fit my-0 mr-0 ml-auto bg-blue50 rounded txt-body cursor-pointer"
                         >
                             {{ saveData.label }}
                             <div class="icon-fav" />
                         </div>
+
+                        <div class="flex justify-between mb-4" :class="isSeeker ? '' : 'mt-[166px]'">
+                            <div class="text-gray40 txt-h3">Локація:</div>
+                            <div class="flex gap-2">
+                                <div
+                                    @click="mediaMode = 0"
+                                    class="flex items-center gap-2 px-4 py-2 rounded cursor-pointer"
+                                    :class="mediaMode === 0 ? 'bg-blue50' : 'bg-gray60'"
+                                >
+                                    <div class="txt-body">Фото</div>
+                                    <div class="icon-photo" />
+                                </div>
+                                <div
+                                    @click="mediaMode = 1"
+                                    class="flex items-center gap-2 px-4 py-2 rounded cursor-pointer"
+                                    :class="mediaMode === 1 ? 'bg-blue50' : 'bg-gray60'"
+                                >
+                                    <div class="txt-body">Відео</div>
+                                    <div class="icon-video" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <video 
+                            v-show="mediaMode === 1"
+                            height="355"
+                            controls
+                            class="border-solid border-gray50 border-2 rounded-xl"
+                        >
+                            <source :src="'/'+vacancy.location.video">
+                            Your browser does not support the video tag.
+                        </video>
                         
-                        <Carousel :autoplay="5000" :transition="750" :wrap-around="true">
+                        <Carousel v-show="mediaMode === 0" :autoplay="5000" :transition="750" :wrap-around="true">
                             <Slide 
                                 v-for="(photo, index) in vacancy.location.photos.split(';')" 
                                 :key="index"
                                 class="relative cursor-grab"
                             >
                                 <div
-                                    class="w-full h-[448px] border-solid border-gray50 border-2 rounded-xl image"
+                                    class="w-full h-[355px] border-solid border-gray50 border-2 rounded-xl image"
                                     :style="{ backgroundImage: `url('/${photo}')` }"
                                 />
-                                <div class="absolute right-4 bottom-2 text-gray90 txt-h5">{{ index + 1 }}/{{ vacancy.location.photos.split(';').length }}</div>
+                                <div class="absolute right-4 bottom-2 txt-h5">{{ index + 1 }}/{{ vacancy.location.photos.split(';').length }}</div>
                             </Slide>
                         </Carousel>
 
@@ -184,7 +219,7 @@ const save = () => {
                             <div
                                 v-for="(item, index) in vacancy.saloon.socials.split(';')"
                                 :key="index"
-                                class="mb-6 txt-body"
+                                class="p-4 mb-6 rounded-lg bg-gray80 txt-body"
                             >
                                 {{ item }}
                             </div>
@@ -268,8 +303,39 @@ const save = () => {
                 <div class="mb-2 text-gray40 txt-h3">Опис вакансії:</div>
                 <div class="whitespace-pre-wrap mb-10 txt-body">{{ vacancy.descr }}</div>
 
-                <div class="mb-2 text-gray40 txt-h3">Фото:</div>
-                <Carousel :autoplay="5000" :transition="750" :wrap-around="true" class="mb-6">
+                <div class="flex justify-between mb-2">
+                    <div class="text-gray40 txt-h3">Локація:</div>
+                    <div class="flex gap-2">
+                        <div
+                            @click="mediaMode = 0"
+                            class="flex items-center gap-1 px-2 py-1 rounded cursor-pointer"
+                            :class="mediaMode === 0 ? 'bg-blue50' : 'bg-gray60'"
+                        >
+                            <div class="txt-body">Фото</div>
+                            <div class="icon-photo" />
+                        </div>
+                        <div
+                            @click="mediaMode = 1"
+                            class="flex items-center gap-1 px-2 py-1 rounded cursor-pointer"
+                            :class="mediaMode === 1 ? 'bg-blue50' : 'bg-gray60'"
+                        >
+                            <div class="txt-body">Відео</div>
+                            <div class="icon-video" />
+                        </div>
+                    </div>
+                </div>
+                
+                <video 
+                    v-show="mediaMode === 1" 
+                    height="202"
+                    controls
+                    class="border-solid border-gray50 border-2 rounded-lg"
+                >
+                    <source :src="'/'+vacancy.location.video">
+                    Your browser does not support the video tag.
+                </video>
+
+                <Carousel v-show="mediaMode === 0" :autoplay="5000" :transition="750" :wrap-around="true">
                     <Slide 
                         v-for="(photo, index) in vacancy.location.photos.split(';')" 
                         :key="index"
@@ -279,13 +345,13 @@ const save = () => {
                             class="w-full h-[202px] border-solid border-2 border-gray50 rounded-lg image"
                             :style="{ backgroundImage: `url('/${photo}')` }"
                         />
-                        <div class="absolute right-4 bottom-2 text-gray90 txt-h5">
+                        <div class="absolute right-4 bottom-2 txt-h5">
                             {{ index + 1 }}/{{ vacancy.location.photos.split(';').length }}
                         </div>
                     </Slide>
                 </Carousel>
 
-                <div class="mb-2 text-gray40 txt-body">Соціальні мережі:</div>
+                <div class="mt-6 mb-2 text-gray40 txt-body">Соціальні мережі:</div>
                 <div class="mb-10">
                     <div
                         v-for="(item, index) in vacancy.saloon.socials.split(';')"

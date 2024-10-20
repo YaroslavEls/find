@@ -12,14 +12,14 @@ export default {
 
     theme: {
         colors: {
-            background: '#282b34',
+            background: '#21232D',
             'background-dim': '#272a33e6',
             gray0: '#ffffff',
             gray10: '#eceef2',
             gray20: '#d7dbe4',
             gray30: '#a9b2c2',
             gray40: '#6c7a93',
-            gray50: '#484e5b',
+            gray50: '#4d566b',
             gray60: '#3a4257',
             gray70: '#2e323b',
             gray80: '#282b34',

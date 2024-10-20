@@ -39,7 +39,7 @@ const show = ref(false);
             <div 
                 class="flex justify-between items-center p-3 mb-1 w-full bg-background border-solid rounded-lg txt-body"
                 :class="[
-                    error ? 'border-systemred' : 'border-gray40',
+                    show ? 'border-blue50' : 'border-gray40',
                     mq.desktop ? 'min-h-[61.2px] border-2' : 'border'
                 ]"
             >

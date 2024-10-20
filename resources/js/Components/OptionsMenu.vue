@@ -69,7 +69,7 @@ const show = (href) => {
                 mq.desktop
                     ? 'top-12 right-0 w-[174px] px-4 py-2 rounded-lg' 
                     : 'top-8 right-2 w-[120px] px-2 py-1 rounded',
-                bg ? 'bg-gray50' : 'bg-gray70'
+                bg ? 'bg-gray50' : 'border-2 border-gray40 bg-background'
             ]"
         >
             <div 
