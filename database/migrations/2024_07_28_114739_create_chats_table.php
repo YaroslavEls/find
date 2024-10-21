@@ -12,10 +12,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('chats', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('saloon_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('seeker_id')->constrained()->cascadeOnDelete();
-            $table->boolean('archived')->default(false);
+            $table->ulid('id')->primary();
+            $table->foreignUlid('saloon_id')->constrained()->cascadeOnDelete();
+            $table->foreignUlid('seeker_id')->constrained()->cascadeOnDelete();
+            $table->boolean('saloon_archived')->default(false);
+            $table->boolean('seeker_archived')->default(false);
             $table->timestamps();
         });
     }

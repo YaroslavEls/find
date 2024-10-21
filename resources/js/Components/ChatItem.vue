@@ -11,7 +11,7 @@ const props = defineProps({
 });
 
 const model = defineModel({ 
-    type: [Number, null],
+    type: [Number, String, null],
     required: true 
 });
 
@@ -67,7 +67,15 @@ const menuItems = () => {
 
                 <Link :href="route('chat.show', { chat: chat })" class="basis-[49%]">
                     <div class="flex justify-between items-center mb-2">
-                        <div class="txt-h5">{{ latestSender }}</div>
+                        <div class="flex items-center gap-2">
+                            <div
+                                v-if="chat.has_new_messages"
+                                class="px-1 py-0.5 rounded bg-systemred txt-text-buttons"
+                            >
+                                Нове повідомлення
+                            </div>
+                            <div class="txt-h5">{{ latestSender }}</div>
+                        </div>
                         <div class="text-gray30 txt-secondary">{{ formattedDate }}</div>
                     </div>
                     <div class="text-gray40 txt-body crop crop-4">{{ chat.latest_message.text }}</div>
@@ -90,13 +98,17 @@ const menuItems = () => {
             <div class="relative mb-8 pb-4 border-solid border-b-[1px] border-gray50">
                 <Link 
                     :href="chatter.route"
-                    class="flex items-center gap-2 max-w-[80%] w-fit mb-2"
+                    class="relative flex items-center gap-2 max-w-[80%] w-fit mb-2"
                 >
                     <div
                         class="w-8 h-8 border-solid border-1 border-gray50 rounded-full image"
                         :style="{ backgroundImage: `url('/${chatter.photo}')` }"
                     />
                     <div class="text-gray30 txt-h5">{{ chatter.name }}</div>
+                    <div 
+                        v-if="chat.has_new_messages"
+                        class="absolute top-1 right-[-8px] w-3 h-3 bg-systemred rounded-full"
+                    />
                 </Link>
                 <Link 
                     :href="route('chat.show', { chat: chat })"

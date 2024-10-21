@@ -13,7 +13,12 @@ class ArchiveController extends Controller
             abort(403);
         }
 
-        $chat->archived = true;
+        if ($request->user()->is_seeker()) {
+            $chat->seeker_archived = true;
+        } else {
+            $chat->saloon_archived = true;
+        }
+
         $chat->save();
     }
 
@@ -23,7 +28,12 @@ class ArchiveController extends Controller
             abort(403);
         }
 
-        $chat->archived = false;
+        if ($request->user()->is_seeker()) {
+            $chat->seeker_archived = false;
+        } else {
+            $chat->saloon_archived = false;
+        }
+
         $chat->save();
     }
 }

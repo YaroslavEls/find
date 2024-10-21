@@ -5,15 +5,17 @@ namespace App\Models;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\DB;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, HasUlids;
 
     /**
      * The attributes that are mass assignable.
@@ -102,17 +104,29 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function nonArchivedChats(): Collection
     {
-        return $this->chats()->where('archived', false)->get();
+        $column = $this->is_seeker() ? 'seeker_archived' : 'saloon_archived';
+        return $this->chats()->where($column, false)->get();
     }
 
     public function archivedChats(): Collection
     {
-        return $this->chats()->where('archived', true)->get();
+        $column = $this->is_seeker() ? 'seeker_archived' : 'saloon_archived';
+        return $this->chats()->where($column, true)->get();
     }
 
     public function in_chat(Chat $chat): bool
     {
         return ($this->is_seeker() && $chat->seeker->is($this->userable))
             || ($this->is_saloon() && $chat->saloon->is($this->userable));
+    }
+
+    public function unread_chats()
+    {
+        return DB::table('messages')
+            ->where('receiver_id', $this->id)
+            ->where('read', false)
+            ->distinct()
+            ->pluck('chat_id')
+            ->toArray();
     }
 }

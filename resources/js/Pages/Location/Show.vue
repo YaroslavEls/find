@@ -47,7 +47,7 @@ const isSeeker = usePage().props.auth.user.userable_type === 'App\\Models\\Seeke
 
         <VacancyItem
             v-for="(vac, index) in location.vacancies"
-            :key="index"
+            :key="vac.id"
             :vacancy="vac"
             :index="index"
             :isSeeker="isSeeker"

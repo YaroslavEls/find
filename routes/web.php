@@ -58,6 +58,9 @@ Route::middleware(['auth', 'verified', 'completed'])->group(function () {
     Route::post('chat/{chat}', [MessageController::class, 'store'])
         ->name('chat.message');
 
+    Route::post('chat/{chat}/read', [ChatController::class, 'read'])
+        ->name('chat.read');
+
     Route::post('chat/{chat}/archive', [ArchiveController::class, 'store'])
         ->name('chat.archive');
     Route::delete('chat/{chat}/unarchive', [ArchiveController::class, 'destroy'])

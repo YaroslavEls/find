@@ -12,9 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('vacancies', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('saloon_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('location_id')->constrained()->cascadeOnDelete();
+            $table->ulid('id')->primary();
+            $table->foreignUlid('saloon_id')->constrained()->cascadeOnDelete();
+            $table->foreignUlid('location_id')->constrained()->cascadeOnDelete();
             $table->string('job');
             $table->string('employment');
             $table->float('experience');

@@ -45,6 +45,10 @@ const expanded = ref(false);
                                 class="font-semibold text-[22px] tracking-normal leading-none"
                             >
                                 Чати
+                                <div 
+                                    v-if="$page.props.auth.user.new_messages.length > 0"
+                                    class="absolute top-[-4px] right-[-12px] w-4 h-4 bg-systemred rounded-full"
+                                />
                             </Link>
                         </nav>
                         <Link
@@ -117,9 +121,13 @@ const expanded = ref(false);
                             </Link>
                             <Link 
                                 :href="route('chat')"
-                                class="block text-center txt-buttons"
+                                class="relative block text-center txt-buttons"
                             >
                                 Чати
+                                <div 
+                                    v-if="$page.props.auth.user.new_messages.length > 0"
+                                    class="absolute top-0 left-1/2 transform -translate-x-1/2 ml-[22px] w-3 h-3 bg-systemred rounded-full"
+                                />
                             </Link>
                             <Link 
                                 :href="route('profile')"

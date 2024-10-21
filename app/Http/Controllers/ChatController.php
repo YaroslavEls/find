@@ -22,6 +22,16 @@ class ChatController extends Controller
 
         $chats->load(['seeker', 'saloon', 'latestMessage']);
 
+        $unread_chats_ids = $request->user()->unread_chats();
+
+        $chats->each(function ($chat) use ($request, $unread_chats_ids) {
+            $chat->has_new_messages = in_array($chat->id, $unread_chats_ids);
+            $chat->archived = $request->user()->is_seeker()
+                ? $chat->seeker_archived 
+                : $chat->saloon_archived;
+            unset($chat['seeker_archived'], $chat['saloon_archived']);
+        });
+
         $chats = $chats->sortByDesc(function($chat) {
             return $chat->latestMessage->created_at;
         })->values()->all();
@@ -108,10 +118,32 @@ class ChatController extends Controller
 
         $chat->load(['messages', 'seeker', 'saloon']);
         $chat->messages->load(['sender']);
-        
+
+        $chat->archived = $request->user()->is_seeker()
+            ? $chat->seeker_archived 
+            : $chat->saloon_archived;
+        unset($chat['seeker_archived'], $chat['saloon_archived']);
+
+        $this->read($request, $chat);
+
         return Inertia::render('Chat/Show', [
             'breadcrumbs' => $breadcrumbs,
             'chat' => $chat
         ]);
+    }
+
+    public function read(Request $request, Chat $chat): void
+    {
+        if ($request->user()->cannot('view', $chat)) {
+            abort(403);
+        }
+
+        $messages_to_read = $chat->messages
+            ->where('receiver_id', $request->user()->id)
+            ->where('read', false);
+
+        if (!$messages_to_read->isEmpty()) {
+            $messages_to_read->toQuery()->update(['read' => true]);
+        }
     }
 }

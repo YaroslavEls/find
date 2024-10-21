@@ -79,8 +79,8 @@ const modal = ref(null);
         </MqResponsive>
         
         <ReviewItem
-            v-for="(review, index) in reviews"
-            :key="index"
+            v-for="review in reviews"
+            :key="review.id"
             :review="review"
             v-model:selected="active"
             v-model:modal="modal"

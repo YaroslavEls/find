@@ -3,9 +3,8 @@ import MainLayout from '@/Layouts/MainLayout.vue';
 import Breadcrumbs from '@/Components/Breadcrumbs.vue';
 import MessageItem from '@/Components/MessageItem.vue';
 import MessageForm from '@/Components/MessageForm.vue';
-import { Head, Link, useForm, usePage } from '@inertiajs/vue3';
-import { ref, onMounted } from 'vue';
-import { useMq } from 'vue3-mq';
+import { Head, Link, useForm, usePage, router } from '@inertiajs/vue3';
+import { ref, onMounted, onBeforeUnmount } from 'vue';
 
 const props = defineProps({
     breadcrumbs: {
@@ -18,8 +17,6 @@ const props = defineProps({
     }
 });
 
-const mq = useMq();
-
 const form = useForm({
     text: ''
 });
@@ -31,20 +28,31 @@ const submit = () => {
         preserveScroll: true,
         onSuccess: () => {
             form.reset();
-            incoming.value.length = 0;
+            props.chat.messages.sort((a, b) => {
+                return new Date(a.created_at) - new Date(b.created_at);
+            });
             textarea.value.style.height = 'auto';
         }
     })
 };
 
 onMounted(() => {
-    Echo.private(`chat.${usePage().props.auth.user.user_id}`)
+    const new_messages = usePage().props.auth.user.new_messages;
+    const index = new_messages.indexOf(props.chat.id);
+    if (index !== -1) {
+        new_messages.splice(new_messages.indexOf(props.chat.id), 1);
+    }
+    
+    Echo.join(`chat.${props.chat.id}`)
         .listen('MessageSent', (res) => {
-            incoming.value.push(res.message);
-        })
+            props.chat.messages.push(res.message);
+        });
 });
 
-const incoming = ref([]);
+onBeforeUnmount(() => {
+    router.post(route('chat.read', {chat: props.chat}));
+    Echo.leave(`chat.${props.chat.id}`);
+});
 
 const author = (msg) => {
     if (!msg) return null;
@@ -71,22 +79,6 @@ const author = (msg) => {
                 :message="message"
                 :author="author(message)"
                 :next="author(chat.messages[index + 1])"
-            />
-
-            <div
-                v-show="incoming.length > 0"
-                class="border-solid border-blue50 border-b-[1px] text-blue50 text-right txt-text-buttons"
-                :class="mq.desktop ? 'mb-10 pb-2' : 'my-6 pb-1'"
-            >
-                Нові повідомлення
-            </div>
-
-            <MessageItem
-                v-for="message in incoming"
-                :key="message.id"
-                :message="message"
-                :author="author(message)"
-                :next="null"
             />
 
             <form

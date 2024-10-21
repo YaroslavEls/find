@@ -10,13 +10,13 @@ const props = defineProps({
         required: true 
     },
     index: { 
-        type: Number,
+        type: [String, Number],
         required: true 
     }
 });
 
 const selected = defineModel('selected', { 
-    type: [Number, null],
+    type: [String, Number, null],
     required: true 
 });
 const modal = defineModel('modal', {

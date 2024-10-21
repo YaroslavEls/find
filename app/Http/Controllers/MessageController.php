@@ -23,6 +23,6 @@ class MessageController extends Controller
         $message = $chat->messages()->create($data);
         $message->load(['sender']);
 
-        broadcast(new MessageSent($message));
+        broadcast(new MessageSent($message))->toOthers();
     }
 }

@@ -190,15 +190,23 @@ const save = () => {
                             </div>
                         </div>
 
-                        <video 
-                            v-show="mediaMode === 1"
-                            height="355"
-                            controls
-                            class="border-solid border-gray50 border-2 rounded-xl"
-                        >
-                            <source :src="'/'+vacancy.location.video">
-                            Your browser does not support the video tag.
-                        </video>
+                        <div v-show="mediaMode === 1">
+                            <video
+                                v-if="vacancy.location.video"
+                                height="355"
+                                controls
+                                class="border-solid border-gray50 border-2 rounded-xl"
+                            >
+                                <source :src="'/'+vacancy.location.video">
+                                Your browser does not support the video tag.
+                            </video>
+                            <div 
+                                v-else
+                                class="flex justify-center items-center w-full h-[355px] bg-gray50 rounded-xl txt-h4"
+                            >
+                                Відео відсутнє
+                            </div>
+                        </div>
                         
                         <Carousel v-show="mediaMode === 0" :autoplay="5000" :transition="750" :wrap-around="true">
                             <Slide 
@@ -324,16 +332,24 @@ const save = () => {
                         </div>
                     </div>
                 </div>
-                
-                <video 
-                    v-show="mediaMode === 1" 
-                    height="202"
-                    controls
-                    class="border-solid border-gray50 border-2 rounded-lg"
-                >
-                    <source :src="'/'+vacancy.location.video">
-                    Your browser does not support the video tag.
-                </video>
+
+                <div v-show="mediaMode === 1">
+                    <video 
+                        v-if="vacancy.location.video" 
+                        height="202"
+                        controls
+                        class="border-solid border-gray50 border-2 rounded-lg"
+                    >
+                        <source :src="'/'+vacancy.location.video">
+                        Your browser does not support the video tag.
+                    </video>
+                    <div 
+                        v-else
+                        class="flex justify-center items-center w-full h-[202px] bg-gray50 rounded-xl txt-h4"
+                    >
+                        Відео відсутнє
+                    </div>
+                </div>
 
                 <Carousel v-show="mediaMode === 0" :autoplay="5000" :transition="750" :wrap-around="true">
                     <Slide 
