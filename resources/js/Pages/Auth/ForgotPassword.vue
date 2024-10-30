@@ -19,7 +19,6 @@ const form = useForm({
 
 const submit = () => {
     form.post(route('password.email'), {
-        onError: () => console.log(form),
         onSuccess: () => form.reset(),
     });
 };

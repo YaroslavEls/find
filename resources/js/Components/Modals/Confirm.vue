@@ -75,10 +75,10 @@ const submit = () => {
                         Скасувати
                     </div>
                     <button
-                        class="w-full py-4 text-center border-solid border-2 border-gray40 rounded-lg txt-buttons text-systemred cursor-pointer"
-                        :class="(!password || form.password !== '') ? '' : 'pointer-events-none'"
+                        class="w-full py-4 text-center border-solid border-2 border-systemred rounded-lg txt-buttons text-systemred cursor-pointer"
+                        :class="(!password || form.password !== '') ? '' : 'pointer-events-none opacity-40'"
                     >
-                        <div :class="(!password || form.password !== '') ? '' : 'opacity-40'">{{ title.slice(0, -1) }}</div>
+                        {{ title.slice(0, -1) }}
                     </button>
                 </form>
             </div>
@@ -113,10 +113,10 @@ const submit = () => {
                     Скасувати
                 </div>
                 <button
-                    class="w-full py-3 text-center border-solid border border-gray40 rounded-lg txt-buttons text-systemred"
-                    :class="(!password || form.password !== '') ? '' : 'pointer-events-none'"
+                    class="w-full py-3 text-center border-solid border border-systemred rounded-lg txt-buttons text-systemred"
+                    :class="(!password || form.password !== '') ? '' : 'pointer-events-none opacity-40'"
                 >
-                    <div :class="(!password || form.password !== '') ? '' : 'opacity-40'">{{ title.slice(0, -1) }}</div>
+                    {{ title.slice(0, -1) }}
                 </button>
             </form>
         </template>

@@ -74,7 +74,7 @@ const menuItems = () => {
                     />
                     <div class="mb-4 txt-h3">
                         {{ vacancy.job }} - 
-                        <span class="text-systemgreen">{{ vacancy.salary }}₴</span>
+                        <span class="text-systemgreen">{{ (+vacancy.salary).toLocaleString('de-DE') }}₴</span>
                     </div>
                     <div v-if="vacancy.location.gen" class="flex gap-2 items-center mb-4">
                         <div class="icon-gen" />
@@ -130,8 +130,8 @@ const menuItems = () => {
                 <div
                     v-if="isSeeker"
                     @click="options(index)"
-                    class="absolute top-2 right-2 w-[29px] h-5 rounded icon-options bg-center bg-no-repeat"
-                    :class="selected == index ? 'bg-gray70' : 'bg-gray50'"
+                    class="absolute top-2 right-2 w-[29px] h-5 rounded icon-options bg-center bg-no-repeat bg-gray60"
+                    :class="selected == index ? 'close' : ''"
                 />
 
                 <OptionsMenu
@@ -155,7 +155,7 @@ const menuItems = () => {
 
                 <div class="mb-4 txt-h3">
                     {{ vacancy.job }} - 
-                    <span class="text-systemgreen">{{ vacancy.salary }}₴</span>
+                    <span class="text-systemgreen">{{ (+vacancy.salary).toLocaleString('de-DE') }}₴</span>
                 </div>
 
                 <div v-if="vacancy.location.gen" class="flex gap-1 items-center mb-4">

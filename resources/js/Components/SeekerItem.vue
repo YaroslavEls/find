@@ -52,7 +52,7 @@ const menuItems = () => {
                     />
                     <div class="mb-4 txt-h3">
                         {{ seeker.job }} - 
-                        <span class="text-systemgreen">{{ seeker.salary }}₴</span>
+                        <span class="text-systemgreen">{{ (+seeker.salary).toLocaleString('de-DE') }}₴</span>
                     </div>
                     <div class="flex gap-2 mb-4 items-center text-gray20 txt-h5">
                         <div class="icon-location" />
@@ -93,8 +93,8 @@ const menuItems = () => {
             <div class="relative mb-8">
                 <div
                     @click="options(seeker.id)"
-                    class="absolute top-2 right-2 w-[29px] h-5 rounded icon-options bg-center bg-no-repeat"
-                    :class="model == seeker.id ? 'bg-gray70' : 'bg-gray50'"
+                    class="absolute top-2 right-2 w-[29px] h-5 rounded icon-options bg-center bg-no-repeat bg-gray60"
+                    :class="model == seeker.id ? 'close' : ''"
                 />
 
                 <OptionsMenu
@@ -116,7 +116,7 @@ const menuItems = () => {
 
                 <div class="mb-4 txt-h3">
                     {{ seeker.job }} - 
-                    <span class="text-systemgreen">{{ seeker.salary }}₴</span>
+                    <span class="text-systemgreen">{{ (+seeker.salary).toLocaleString('de-DE') }}₴</span>
                 </div>
 
                 <div class="flex gap-2 mb-2 items-center txt-h5">

@@ -66,7 +66,13 @@ class SaloonController extends Controller
     public function show(Request $request, Vacancy $vacancy): Response
     {
         $saloon = $vacancy->saloon()->get()[0];
-        $saloon->load(['vacancies', 'locations']);
+        
+        $saloon->load([
+            'vacancies' => fn ($query) =>
+                $query->orderBy('created_at', 'desc'),
+            'locations' => fn ($query) =>
+                $query->orderBy('created_at', 'desc')
+        ]);
 
         $score = $saloon->user->reviews->avg('score');
         if ($score) {

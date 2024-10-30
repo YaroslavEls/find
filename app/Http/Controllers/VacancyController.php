@@ -67,7 +67,9 @@ class VacancyController extends Controller
                 $query->where('salary', '>=', $sal);
             })
             ->when($city, function(Builder $query, string $city) {
-                $query->where('city', 'like', '%' . $city . '%');
+                $query->whereHas('location', function ($query) use ($city) {
+                    $query->where('city', 'like', '%' . $city . '%');
+                });
             })
             ->paginate(10)
             ->withQueryString()

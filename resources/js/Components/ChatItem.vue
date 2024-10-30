@@ -120,8 +120,8 @@ const menuItems = () => {
 
                 <div
                     @click="options(chat.id)"
-                    class="absolute top-2 right-2 w-[29px] h-5 rounded icon-options bg-center bg-no-repeat"
-                    :class="model == chat.id ? 'bg-gray70' : 'bg-gray50'"
+                    class="absolute top-2 right-2 w-[29px] h-5 rounded icon-options bg-center bg-no-repeat bg-gray60"
+                    :class="model == chat.id ? 'close' : ''"
                 />
 
                 <OptionsMenu

@@ -15,10 +15,10 @@ const show = () => {
     <div>
         <div 
             @click="show" 
-            class="flex gap-2 justify-center items-center mt-14 text-gray30 txt-text-buttons cursor-pointer"
+            class="flex gap-2 justify-center items-center mt-14 text-systemred txt-text-buttons cursor-pointer"
         >
             <div>Видалити акаунт</div>
-            <div class="icon-delete gray" />
+            <div class="icon-delete red" />
         </div>
 
         <Confirm

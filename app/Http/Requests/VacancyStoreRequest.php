@@ -20,7 +20,7 @@ class VacancyStoreRequest extends FormRequest
         $employments = ['Повна', 'Неповна', 'Підміни'];
 
         return [
-            'location_id' => ['required', 'integer', Rule::exists(Location::class, 'id')],
+            'location_id' => ['required', 'ulid', Rule::exists(Location::class, 'id')],
             'job' => ['required', 'string', Rule::in($jobs)],
             'employment' => ['required', 'array', 'max:3'],
             'employment.*' => ['required', 'string', Rule::in($employments)],

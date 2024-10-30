@@ -102,7 +102,6 @@ watch (
 
 const submit = () => {
     form.post(route('location.validate'), {
-        onError: () => console.log(form),
         onSuccess: () => {
             model.value.locations[toEdit.value] = form.data();
             form.reset();

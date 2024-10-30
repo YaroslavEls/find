@@ -24,7 +24,6 @@ const form = useForm({
 
 const submit = () => {
     form.post(route('password.store'), {
-        onError: () => console.log(form),
         onFinish: () => form.reset(),
     });
 };

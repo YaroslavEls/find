@@ -30,8 +30,7 @@ const form = useForm({
 
 const submit = () => {
     form.post(route('review.store', { user: props.seeker.user.id }), {
-        onSuccess: () => form.regenerate(),
-        onError: () => console.log(form)
+        onSuccess: () => form.regenerate()
     });
 };
 
@@ -50,6 +49,24 @@ const modal = ref(null);
 
         <MqResponsive group>
             <template #desktop>
+                <div class="flex items-center gap-6 mb-10">
+                    <div
+                        class="w-16 h-16 border-solid border-2 border-gray50 rounded-full image"
+                        :style="{ backgroundImage: `url('/${seeker.photo}')` }"
+                    />
+                    <div>
+                        <div class="txt-h2">{{ seeker.name }}</div>
+                        <div class="flex gap-1 mt-2">
+                            <div
+                                v-for="x in 5"
+                                :key="x"
+                                class="icon-star-small"
+                                :class="seeker.score < x ? 'gray' : ''"
+                            />
+                        </div>
+                    </div>
+                </div>
+
                 <div class="mb-4 text-gray40 txt-h3">
                     {{ reviews.length }} Відгуків
                 </div>
@@ -65,11 +82,11 @@ const modal = ref(null);
             <template #mobile>
                 <div class="flex items-center gap-2 mb-8">
                     <div
-                        class="w-14 h-14 border-solid border-2 border-gray50 rounded-full image"
+                        class="max-w-14 w-full h-14 border-solid border-2 border-gray50 rounded-full image"
                         :style="{ backgroundImage: `url('/${seeker.photo}')` }"
                     />
                     <div>
-                        <div class="mb-1 txt-h4">{{ seeker.name }}</div>
+                        <div class="mb-1 txt-h3">{{ seeker.name }}</div>
                         <div class="flex gap-1">
                             <div
                                 v-for="x in 5"

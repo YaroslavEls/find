@@ -66,7 +66,7 @@ const show = ref(false);
                     <div 
                         class="rounded-full" 
                         :class="[
-                            model == opt ? 'bg-gray0 border-solid border-[6px] border-blue50' : 'bg-gray50',
+                            model == opt ? 'bg-gray0 border-solid border-[6px] border-blue50' : 'bg-gray60',
                             mq.desktop ? 'w-6 h-6' : 'w-5 h-5'    
                         ]"
                     />

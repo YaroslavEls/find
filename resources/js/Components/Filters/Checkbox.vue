@@ -23,7 +23,7 @@ const mq = useMq();
         class="flex items-end gap-2 w-fit mb-4 cursor-pointer"
     >
         <div 
-            class="rounded bg-gray50"
+            class="rounded bg-gray60"
             :class="[
                 model ? 'icon-checkbox' : '',
                 mq.desktop ? 'w-6 h-6' : 'w-5 h-5'    

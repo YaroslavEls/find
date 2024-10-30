@@ -86,7 +86,7 @@ const save = () => {
 
                         <div class="mb-10 txt-h1">
                             {{ seeker.job }} - 
-                            <span class="text-systemgreen txt-h3">{{ seeker.salary }}₴</span>
+                            <span class="text-systemgreen txt-h3">{{ (+seeker.salary).toLocaleString('de-DE') }}₴</span>
                         </div>
 
                         <div class="flex gap-4 mb-8">
@@ -163,7 +163,7 @@ const save = () => {
                     <div class="txt-h2">{{ seeker.job }}</div>
                     <div @click="save" class="icon-fav" />
                 </div>
-                <div class="mb-4 text-systemgreen txt-h3">{{ seeker.salary }}₴</div>
+                <div class="mb-4 text-systemgreen txt-h3">{{ (+seeker.salary).toLocaleString('de-DE') }}₴</div>
                 <Tags
                     :tags="{ date: seeker.updated_at, exp: seeker.experience, empl: seeker.employment }"
                     class="mb-8"

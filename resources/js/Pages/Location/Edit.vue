@@ -126,9 +126,7 @@ const submit = () => {
         form.video = null;
     }
 
-    form.post(route('location.update', { location: props.location.id }), {
-        onError: () => console.log(form)
-    });
+    form.post(route('location.update', { location: props.location.id }));
 };
 
 </script>

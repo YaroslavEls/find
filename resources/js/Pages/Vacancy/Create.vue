@@ -30,9 +30,7 @@ const submit = () => {
     const location = props.locations.find(item => item.name == form.location);
     form.location_id = location ? location.id : null;
 
-    form.post(route('vacancy.store'), {
-        onError: () => console.log(form)
-    });
+    form.post(route('vacancy.store'));
 };
 
 const allow = computed(() => {

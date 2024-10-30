@@ -54,8 +54,8 @@ const current = useRemember(props.section ?? 'public');
             <Vacancies
                 v-if="current === 'vacancies'"
                 :saloon="saloon"
-                :locations="saloon.locations"
-                :vacancies="saloon.vacancies"
+                :locations="locations"
+                :vacancies="vacancies"
                 :isSeeker="true"
             />
         </Transition>
@@ -63,7 +63,7 @@ const current = useRemember(props.section ?? 'public');
         <Transition>
             <Locations
                 v-if="current === 'locations'"
-                :locations="saloon.locations"
+                :locations="locations"
             />
         </Transition>
 

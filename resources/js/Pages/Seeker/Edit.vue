@@ -166,8 +166,7 @@ const refresh = () => {
 
 const submit = () => {
     form.post(route('seeker.update'), {
-        onSuccess: () => refresh(),
-        onError: () => console.log(form)
+        onSuccess: () => refresh()
     });
 };
 

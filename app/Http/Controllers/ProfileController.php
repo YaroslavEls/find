@@ -19,11 +19,16 @@ class ProfileController extends Controller
             ]);
         }
         if ($request->user()->is_saloon()) {
+            $vacancies = $request->user()->userable->vacancies()
+                ->orderBy('created_at', 'desc')->get();
+            $locations = $request->user()->userable->locations()
+                ->orderBy('created_at', 'desc')->get();
+
             return Inertia::render('Saloon/Edit', [
                 'section' => $request->query('sec') ?? null,
                 'saloon' => $request->user()->userable,
-                'vacancies' => $request->user()->userable->vacancies,
-                'locations' => $request->user()->userable->locations
+                'vacancies' => $vacancies,
+                'locations' => $locations
             ]);
         }
     }

@@ -107,9 +107,7 @@ const submit = () => {
     const location = props.locations.find(item => item.name == form.location);
     form.location_id = location ? location.id : null;
 
-    form.post(route('vacancy.update', { vacancy: props.vacancy.id }), {
-        onError: () => console.log(form)
-    });
+    form.post(route('vacancy.update', { vacancy: props.vacancy.id }));
 };
 
 </script>

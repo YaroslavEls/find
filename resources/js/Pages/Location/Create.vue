@@ -20,9 +20,7 @@ const form = useForm({
 });
 
 const submit = () => {
-    form.post(route('location.store'), {
-        onError: () => console.log(form)
-    });
+    form.post(route('location.store'));
 };
 
 const allow = computed(() => {

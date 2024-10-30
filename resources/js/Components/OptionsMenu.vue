@@ -64,12 +64,11 @@ const show = (href) => {
 <template>
     <Transition name="fade">
         <div 
-            class="absolute"
+            class="absolute border-2 border-gray40 bg-background"
             :class="[
                 mq.desktop
                     ? 'top-12 right-0 w-[174px] px-4 py-2 rounded-lg' 
-                    : 'top-8 right-2 w-[120px] px-2 py-1 rounded',
-                bg ? 'bg-gray50' : 'border-2 border-gray40 bg-background'
+                    : 'top-8 right-2 w-[120px] px-2 py-1 rounded'
             ]"
         >
             <div 

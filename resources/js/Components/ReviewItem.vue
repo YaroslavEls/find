@@ -49,7 +49,7 @@ const menuItems = {
     <MqResponsive group>
         <template #desktop>
             <div class="relative flex justify-between">
-                <div class="flex gap-4 w-[69%] mb-8 p-4 bg-gray70 rounded-xl">
+                <div class="flex gap-4 w-[69%] mb-8 p-4 bg-gray80 rounded-xl">
                     <Link :href="author.route">
                         <div
                             class="w-14 h-14 border-solid border-1 border-gray50 rounded-full image"
@@ -59,7 +59,13 @@ const menuItems = {
                     
                     <div class="grow">
                         <div class="flex justify-between items-center">
-                            <Link :href="author.route">
+                            <Link :href="author.route" class="flex gap-2">
+                                <div 
+                                    v-if="review.author_id == $page.props.auth.user.user_id" 
+                                    class="text-blue40 txt-secondary"
+                                >
+                                    Ваш відгук
+                                </div>
                                 <div class="txt-h4">{{ author.name }}</div>
                             </Link>
                             <div class="text-gray30 txt-secondary">{{ formattedDate }}</div>
@@ -94,7 +100,7 @@ const menuItems = {
         </template>
 
         <template #mobile>
-            <div class="mb-2 p-4 bg-gray70 rounded-xl">
+            <div class="mb-2 p-4 bg-gray80 rounded-xl">
                 <div
                     v-if="review.author_id == $page.props.auth.user.user_id"
                     class="relative flex justify-between items-center mb-4"
@@ -102,14 +108,14 @@ const menuItems = {
                     <div class="text-blue40 txt-secondary">Ваш відгук</div>
                     <div
                         @click="options(review.id)"
-                        class="w-[29px] h-5 rounded icon-options bg-center bg-no-repeat bg-gray50"
+                        class="w-[29px] h-5 rounded icon-options bg-center bg-no-repeat bg-gray60"
+                        :class="selected == review.id ? 'close' : ''"
                     />
                     <div class="absolute top-[-4px] right-[-8px]">
                         <OptionsMenu
                             v-show="selected == review.id" 
                             :items="menuItems"
                             v-model="modal"
-                            bg
                         />
                     </div>
                 </div>

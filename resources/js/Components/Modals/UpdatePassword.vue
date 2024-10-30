@@ -24,7 +24,6 @@ const submit = () => {
     form.put(route('password.update'), {
         preserveScroll: true,
         onError: () => {
-            console.log(form.errors)
             form.reset()
         },
         onSuccess: () => {
@@ -67,10 +66,10 @@ const submit = () => {
                         Скасувати
                     </div>
                     <button
-                        class="w-full py-4 text-center border-solid border-2 border-gray40 rounded-lg txt-buttons text-blue50 cursor-pointer"
-                        :class="(form.current_password && form.password) ? 'pointer-events-auto' : 'pointer-events-none'"
+                        class="w-full py-4 text-center border-solid border-2 border-gray40 rounded-lg txt-buttons cursor-pointer"
+                        :class="(form.current_password && form.password) ? '' : 'pointer-events-none opacity-40'"
                     >
-                        <div :class="(form.current_password && form.password) ? '' : 'opacity-40'">Підтвердити</div>
+                        Підтвердити
                     </button>
                 </form>
             </div>
@@ -110,10 +109,10 @@ const submit = () => {
                     Скасувати
                 </div>
                 <button
-                    class="w-full py-3 text-center border-solid border border-gray40 rounded-lg txt-buttons text-blue50"
-                    :class="(form.current_password && form.password) ? 'pointer-events-auto' : 'pointer-events-none'"
+                    class="w-full py-3 text-center border-solid border border-gray40 rounded-lg txt-buttons"
+                    :class="(form.current_password && form.password) ? '' : 'pointer-events-none opacity-40'"
                 >
-                    <div :class="(form.current_password && form.password) ? '' : 'opacity-40'">Підтвердити</div>
+                    Підтвердити
                 </button>
             </form>
         </template>

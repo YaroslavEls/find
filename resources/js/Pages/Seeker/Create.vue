@@ -42,9 +42,6 @@ const next = () => {
         headers: {
             'form-page': current.value
         },
-        onError: () => {
-            console.log(forms);
-        },
         onSuccess: () => {
             if (current.value < 3) {
                 current.value = move(++current.value);

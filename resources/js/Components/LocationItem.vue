@@ -99,8 +99,8 @@ const url = !usePage().url.startsWith('/profile')
                 <div
                     v-if="$page.url.startsWith('/profile')"
                     @click="options(index)"
-                    class="absolute top-2 right-2 w-[29px] h-5 rounded icon-options bg-center bg-no-repeat"
-                    :class="selected == index ? 'bg-gray70' : 'bg-gray50'"
+                    class="absolute top-2 right-2 w-[29px] h-5 rounded icon-options bg-center bg-no-repeat bg-gray60"
+                    :class="selected == index ? 'close' : ''"
                 />
 
                 <OptionsMenu

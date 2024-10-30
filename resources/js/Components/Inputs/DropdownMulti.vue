@@ -93,7 +93,7 @@ const update = (key) => {
                     <div 
                         class="rounded"
                         :class="[
-                            value ? 'icon-checkbox' : 'bg-gray50',
+                            value ? 'icon-checkbox' : 'bg-gray60',
                             mq.desktop ? 'w-6 h-6' : 'w-5 h-5'    
                         ]"
                     />

@@ -23,7 +23,7 @@ const model = defineModel({
                 @keydown.enter.prevent
                 type="checkbox" 
                 v-model="model"
-                class="w-6 h-6 border-none rounded bg-gray50"
+                class="w-6 h-6 border-none rounded bg-gray60"
             >
             <div class="txt-body">{{ text }}</div>
         </div>

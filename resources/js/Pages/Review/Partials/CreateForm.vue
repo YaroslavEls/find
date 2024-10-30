@@ -91,7 +91,7 @@ model.value.regenerate = () => {
                         ref="textarea"
                         @input="resize"
                         v-model="model.text"
-                        class="w-full max-h-[500px] px-4 py-3 bg-background border-solid border-2 border-gray40 rounded-lg text-gray0 txt-body"
+                        class="w-full max-h-[500px] px-4 py-3 bg-background border-solid border border-gray40 rounded-lg text-gray0 txt-body"
                     ></textarea>
                     <button
                         class="max-w-12 w-full h-12 rounded-lg bg-center bg-no-repeat bg-blue50 icon-send" 

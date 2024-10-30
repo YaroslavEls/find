@@ -33,9 +33,7 @@ const remove = (i) => {
 };
 
 const submit = () => {
-    model.value.post(route('register.saloon'), {
-        onError: () => console.log(model.value)
-    });
+    model.value.post(route('register.saloon'));
 };
 
 </script>
@@ -51,7 +49,7 @@ const submit = () => {
     <div
         v-for="(location, index) in model.locations"
         :key="index"
-        class="flex justify-between items-center w-full px-4 py-2 rounded-lg bg-gray70"
+        class="flex justify-between items-center w-full px-4 py-2 rounded-lg bg-gray80"
         :class="mq.desktop ? 'mb-10' : 'mb-6'"
     >
         <div class="flex">

@@ -84,8 +84,7 @@ const submit = () => {
     }
 
     form.post(route('saloon.update'), {
-        onSuccess: () => refresh(),
-        onError: () => console.log(form)
+        onSuccess: () => refresh()
     });
 };
 

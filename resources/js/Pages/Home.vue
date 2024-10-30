@@ -29,8 +29,8 @@ const scrollToDetails = (pos) => {
                         <div class="w-fit px-6 py-3 bg-blue50 rounded-lg txt-h5">Платформа для пошуку роботи</div>
                         <div class="w-fit px-6 py-3 bg-blue50 rounded-lg txt-h5">Кав’ярні обирають FIND</div>
                     </div>
-                    <div class="max-w-[1032px] font-semibold text-[80px] leading-[110%] mb-4">FIND - шукай роботу, якісно, швидко та зручно</div>
-                    <div class="max-w-[728px] mb-16 text-gray30 txt-h3">Місце, для пошуку роботи та кандидатів в сфері загального харчування</div>
+                    <div class="max-w-[1032px] font-semibold text-[80px] leading-[110%] mb-4">FIND - шукай роботу якісно, швидко та зручно</div>
+                    <div class="max-w-[728px] mb-16 text-gray30 txt-h3">Місце для пошуку роботи та кандидатів в кавовій індустрії</div>
                     <div class="flex gap-8 justify-end">
                         <div
                             @click="scrollToDetails(775)"
@@ -54,7 +54,7 @@ const scrollToDetails = (pos) => {
                             <div class="txt-h2">Ідея</div>
                         </div>
                         <div class="txt-h4">
-                            Працюючи в цій сфері, ми постійно стикались із задачею пошуку кваліфікованих бариста. І коли, знаходили - то, дізнавались, що вони також шукають відповідальних керівників. Тому вирішили , разом створити «FIND» - як, швидку та доступну платформа, для пошуку роботи в крутезних кав’яренях та наймі кваліфікованих бариста.
+                            Працюючи в кавовій індустрії, ми постійно стикалися із задачею пошуку кваліфікованих бариста. І коли знаходили їх, то дізнавалися, що вони також шукають відповідальних керівників. Тому ми вирішили разом створити «FIND» — швидку та доступну платформу для пошуку роботи в крутих кав'ярнях і найму кваліфікованих бариста.
                         </div>
                     </div>
                 </div>
@@ -63,7 +63,7 @@ const scrollToDetails = (pos) => {
                     <div class="flex items-center gap-8 max-w-[1488px] mx-auto">
                         <div class="max-w-[576px]">
                             <div class="mb-4 txt-h1">Вакансії для всіх!</div>
-                            <div class="mb-[72px] txt-h4">Команда FIND знає як багато факторів впливає на вибір нового місця роботи, тому ми створили максимально якісний інструмент для створення вакансій, які допоможуть знайти працівника або нову роботу.</div>
+                            <div class="mb-[72px] txt-h4">Команда FIND знає, як багато факторів впливає на вибір нового місця роботи, тому ми створили максимально якісний інструмент для створення вакансій, які допоможуть знайти працівника або нову роботу.</div>
                             <Link
                                 :href="route('vacancies')"
                                 class=" block text-center w-[424px] rounded-lg py-5 bg-gray0 text-gray90 txt-buttons"
@@ -91,8 +91,8 @@ const scrollToDetails = (pos) => {
                             />
                         </div>
                         <div class="max-w-[728px]">
-                            <div class="mb-4 txt-h1">Шукай і в телефоні теж!</div>
-                            <div class="mb-[72px] text-gray30 txt-h4">Команда FIND розуміє що потреба шукати роботу або працівників, може виникнути в будь який момент, тому ви можете використовувати наш сервіс, як з компютерів так і з телефонів.</div>
+                            <div class="mb-4 txt-h1">Шукай в телефоні!</div>
+                            <div class="mb-[72px] text-gray30 txt-h4">Команда FIND розуміє, що потреба шукати роботу або працівників, може виникнути в будь який момент, тому ви можете використовувати наш сервіс, як з компютерів так і з телефонів.</div>
                             <Link
                                 :href="start"
                                 class="block text-center w-[424px] rounded-lg py-5 bg-blue50 txt-buttons"
@@ -130,8 +130,8 @@ const scrollToDetails = (pos) => {
 
             <template #mobile>
                 <div class="w-fit mb-4 px-3 py-2 bg-blue50 rounded txt-body">Кав’ярні обирають FIND</div>
-                <div class="mb-2 txt-h2">FIND - шукай роботу, якісно, швидко та зручно</div>
-                <div class="mb-10 text-gray30 txt-h5">Місце, для пошуку роботи та кандидатів в сфері загального харчування</div>
+                <div class="mb-2 txt-h2">FIND - шукай роботу якісно, швидко та зручно</div>
+                <div class="mb-10 text-gray30 txt-h5">Місце для пошуку роботи та кандидатів в кавовій індустрії</div>
                 <Link
                     :href="start"
                     class="block mb-4 text-center rounded-lg py-3 bg-blue50 txt-buttons"
@@ -150,13 +150,13 @@ const scrollToDetails = (pos) => {
                         <div class="icon-idea" />
                         <div class="txt-h3">Ідея</div>
                     </div>
-                    <div class="txt-body">Працюючи в цій сфері, ми постійно стикались із задачею пошуку кваліфікованих бариста. І коли, знаходили - то, дізнавались, що вони також шукають відповідальних керівників. Тому вирішили , разом створити «FIND» - як, швидку та доступну платформа, для пошуку роботи в крутезних кав’яренях та наймі кваліфікованих бариста.</div>
+                    <div class="txt-body">Працюючи в кавовій індустрії, ми постійно стикалися із задачею пошуку кваліфікованих бариста. І коли знаходили їх, то дізнавалися, що вони також шукають відповідальних керівників. Тому ми вирішили разом створити «FIND» — швидку та доступну платформу для пошуку роботи в крутих кав'ярнях і найму кваліфікованих бариста.</div>
                 </div>
 
                 <div class="mb-8 p-4 rounded-lg bg-blue50">
                     <img src="/storage/static_images/home1.png" alt="" class="mb-4">
                     <div class="mb-2 txt-h1">Вакансії для всіх!</div>
-                    <div class="mb-6 text-gray20 txt-h5">Команда FIND знає як багато факторів впливає на вибір нового місця роботи, тому ми створили максимально якісний інструмент для створення вакансій, які допоможуть знайти працівника або нову роботу.</div>
+                    <div class="mb-6 text-gray20 txt-h5">Команда FIND знає, як багато факторів впливає на вибір нового місця роботи, тому ми створили максимально якісний інструмент для створення вакансій, які допоможуть знайти працівника або нову роботу.</div>
                     <Link 
                         :href="route('vacancies')"
                         class="block w-full py-3 rounded-lg bg-gray0 text-center text-gray90 txt-buttons"
@@ -170,13 +170,13 @@ const scrollToDetails = (pos) => {
                         <img src="/storage/static_images/home2.png" alt="" class="max-h-[335px] mb-4">
                         <img src="/storage/static_images/home3.png" alt="" class="max-h-[335px] mb-4">
                     </div>
-                    <div class="mb-2 txt-h1">Шукай в телефоні також!</div>
-                    <div class="mb-6 text-gray30 txt-h5">Команда FIND розуміє що потреба шукати роботу або працівників, може виникнути в будь який момент, тому ви можете використовувати наш сервіс, як з компютерів так і з телефонів.</div>
+                    <div class="mb-2 txt-h1">Шукай в телефоні!</div>
+                    <div class="mb-6 text-gray30 txt-h5">Команда FIND розуміє, що потреба шукати роботу або працівників, може виникнути в будь який момент, тому ви можете використовувати наш сервіс, як з компютерів так і з телефонів.</div>
                     <Link 
                         :href="start"
                         class="block w-full py-3 rounded-lg bg-gray0 text-center text-gray90 txt-buttons"
                     >
-                        Почати пошук!
+                        Почати пошук
                     </Link>
                 </div>
 
@@ -191,7 +191,7 @@ const scrollToDetails = (pos) => {
                         :href="start"
                         class="block w-full py-3 rounded-lg bg-gray0 text-center text-gray90 txt-buttons"
                     >
-                        Почати пошук!
+                        Почати пошук
                     </Link>
                 </div>
             </template>

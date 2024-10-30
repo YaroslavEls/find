@@ -22,7 +22,6 @@ const submit = () => {
     }
 
     model.value.post(route('saloon.validate'), {
-        onError: () => console.log(model.value),
         onSuccess: () => current.value = ++current.value
     });
 };

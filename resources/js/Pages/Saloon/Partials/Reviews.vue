@@ -29,8 +29,7 @@ const form = useForm({
 const submit = () => {
     form.post(route('review.store', { user: props.saloon.user.id }), {
         only: ['reviews'],
-        onSuccess: () => form.regenerate(),
-        onError: () => console.log(form)
+        onSuccess: () => form.regenerate()
     });
 };
 

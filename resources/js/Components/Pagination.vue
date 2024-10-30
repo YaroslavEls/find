@@ -29,7 +29,7 @@ const mq = useMq();
             :href="item.url ? item.url : ''"
             class="rounded-lg text-center txt-body"
             :class="[
-                item.active ? 'bg-blue50' : 'bg-gray50', 
+                item.active ? 'bg-blue50' : (mq.desktop ? 'bg-gray50' : 'bg-gray60'), 
                 item.url ? '' : 'pointer-events-none',
                 mq.desktop ? 'w-10 h-10 py-2' : 'w-8 h-8 py-[6px]'
             ]"
