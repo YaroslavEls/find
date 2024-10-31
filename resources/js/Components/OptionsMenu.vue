@@ -39,7 +39,7 @@ const params = {
     },
     unsave: {
         method: 'delete',
-        text: 'Видалити',
+        text: 'Видалити зі збереженого',
         icon: 'icon-fav'
     },
     archive: {
@@ -51,6 +51,16 @@ const params = {
         method: 'delete',
         text: 'Розархівувати',
         icon: 'icon-archive'
+    },
+    activate: {
+        method: 'post',
+        text: 'Активувати',
+        icon: 'icon-activate'
+    },
+    deactivate: {
+        method: 'post',
+        text: 'Деактивувати',
+        icon: 'icon-deactivate'
     }
 };
 
@@ -64,11 +74,11 @@ const show = (href) => {
 <template>
     <Transition name="fade">
         <div 
-            class="absolute border-2 border-gray40 bg-background"
+            class="absolute border-2 border-gray40 bg-background z-10 text-gray0"
             :class="[
                 mq.desktop
-                    ? 'top-12 right-0 w-[174px] px-4 py-2 rounded-lg' 
-                    : 'top-8 right-2 w-[120px] px-2 py-1 rounded'
+                    ? 'top-12 right-0 px-4 py-2 rounded-lg' 
+                    : 'top-8 right-2 px-2 py-1 rounded'
             ]"
         >
             <div 
@@ -81,6 +91,7 @@ const show = (href) => {
                     v-if="key === 'delete'"
                     @click="show(value)"
                     class="flex justify-between w-full txt-secondary cursor-pointer"
+                    :class="mq.desktop ? 'gap-6' : 'gap-4'"
                 >
                     {{ params[key]['text'] }}
                     <div :class="params[key]['icon']" />
@@ -92,6 +103,7 @@ const show = (href) => {
                     as="button"
                     preserve-scroll
                     class="flex justify-between w-full txt-secondary"
+                    :class="mq.desktop ? 'gap-6' : 'gap-4'"
                     
                 >
                     {{ params[key]['text'] }}

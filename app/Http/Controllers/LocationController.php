@@ -52,7 +52,10 @@ class LocationController extends Controller
 
     public function show(Vacancy $vacancy, Location $location): Response
     {
-        $location->load(['vacancies']);
+        $location->load([
+            'vacancies' => fn ($query) =>
+                $query->where('active', true)->orderBy('created_at', 'desc')
+        ]);
 
         $breadcrumbs = Breadcrumbs::generate('location', $vacancy, $location);
 
@@ -95,12 +98,16 @@ class LocationController extends Controller
         }
         unset($validated['oldPhotos']);
 
-        if ($validated['video'] == null) {
+        if ($validated['videoDeleted']) {
+            Storage::delete($location->video);
+        } else if ($validated['video'] == null) {
             $validated['video'] = $location->video;
         } else {
             $path = $validated['video']->store('uploads');
             $validated['video'] = $path;
-            Storage::delete($location->video);
+            if ($location->video) {
+                Storage::delete($location->video);
+            }
         }
         
         $location->fill($validated);

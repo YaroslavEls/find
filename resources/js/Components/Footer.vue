@@ -48,6 +48,13 @@ const scrollTop = () => {
                             >
                                 Чати
                             </Link>
+                            <Link
+                                v-if="!$page.props.auth.user || $page.props.auth.user.userable_type == 'App\\Models\\Saloon'"
+                                :href="route('vacancies')" 
+                                class="block mb-2 text-gray40 txt-buttons"
+                            >
+                                Вакансії
+                            </Link>
                         </div>
                         <div>
                             <div class="mb-4 txt-h5">Соціальні мережі</div>
@@ -133,6 +140,13 @@ const scrollTop = () => {
                                 class="block mb-2 text-gray40 txt-buttons"
                             >
                                 Чати
+                            </Link>
+                            <Link
+                                v-if="$page.props.auth.user.userable_type == 'App\\Models\\Saloon'"
+                                :href="route('vacancies')" 
+                                class="block mb-2 text-gray40 txt-buttons"
+                            >
+                                Вакансії
                             </Link>
                         </div>
                         <div>

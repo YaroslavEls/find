@@ -25,6 +25,7 @@ const form = useForm({
     oldPhotos: props.location.photos.split(';'),
     photos: [],
     video: props.location.video,
+    videoDeleted: false,
     _method: 'patch'
 });
 
@@ -122,11 +123,17 @@ watch (
 );
 
 const submit = () => {
+    let oldVideo;
     if (typeof form.video === 'string') {
+        oldVideo = form.video;
         form.video = null;
+    } else if (form.video === null && props.location.video !== null) {
+        form.videoDeleted = true;
     }
 
-    form.post(route('location.update', { location: props.location.id }));
+    form.post(route('location.update', { location: props.location.id }), {
+        onError: () => form.video = oldVideo ? oldVideo : form.video
+    });
 };
 
 </script>

@@ -40,12 +40,12 @@ const isSeeker = usePage().props.auth.user.userable_type === 'App\\Models\\Seeke
 const saveData = {
     route: route('save.vacancy', { vacancy: props.vacancy }), 
     method: 'post', 
-    label: 'Додати до обраного' 
+    label: 'Зберегти'
 };
 if (usePage().props.auth.user.saves.includes(props.vacancy.id)) {
     saveData.route = route('unsave.vacancy', { vacancy: props.vacancy });
     saveData.method = 'delete';
-    saveData.label = 'Видалити з обраного';
+    saveData.label = 'Видалити зі збереженого';
 }
 
 const save = () => {
@@ -237,9 +237,14 @@ const save = () => {
             </template>
 
             <template #mobile>
-                <div class="flex justify-between items-end mb-4">
+                <div class="flex justify-between items-center mb-4">
                     <div class="txt-h2">{{ vacancy.job }}</div>
-                    <div v-if="isSeeker" @click="save" class="icon-fav" />
+                    <div
+                        v-if="isSeeker"
+                        @click="save" 
+                        class="icon-fav big" 
+                        :class="saveData.method === 'post' ? '' : 'filled'"
+                    />
                 </div>
                 <div class="mb-4 text-systemgreen txt-h3">{{ (+vacancy.salary).toLocaleString('de-DE') }}₴</div>
 

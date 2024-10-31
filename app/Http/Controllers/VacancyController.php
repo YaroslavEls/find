@@ -46,6 +46,7 @@ class VacancyController extends Controller
         }
 
         $vacancies = $vacancies
+            ->where('active', true)
             ->when($saloon, function (Builder $query, string $saloon) {
                 $query->where('saloon_id', $saloon);
             })
@@ -98,8 +99,13 @@ class VacancyController extends Controller
         return redirect(route('profile', ['sec' => 'vacancies']));
     }
 
-    public function show(Vacancy $vacancy)
+    public function show(Request $request, Vacancy $vacancy)
     {
+        if (!$vacancy->active && 
+            $request->user()->cannot('view_inactive', $vacancy)) {
+            abort(404);
+        }
+
         $vacancy->load(['saloon', 'location']);
 
         $score = $vacancy->saloon->user->reviews->avg('score');
@@ -144,5 +150,25 @@ class VacancyController extends Controller
         }
 
         $vacancy->delete();
+    }
+
+    public function activate(Request $request, Vacancy $vacancy): void
+    {
+        if ($request->user()->cannot('activate', $vacancy)) {
+            abort(403);
+        }
+
+        $vacancy->active = true;
+        $vacancy->save();
+    }
+
+    public function deactivate(Request $request, Vacancy $vacancy): void
+    {
+        if ($request->user()->cannot('deactivate', $vacancy)) {
+            abort(403);
+        }
+
+        $vacancy->active = false;
+        $vacancy->save();
     }
 }

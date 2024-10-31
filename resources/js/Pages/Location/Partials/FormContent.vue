@@ -46,7 +46,7 @@ const model = defineModel({
         heading="Фото вашого закладу"
         subheading="Максимум 12 фото, до 10МБ кожне"
         button="Додати фото"
-        :error="model.errors.photos"
+        :error="model.errors"
         v-model:photos="model.photos"
         v-model:oldPhotos="model.oldPhotos"
     />
@@ -56,6 +56,7 @@ const model = defineModel({
         heading="Відео огляд закладу"
         subheading="Максимум 1 відео, до 100МБ"
         button="Додати відео"
+        deletable
         :error="model.errors.video"
         v-model="model.video"
     />

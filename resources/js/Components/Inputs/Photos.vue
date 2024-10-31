@@ -3,7 +3,7 @@ import InputLayout from '@/Layouts/InputLayout.vue';
 import { ref } from 'vue';
 import { useMq } from "vue3-mq";
 
-defineProps({
+const props = defineProps({
     identifier: {
         type: String,
         required: true
@@ -21,7 +21,8 @@ defineProps({
         required: true
     },
     error: {
-        type: String
+        type: Object,
+        required: true
     }
 });
 
@@ -37,6 +38,13 @@ const oldPhotos = defineModel('oldPhotos', {
 });
 
 const mq = useMq();
+
+const errors = () => {
+    return Object
+        .keys(props.error)
+        .filter(key => key.startsWith('photos'))
+        .map(key => +key.split(".")[1]);
+};
 
 const urls = ref([]);
 for (let i = 0; i < photos.value.length; i++) {
@@ -105,7 +113,7 @@ const removeOld = (x) => {
                     class="relative"
                 >
                     <div
-                        class="bg-gray0 rounded image"
+                        class="border-2 border-gray40 bg-gray0 rounded image"
                         :class="mq.desktop ? 'w-[120px] h-[88px]' : 'w-[75px] h-[75px]'"
                         :style="{ backgroundImage: `url('/${item}')` }"
                     />
@@ -121,8 +129,11 @@ const removeOld = (x) => {
                     class="relative"
                 >
                     <div
-                        class="bg-gray0 rounded image"
-                        :class="mq.desktop ? 'w-[120px] h-[88px]' : 'w-[75px] h-[75px]'"
+                        class="border-2 bg-gray0 rounded image"
+                        :class="[
+                            mq.desktop ? 'w-[120px] h-[88px]' : 'w-[75px] h-[75px]',
+                            errors().includes(index) ? 'border-systemred' : 'border-gray40',
+                        ]"
                         :style="{ backgroundImage: `url('${url}')` }"
                     />
                     <div class="absolute opacity-0 flex justify-center items-center gap-1 w-full h-full top-0 bg-[#000] bg-opacity-50 border-solid border-2 border-gray0 rounded txt-secondary cursor-pointer hover:opacity-100">
@@ -137,8 +148,15 @@ const removeOld = (x) => {
                     :class="mq.desktop ? 'w-[120px] h-[88px] border-2' : 'w-[75px] h-[75px] border'"
                 />
             </div>
+
+            <div
+                v-for="i in errors()"
+                class="mt-1 text-systemred txt-secondary"
+            >
+                {{ error[`photos.${i}`] }}
+            </div>
         </template>
 
-        <template v-if="error" #error>{{ error }}</template>
+        <template v-if="errors().length" #error>{{ error['photos'] }}</template>
     </InputLayout>
 </template>

@@ -27,6 +27,7 @@ class LocationUpdateRequest extends FormRequest
             'photos' => ['nullable', 'array', 'max:12', new PhotosRequired],
             'photos.*' => ['filled', 'mimes:png,jpg', 'max:10240'],
             'video' => ['nullable', 'mimes:mpeg,mp4,avi,m4v', 'max:102400'],
+            'videoDeleted' => ['required', 'boolean']
         ];
     }
 }

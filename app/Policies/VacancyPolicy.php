@@ -27,4 +27,19 @@ class VacancyPolicy
     {
         return $user->is_seeker();
     }
+
+    public function view_inactive(User $user, Vacancy $vacancy): bool
+    {
+        return $user->userable()->is($vacancy->saloon);
+    }
+
+    public function activate(User $user, Vacancy $vacancy): bool
+    {
+        return $user->userable()->is($vacancy->saloon);
+    }
+
+    public function deactivate(User $user, Vacancy $vacancy): bool
+    {
+        return $user->userable()->is($vacancy->saloon);
+    }
 }

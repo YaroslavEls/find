@@ -20,6 +20,7 @@ return new class extends Migration
             $table->float('experience');
             $table->float('salary');
             $table->text('descr');
+            $table->boolean('active')->default(true);
             $table->timestamps();
         });
     }

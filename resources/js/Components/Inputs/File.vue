@@ -1,6 +1,6 @@
 <script setup>
 import InputLayout from '@/Layouts/InputLayout.vue';
-import { ref } from 'vue';
+import { computed } from 'vue';
 import { useMq } from "vue3-mq";
 
 const props = defineProps({
@@ -23,6 +23,10 @@ const props = defineProps({
         type: String, 
         required: true 
     },
+    deletable: {
+        type: Boolean,
+        default: false
+    },
     note: { 
         type: String
     },
@@ -32,27 +36,31 @@ const props = defineProps({
 });
 
 const model = defineModel({
-    type: [File, null],
+    type: [File, String, null],
     required: true
 });
 
 const mq = useMq();
 
+const clear = () => {
+    model.value = null;
+};
+
 const inputEvent = (e) => {
-    filename.value = e.target.files[0].name;
     model.value = e.target.files[0];
 };
 
-const filename = ref();
-if (model.value) {
-    if (typeof model.value === 'string') {
-        filename.value = model.value.split('/')[1];
+const filename = computed(() => {
+    if (model.value) {
+        if (typeof model.value === 'string') {
+            return model.value.split('/')[1];
+        } else {
+            return model.value.name;
+        }
     } else {
-        filename.value = model.value.name;
+        return props.button;
     }
-} else {
-    filename.value = props.button;
-}
+});
 
 </script>
 
@@ -77,6 +85,16 @@ if (model.value) {
                 @input="inputEvent"
                 class="txt-secondary"
             >
+
+            <div
+                v-if="deletable"
+                @click="clear"
+                class="flex gap-2 items-center w-fit mt-2 ml-auto txt-text-buttons"
+                :class="model ? 'text-systemred cursor-pointer' : 'text-gray40'"
+            >
+                Видалити
+                <div class="icon-delete" :class="model ? 'red' : 'gray opacity-50'" />
+            </div>
         </template>
 
         <template v-if="note" #note>{{ note }}</template>

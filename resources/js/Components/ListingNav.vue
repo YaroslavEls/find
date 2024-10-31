@@ -63,7 +63,7 @@ const active = ref(false);
                             class="flex gap-2 px-6 py-2 h-fit rounded txt-body"
                             :class="sort == 'saved' ? 'bg-blue50' : 'bg-gray60'"
                         >
-                            Обрані
+                            Збережені
                             <div class="icon-fav" />
                         </Link>
                     </div>
@@ -74,7 +74,7 @@ const active = ref(false);
                         @click="active = !active"
                         class="flex gap-2 px-6 py-2 h-fit bg-blue50 rounded txt-body cursor-pointer"
                     >
-                        Фільтрувати
+                        Фільтри
                         <div class="icon-filter" />
                     </div>
 
@@ -96,7 +96,7 @@ const active = ref(false);
                     <div class="text-gray40 txt-h3">{{ count }}</div>
                 </div>
 
-                <div class="flex justify-between items-center">
+                <div class="flex justify-between items-center flex-wrap gap-y-4">
                     <div class="flex gap-2">
                         <Link
                             :href="path"
@@ -118,7 +118,7 @@ const active = ref(false);
                             class="px-3 py-1 h-7 rounded txt-body"
                             :class="sort == 'saved' ? 'bg-blue50' : 'bg-gray60'"
                         >
-                            Обрані
+                            Збережені
                         </Link>
                     </div>
 
@@ -126,7 +126,7 @@ const active = ref(false);
                         @click="active = !active"
                         class="flex gap-2 px-3 py-1 h-7 bg-blue50 rounded txt-body"
                     >
-                        Фільтрувати
+                        Фільтри
                         <div class="icon-filter" />
                     </div>
 

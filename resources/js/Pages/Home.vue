@@ -72,7 +72,7 @@ const scrollToDetails = (pos) => {
                             </Link>
                         </div>
                         <div 
-                            class="shrink-0 w-[880px] h-[495px] rounded-2xl image"
+                            class="shrink-0 w-[880px] h-[497px] rounded-2xl image"
                             :style="{ backgroundImage: `url('/storage/static_images/home1.png')` }"
                         />
                     </div>
@@ -82,17 +82,17 @@ const scrollToDetails = (pos) => {
                     <div class="flex items-center justify-between max-w-[1488px] mx-auto">
                         <div class="flex gap-8 mr-8">
                             <div
-                                class="shrink-0 w-[272px] h-[590px] rounded-3xl image"
+                                class="shrink-0 w-[272px] h-[589px] rounded-2xl image"
                                 :style="{ backgroundImage: `url('/storage/static_images/home2.png')` }"
                             />
                             <div
-                                class="shrink-0 w-[272px] h-[590px] rounded-3xl image"
+                                class="shrink-0 w-[272px] h-[589px] rounded-2xl image"
                                 :style="{ backgroundImage: `url('/storage/static_images/home3.png')` }"
                             />
                         </div>
                         <div class="max-w-[728px]">
                             <div class="mb-4 txt-h1">Шукай в телефоні!</div>
-                            <div class="mb-[72px] text-gray30 txt-h4">Команда FIND розуміє, що потреба шукати роботу або працівників, може виникнути в будь який момент, тому ви можете використовувати наш сервіс, як з компютерів так і з телефонів.</div>
+                            <div class="mb-[72px] text-gray30 txt-h4">Команда FIND розуміє, що потреба шукати роботу або працівників може виникнути в будь який момент, тому ви можете використовувати наш сервіс як з компютерів, так і з телефонів.</div>
                             <Link
                                 :href="start"
                                 class="block text-center w-[424px] rounded-lg py-5 bg-blue50 txt-buttons"
@@ -116,11 +116,11 @@ const scrollToDetails = (pos) => {
                             </Link>
                         </div>
                         <div 
-                            class="relative shrink-0 w-[880px] h-[495px] rounded-2xl image"
+                            class="relative shrink-0 w-[880px] h-[497px] rounded-2xl image"
                             :style="{ backgroundImage: `url('/storage/static_images/home4.png')` }"
                         >
                             <div
-                                class="absolute right-[24px] top-[55px] w-[272px] h-[504px] rounded-2xl image"
+                                class="absolute right-[46px] top-[76px] w-[213px] h-[462px] rounded-2xl image"
                                 :style="{ backgroundImage: `url('/storage/static_images/home5.png')` }"
                             />
                         </div>
@@ -166,12 +166,12 @@ const scrollToDetails = (pos) => {
                 </div>
 
                 <div class="mb-8 p-4 rounded-lg bg-gray80">
-                    <div class="flex justify-center flex-wrap gap-x-5 mb-4">
+                    <div class="flex justify-center flex-wrap gap-x-4 mb-4">
                         <img src="/storage/static_images/home2.png" alt="" class="max-h-[335px] mb-4">
                         <img src="/storage/static_images/home3.png" alt="" class="max-h-[335px] mb-4">
                     </div>
                     <div class="mb-2 txt-h1">Шукай в телефоні!</div>
-                    <div class="mb-6 text-gray30 txt-h5">Команда FIND розуміє, що потреба шукати роботу або працівників, може виникнути в будь який момент, тому ви можете використовувати наш сервіс, як з компютерів так і з телефонів.</div>
+                    <div class="mb-6 text-gray30 txt-h5">Команда FIND розуміє, що потреба шукати роботу або працівників може виникнути в будь який момент, тому ви можете використовувати наш сервіс як з компютерів, так і з телефонів.</div>
                     <Link 
                         :href="start"
                         class="block w-full py-3 rounded-lg bg-gray0 text-center text-gray90 txt-buttons"
@@ -183,7 +183,7 @@ const scrollToDetails = (pos) => {
                 <div class="p-4 rounded-lg bg-blue50">
                     <div class="relative">
                         <img src="/storage/static_images/home4.png" alt="" class="mb-4">
-                        <img src="/storage/static_images/home5.png" alt="" class="absolute right-[13px] max-h-[175px] bottom-0">
+                        <img src="/storage/static_images/home5.png" alt="" class="absolute right-[22px] max-h-[153px] bottom-0">
                     </div>
                     <div class="mb-2 txt-h1">Рейтинг та відгук!</div>
                     <div class="mb-6 text-gray20 txt-h5">Відгуки грають не маленьке значення під час будь-якого вибору, тому ми додали можливість залишати відгуки як на кав’ярня, так і на бариста.</div>

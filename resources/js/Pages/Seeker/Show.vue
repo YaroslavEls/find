@@ -50,12 +50,12 @@ const formattedDate = formatter.format(date);
 const saveData = {
     route: route('save.seeker', { seeker: props.seeker }), 
     method: 'post', 
-    label: 'Додати до обраного' 
+    label: 'Зберегти'
 };
 if (usePage().props.auth.user.saves.includes(props.seeker.id)) {
     saveData.route = route('unsave.seeker', { seeker: props.seeker });
     saveData.method = 'delete';
-    saveData.label = 'Видалити з обраного';
+    saveData.label = 'Видалити зі збереженого';
 }
 
 const save = () => {
@@ -159,9 +159,13 @@ const save = () => {
             </template>
 
             <template #mobile>
-                <div class="flex justify-between items-end mb-4">
+                <div class="flex justify-between items-center mb-4">
                     <div class="txt-h2">{{ seeker.job }}</div>
-                    <div @click="save" class="icon-fav" />
+                    <div 
+                        @click="save" 
+                        class="icon-fav big" 
+                        :class="saveData.method === 'post' ? '' : 'filled'"
+                    />
                 </div>
                 <div class="mb-4 text-systemgreen txt-h3">{{ (+seeker.salary).toLocaleString('de-DE') }}₴</div>
                 <Tags

@@ -7,7 +7,7 @@ const mq = useMq();
 
 <template>
     <div class="relative mb-8">
-        <div v-if="$slots.heading" class="flex justify-between items-end mb-1">
+        <div v-if="$slots.heading" class="flex justify-between items-end flex-wrap gap-x-8 mb-1">
             <div class="txt-h5" :class="$slots.error ? 'text-systemred' : ''">
                 <slot name="heading" />
             </div>

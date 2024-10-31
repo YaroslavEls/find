@@ -5,6 +5,10 @@ const props = defineProps({
     tags: {
         type: Object,
         required: true
+    },
+    disabled: {
+        type: Boolean,
+        default: false
     }
 });
 
@@ -80,7 +84,7 @@ const iconsMob = {
             class="flex items-center py-1 h-fit rounded bg-gray70 txt-secondary"
             :class="mq.desktop ? 'gap-2 px-4' : 'gap-1 px-2'"
         >
-            <div :class="icons[key]"></div>
+            <div :class="[icons[key], disabled ? 'gray' : '']"></div>
             {{ value }}
         </div>
     </div>

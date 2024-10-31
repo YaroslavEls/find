@@ -50,6 +50,14 @@ const expanded = ref(false);
                                     class="absolute top-[-4px] right-[-12px] w-4 h-4 bg-systemred rounded-full"
                                 />
                             </Link>
+                            <Link
+                                v-if="$page.props.auth.user.userable_type == 'App\\Models\\Saloon'"
+                                :href="route('vacancies')"
+                                :class="$page.url.startsWith('/vacancies') ? 'text-gray0' : 'text-gray40'"
+                                class="font-semibold text-[22px] tracking-normal leading-none"
+                            >
+                                Вакансії
+                            </Link>
                         </nav>
                         <Link
                             :href="route('profile')"
@@ -128,6 +136,13 @@ const expanded = ref(false);
                                     v-if="$page.props.auth.user.new_messages.length > 0"
                                     class="absolute top-0 left-1/2 transform -translate-x-1/2 ml-[22px] w-3 h-3 bg-systemred rounded-full"
                                 />
+                            </Link>
+                            <Link
+                                v-if="$page.props.auth.user.userable_type == 'App\\Models\\Saloon'"
+                                :href="route('vacancies')"
+                                class="block text-center txt-buttons"
+                            >
+                                Вакансії
                             </Link>
                             <Link 
                                 :href="route('profile')"

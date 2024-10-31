@@ -118,6 +118,10 @@ Route::middleware(['auth', 'verified', 'saloon', 'completed'])->group(function (
         ->name('vacancy.update');
     Route::delete('/vacancy/{vacancy}/delete', [VacancyController::class, 'destroy'])
         ->name('vacancy.delete');
+    Route::post('/vacancy/{vacancy}/activate', [VacancyController::class, 'activate'])
+        ->name('vacancy.activate');
+    Route::post('/vacancy/{vacancy}/deactivate', [VacancyController::class, 'deactivate'])
+        ->name('vacancy.deactivate');
 
     Route::get('/seekers', [SeekerController::class, 'index'])
         ->name('seekers');

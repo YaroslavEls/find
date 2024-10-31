@@ -69,7 +69,7 @@ class SaloonController extends Controller
         
         $saloon->load([
             'vacancies' => fn ($query) =>
-                $query->orderBy('created_at', 'desc'),
+                $query->where('active', true)->orderBy('created_at', 'desc'),
             'locations' => fn ($query) =>
                 $query->orderBy('created_at', 'desc')
         ]);
