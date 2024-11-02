@@ -105,7 +105,7 @@ const expanded = ref(false);
 
                         <nav 
                             v-show="expanded"
-                            class="z-10 absolute top-[72px] left-0 flex flex-col gap-10 w-full pt-4 pb-8 bg-background"
+                            class="z-50 absolute top-[72px] left-0 flex flex-col gap-10 w-full pt-4 pb-8 bg-background"
                         >
                             <Link 
                                 :href="route('home')"

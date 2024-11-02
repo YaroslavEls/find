@@ -13,7 +13,7 @@ class LocationFactory extends Factory
     {
         $photos = [];
         for ($i = 0; $i < 11; $i++) {
-            $photos[] = 'storage/test_images/loc-photo-example-'.($i+1).'.jpg';
+            $photos[] = 'storage/test-media/loc-photo-example-'.($i+1).'.jpg';
         }
 
         $randomKeys = array_rand($photos, 5);
@@ -34,7 +34,7 @@ class LocationFactory extends Factory
             return null;
         }
 
-        return 'storage/test_videos/loc-video-example-'.$num.'.mp4';
+        return 'storage/test-media/loc-video-example-'.$num.'.mp4';
     }
 
     /**

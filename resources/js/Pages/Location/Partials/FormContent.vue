@@ -52,7 +52,7 @@ const model = defineModel({
     />
     <File
         identifier="loc_video"
-        allowed=".mpeg,.mp4,.avi"
+        allowed=".mpeg,.mp4,.avi,.mov"
         heading="Відео огляд закладу"
         subheading="Максимум 1 відео, до 100МБ"
         button="Додати відео"

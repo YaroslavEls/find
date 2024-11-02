@@ -195,7 +195,7 @@ const save = () => {
                                 v-if="vacancy.location.video"
                                 height="355"
                                 controls
-                                class="border-solid border-gray50 border-2 rounded-xl"
+                                class="max-h-[355px] border-solid border-gray50 border-2 rounded-xl"
                             >
                                 <source :src="'/'+vacancy.location.video">
                                 Your browser does not support the video tag.

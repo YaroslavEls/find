@@ -24,7 +24,7 @@ class LocationStoreRequest extends FormRequest
             'gen' => ['required', 'boolean'],
             'photos' => ['required', 'array', 'max:12'],
             'photos.*' => ['filled', 'mimes:png,jpg', 'max:10240'],
-            'video' => ['nullable', 'mimes:mpeg,mp4,avi,m4v', 'max:102400'],
+            'video' => ['nullable', 'mimes:mpeg,mp4,avi,m4v,mov', 'max:102400'],
         ];
     }
 }
