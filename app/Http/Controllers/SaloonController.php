@@ -52,11 +52,15 @@ class SaloonController extends Controller
 
         foreach ($locations as $loc) {
             $loc['schedule'] = implode(';', $loc['schedule']);
+            $pathes = [];
             foreach ($loc['photos'] as $photo) {
                 $path = $photo->store('uploads');
                 $pathes[] = $path;
             }
             $loc['photos'] = implode(';', $pathes);
+            if ($loc['video']) {
+                $loc['video'] = $loc['video']->store('uploads');
+            }
             $saloon->locations()->create($loc);
         }
 

@@ -29,14 +29,14 @@ const scrollTop = () => {
                                 Головна
                             </Link>
                             <Link
-                                v-if="!$page.props.auth.user || $page.props.auth.user.userable_type == 'App\\Models\\Seeker'"
+                                v-if="$page.component !== 'Error' && (!$page.props.auth.user || $page.props.auth.user.userable_type == 'App\\Models\\Seeker')"
                                 :href="route('vacancies')" 
                                 class="block mb-2 text-gray40 txt-buttons"
                             >
                                 Вакансії
                             </Link>
                             <Link
-                                v-if="!$page.props.auth.user || $page.props.auth.user.userable_type == 'App\\Models\\Saloon'"
+                                v-if="$page.component !== 'Error' && (!$page.props.auth.user || $page.props.auth.user.userable_type == 'App\\Models\\Saloon')"
                                 :href="route('seekers')" 
                                 class="block mb-2 text-gray40 txt-buttons"
                             >
@@ -49,7 +49,7 @@ const scrollTop = () => {
                                 Чати
                             </Link>
                             <Link
-                                v-if="!$page.props.auth.user || $page.props.auth.user.userable_type == 'App\\Models\\Saloon'"
+                                v-if="$page.component !== 'Error' && (!$page.props.auth.user || $page.props.auth.user.userable_type == 'App\\Models\\Saloon')"
                                 :href="route('vacancies')" 
                                 class="block mb-2 text-gray40 txt-buttons"
                             >
